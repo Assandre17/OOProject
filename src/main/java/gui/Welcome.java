@@ -6,28 +6,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Welcome {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Welcome");
-        frame.setContentPane(new Welcome().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
+
 
     private JPanel panel1;
     private JButton accediButton;
     private JButton registratiButton;
-    private static JFrame welcomeFrame;
+    public JFrame welcomeFrame;
 
-    public Welcome() {
+    public Welcome(JFrame welcomeFrame) {
+        this.welcomeFrame = welcomeFrame;
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login loginForm = new Login(welcomeFrame);
-                loginForm.loginFrame.setVisible(true);
+                Login login = new Login(welcomeFrame);
+                login.loginFrame.setVisible(true);
                 welcomeFrame.setVisible(false);
             }
         });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Welcome");
+        frame.setContentPane(new Welcome(frame).panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     {
