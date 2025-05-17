@@ -3,6 +3,8 @@ package main.java.model;
 public abstract class Utente {
     private String nome;
     private String cognome;
+    private String email;
+    private String password;
 
     protected Utente() {}
 
