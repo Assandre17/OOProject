@@ -8,7 +8,15 @@ public class Controller {
     public void invitaGiudice(Giudice giudice){}
     public void apriRegistrazioni(){}
     public void registrati(){}
-    public void accedi(){}
+    public Utente accedi(String email, String password){
+
+        System.out.println("accesso in corso...");
+
+        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Giudice.
+
+
+        return new Giudice();
+    }
     public void iscriviti(){}
     public void creaTeam(){}
     public void invitaPartecipanti(Partecipante partecipante){}

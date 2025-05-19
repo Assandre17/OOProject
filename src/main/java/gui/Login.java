@@ -1,11 +1,16 @@
 package main.java.gui;
 
+import main.java.controller.Controller;
+import main.java.model.Partecipante;
+import main.java.model.Utente;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Arrays;
 
 public class Login {
     private JPanel panel1;
@@ -15,21 +20,24 @@ public class Login {
     private JPasswordField passwordField;
     private JButton accediButton;
     private JButton tornaAllaHomeButton;
-    public JFrame loginFrame;
 
+    public JFrame loginFrame;
     private JFrame welcomeFrame;
+    private Controller controller;
 
     public Login(JFrame welcomeFrame) {
         this.loginFrame = new JFrame("Login");
+        controller = new Controller();
         this.welcomeFrame = welcomeFrame;
         loginFrame.setContentPane(panel1);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.pack();
+        String email = emailField.getText();
+        String password = Arrays.toString(passwordField.getPassword());
 
         emailField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                String email = emailField.getText();
                 if (!email.isEmpty() && !email.contains("@")) {
                     JOptionPane.showMessageDialog(loginFrame, "Email non valida");
                 }
@@ -44,6 +52,13 @@ public class Login {
                 loginFrame.dispose();
 
 
+            }
+        });
+        accediButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Utente utente = controller.accedi(email,password);
+                utente.apriFinestra(loginFrame);
             }
         });
     }

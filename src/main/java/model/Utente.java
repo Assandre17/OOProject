@@ -1,5 +1,7 @@
 package main.java.model;
 
+import javax.swing.*;
+
 public abstract class Utente {
     private String nome;
     private String cognome;
@@ -23,5 +25,11 @@ public abstract class Utente {
     }
     public void setCognome(String cognome) {
         this.cognome = cognome;
+    }
+
+
+    public void apriFinestra(JFrame frameChiamante){
+        frameChiamante.setVisible(false);
+        frameChiamante.dispose();
     }
 }

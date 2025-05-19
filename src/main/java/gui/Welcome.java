@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 
 public class Welcome {
 
-
-    private JPanel panel1;
     private JButton accediButton;
     private JButton registratiButton;
+
     public JFrame welcomeFrame;
+    private JPanel panel1;
 
     public Welcome(JFrame welcomeFrame) {
         this.welcomeFrame = welcomeFrame;

@@ -1,5 +1,9 @@
 package main.java.model;
 
+import main.java.gui.HomeGiudice;
+
+import javax.swing.*;
+
 public class Giudice extends Utente {
 
     public Giudice() {
@@ -8,6 +12,14 @@ public class Giudice extends Utente {
 
     public Giudice(String nome, String cognome) {
         super(nome, cognome);
+    }
+
+    @Override
+    public void apriFinestra(JFrame frameChiamante){
+        HomeGiudice homePartecipante = new HomeGiudice();
+        homePartecipante.homeGiudiceFrame.setVisible(true);
+        frameChiamante.setVisible(false);
+        frameChiamante.dispose();
     }
 
 }
