@@ -32,12 +32,13 @@ public class Login {
         loginFrame.setContentPane(panel1);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.pack();
-        String email = emailField.getText();
+
         String password = Arrays.toString(passwordField.getPassword());
 
         emailField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                String email = emailField.getText();
                 if (!email.isEmpty() && !email.contains("@")) {
                     JOptionPane.showMessageDialog(loginFrame, "Email non valida");
                 }
@@ -57,6 +58,7 @@ public class Login {
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
                 Utente utente = controller.accedi(email,password);
                 utente.apriFinestra(loginFrame);
             }

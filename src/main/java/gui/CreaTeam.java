@@ -21,7 +21,6 @@ public class CreaTeam {
     public CreaTeam(JFrame homePartecipanteFrame) {
         this.creaTeamFrame = new JFrame("CreaTeam");
         this.homePartecipanteFrame = homePartecipanteFrame;
-        String nomeTeam = textField1.getText();
         controller = new Controller();
         creaTeamFrame.setContentPane(panel1);
         creaTeamFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +29,7 @@ public class CreaTeam {
         avantiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String nomeTeam = textField1.getText();
                 if (nomeTeam.isBlank()) {
                     JOptionPane.showMessageDialog(creaTeamFrame, "Inserisci nome team");
                     return;
