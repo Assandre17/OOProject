@@ -3,6 +3,7 @@ package main.java.model;
 import javax.swing.*;
 
 public abstract class Utente {
+    private Long id;
     private String nome;
     private String cognome;
     private String email;
@@ -31,5 +32,29 @@ public abstract class Utente {
     public void apriFinestra(JFrame frameChiamante){
         frameChiamante.setVisible(false);
         frameChiamante.dispose();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
