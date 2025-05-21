@@ -54,6 +54,7 @@ public class Login {
 
             }
         });
+        //controller actionListner dichiarato a riga 26
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -4,20 +4,31 @@ import main.java.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HomeOrganizzatore {
+
+    private JButton vediButton;
 
     private JPanel panel1;
     public JFrame homeOrganizzatoreFrame;
     private Controller controller;
 
-    public HomeOrganizzatore() {
+    public HomeOrganizzatore(JFrame homeOrganizzatoreFrame, Controller controller) {
         controller = new Controller();
         this.homeOrganizzatoreFrame = new JFrame("HomeOrganizzatore");
         homeOrganizzatoreFrame.setContentPane(panel1);
         homeOrganizzatoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homeOrganizzatoreFrame.pack();
-
+        vediButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HackathonCreatiOrganizzatore hco = new HackathonCreatiOrganizzatore();
+                hco.hcoFrame.setVisible(true);
+                homeOrganizzatoreFrame.setVisible(false); //il compilatore me l'ha leggermente modificato
+            }
+        });
     }
 
     {
