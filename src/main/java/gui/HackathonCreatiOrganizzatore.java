@@ -22,7 +22,7 @@ public class HackathonCreatiOrganizzatore {
     public Dialog hcoFrame;
 
 
-    /*public HackathonCreatiOrganizzatore(JFrame homeOrganizzatoreFrame, Controller controller) {
+    /*public ListaHackathonCreati(JFrame homeOrganizzatoreFrame, Controller controller) {
     this.homeOrganizzatoreFrame = homeOrganizzatoreFrame;
     this.listaHackathonCFrame = new JFrame("Lista Hackathon Creati");
     this.controller = controller;
@@ -32,70 +32,86 @@ public class HackathonCreatiOrganizzatore {
     listaHackathonCFrame.pack();
 
     List<Hackathon> listaHackathon = getMockHackathon();
-    Object[][] datiTable = new Object[listaHackathon.size()][4];
+    Object[][] datiTable = new Object[listaHackathon.size()][3];
 
     for (int i = 0; i < listaHackathon.size(); i++) {
-        datiTable[i][0] = false;
-        datiTable[i][1] = listaHackathon.get(i).getId();
-        datiTable[i][2] = listaHackathon.get(i).getNome();
-        datiTable[i][3] = listaHackathon.get(i).getTema();
+        datiTable[i][0] = i + 1; // numero progressivo hackathon
+        datiTable[i][1] = listaHackathon.get(i).getNome();
+        datiTable[i][2] = "Vedi";
     }
 
-    DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, COLONNE_LISTA_HACKATHON) {
+    DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, new String[]{"ID", "Nome", "Azione"}) {
         @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return switch (columnIndex) {
-                case 0 -> Boolean.class;
-                case 1 -> Long.class;
-                default -> String.class;
-            };
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return columnIndex == 0;
+        public boolean isCellEditable(int row, int column) {
+            return column == 2;
         }
     };
     this.listaHackathonCModel = tabellaHackathon;
     table1.setModel(tabellaHackathon);
 
-    dettaglioButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            List<Hackathon> hackathonChecked = getCheckedHackathon(tabellaHackathon, listaHackathon);
-            homeOrganizzatoreFrame.setVisible(true);
-            listaHackathonCFrame.setVisible(false);
-            listaHackathonCFrame.dispose();
-        }
-    });
+    table1.getColumn("Azione").setCellRenderer(new ButtonRenderer());
+    table1.getColumn("Azione").setCellEditor(new ButtonEditor(listaHackathon));
+
+    listaHackathonCFrame.setVisible(true);
 }
 
-private List<Hackathon> getCheckedHackathon(DefaultTableModel tabellaHackathon, List<Hackathon> listaHackathon) {
-    ArrayList<Object> hackathonChecked = new ArrayList<>();
-    for (int i = 0; i < listaHackathon.size(); i++) {
-        Boolean check = (Boolean) tabellaHackathon.getValueAt(i, 0);
-        if (Boolean.TRUE.equals(check)) {
-            Long id = (Long) tabellaHackathon.getValueAt(i, 1);
-            Hackathon checked = listaHackathon.stream()
-                    .filter(h -> h.getId().equals(id))
-                    .findFirst().orElse(null);
-            hackathonChecked.add(checked);
-        }
+class ButtonRenderer extends JButton implements TableCellRenderer {
+    public ButtonRenderer() {
+        setText("Vedi");
     }
-    return hackathonChecked;
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus,
+                                                   int row, int column) {
+        return this;
+    }
 }
 
-// Metodo mock temporaneo
+class ButtonEditor extends DefaultCellEditor {
+    private JButton button;
+    private boolean clicked;
+    private Hackathon selectedHackathon;
+    private List<Hackathon> hackathonList;
+
+    public ButtonEditor(List<Hackathon> hackathonList) {
+        super(new JTextField()); // niente checkbox
+        this.hackathonList = hackathonList;
+        button = new JButton("Vedi");
+        button.addActionListener(e -> fireEditingStopped());
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected, int row, int col) {
+        selectedHackathon = hackathonList.get(row);
+        clicked = true;
+        return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        if (clicked) {
+            JOptionPane.showMessageDialog(button,
+                "Dettagli Hackathon:\nNome: " + selectedHackathon.getNome());
+        }
+        clicked = false;
+        return "Vedi";
+    }
+
+    @Override
+    public boolean stopCellEditing() {
+        clicked = false;
+        return super.stopCellEditing();
+    }
+}
+
 private List<Hackathon> getMockHackathon() {
-    Hackathon h1 = new Hackathon("Hack for Health", "Sanità digitale");
-    h1.setId(1L);
-    Hackathon h2 = new Hackathon("Green Code Challenge", "Sostenibilità ambientale");
-    h2.setId(2L);
-    List<Hackathon> lista = new ArrayList<>();
-    lista.add(h1);
-    lista.add(h2);
-    return lista;
-}*/
+    Hackathon h1 = new Hackathon("Hack for Health");
+    Hackathon h2 = new Hackathon("Green Code Challenge");
+    return List.of(h1, h2);
+}
+*/
 
 
     {
