@@ -6,6 +6,7 @@ import main.java.model.*;
 
 public class Controller {
     private String nomeTeam;
+    private Utente utente;
 
     public Hackathon creaHackathon(){return new Hackathon();}
     public void invitaGiudice(Giudice giudice){}
