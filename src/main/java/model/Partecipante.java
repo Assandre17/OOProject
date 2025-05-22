@@ -1,5 +1,6 @@
 package main.java.model;
 
+import main.java.controller.Controller;
 import main.java.gui.HomePartecipante;
 
 import javax.swing.*;
@@ -13,8 +14,8 @@ public class Partecipante extends Utente {
     }
 
     @Override
-    public void apriFinestra(JFrame frameChiamante){
-        HomePartecipante homePartecipante = new HomePartecipante();
+    public void apriFinestra(JFrame frameChiamante, Controller controller){
+        HomePartecipante homePartecipante = new HomePartecipante(controller);
         homePartecipante.homePartecipanteFrame.setVisible(true);
         frameChiamante.setVisible(false);
         frameChiamante.dispose();

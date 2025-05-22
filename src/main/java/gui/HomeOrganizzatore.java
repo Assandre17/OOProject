@@ -15,7 +15,7 @@ public class HomeOrganizzatore {
     public JFrame homeOrganizzatoreFrame;
     private Controller controller;
 
-    public HomeOrganizzatore(JFrame homeOrganizzatoreFrame, Controller controller) {
+    public HomeOrganizzatore(Controller controller) {
         controller = new Controller();
         this.homeOrganizzatoreFrame = new JFrame("HomeOrganizzatore");
         homeOrganizzatoreFrame.setContentPane(panel1);

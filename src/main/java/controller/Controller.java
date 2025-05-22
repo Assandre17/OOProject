@@ -6,6 +6,7 @@ import main.java.model.*;
 
 public class Controller {
     private String nomeTeam;
+    private Utente utente;
 
     public Hackathon creaHackathon(){return new Hackathon();}
     public void invitaGiudice(Giudice giudice){}
@@ -17,9 +18,17 @@ public class Controller {
 
         //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Giudice.
 
-
+        createMockUtente();
         return new Partecipante();
     }
+
+
+    private void createMockUtente() {
+        Partecipante utente = new Partecipante("Pippo", "Pluto");
+        utente.setEmail("prova@prova.it");
+        setUtente(utente);
+    }
+
     public void iscriviti(){}
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){
         Team team = new Team();
@@ -37,7 +46,7 @@ public class Controller {
         partecipanti.forEach(partecipante -> {
             Invito invito = new Invito();
             invito.setTeam(team);
-            invito.setPartecipante(partecipante);
+            invito.setPartecipanteInvitato(partecipante);
 
             //TODO: salvataggio a DB dell'invito
 
@@ -47,8 +56,14 @@ public class Controller {
 
     }
     public void richiestaIngressoTeam(){}
-    public boolean accettaIngressoTeam(){return true;}
-    public boolean accettaInvitoTeam(){return true;}
+
+    public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Team team){
+
+        System.out.println("gestione invito in corso...");
+        //TODO: verificare se il partecipante fa già parte di un team una volta implementato il DB, e poi inserirlo o meno nel team
+
+
+    }
     public String pubblicaProblema(){return "";}
     public int assegnaVoto(){return 0;}
     public Documento pubblicaDocumento(Documento documento){return null;}
@@ -63,5 +78,13 @@ public class Controller {
 
     public void setNomeTeam(String nomeTeam) {
         this.nomeTeam = nomeTeam;
+    }
+    
+    public Utente getUtente(){
+        return utente;
+    }
+    
+    private void setUtente(Utente utente){
+        this.utente = utente;
     }
 }

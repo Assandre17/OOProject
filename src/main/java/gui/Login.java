@@ -61,7 +61,7 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
                 Utente utente = controller.accedi(email,password);
-                utente.apriFinestra(loginFrame);
+                utente.apriFinestra(loginFrame, controller);
             }
         });
     }

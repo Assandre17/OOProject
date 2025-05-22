@@ -2,7 +2,7 @@ package main.java.model;
 
 public class Invito {
     private Long id;
-    private Partecipante partecipante;
+    private Partecipante partecipanteInvitato;
     private Team team;
 
     public Long getId() {
@@ -13,12 +13,12 @@ public class Invito {
         this.id = id;
     }
 
-    public Partecipante getPartecipante() {
-        return partecipante;
+    public Partecipante getPartecipanteInvitato() {
+        return partecipanteInvitato;
     }
 
-    public void setPartecipante(Partecipante partecipante) {
-        this.partecipante = partecipante;
+    public void setPartecipanteInvitato(Partecipante partecipante) {
+        this.partecipanteInvitato = partecipante;
     }
 
     public Team getTeam() {

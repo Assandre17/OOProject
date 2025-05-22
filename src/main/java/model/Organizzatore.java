@@ -1,5 +1,6 @@
 package main.java.model;
 
+import main.java.controller.Controller;
 import main.java.gui.HomeOrganizzatore;
 import main.java.gui.HomePartecipante;
 
@@ -13,8 +14,8 @@ public class Organizzatore extends Utente {
     }
 
     @Override
-    public void apriFinestra(JFrame frameChiamante){
-        HomeOrganizzatore homePartecipante = new HomeOrganizzatore();
+    public void apriFinestra(JFrame frameChiamante, Controller controller){
+        HomeOrganizzatore homePartecipante = new HomeOrganizzatore(controller);
         homePartecipante.homeOrganizzatoreFrame.setVisible(true);
         frameChiamante.setVisible(false);
         frameChiamante.dispose();

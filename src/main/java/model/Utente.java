@@ -1,5 +1,7 @@
 package main.java.model;
 
+import main.java.controller.Controller;
+
 import javax.swing.*;
 
 public abstract class Utente {
@@ -29,7 +31,7 @@ public abstract class Utente {
     }
 
 
-    public void apriFinestra(JFrame frameChiamante){
+    public void apriFinestra(JFrame frameChiamante, Controller controller){
         frameChiamante.setVisible(false);
         frameChiamante.dispose();
     }

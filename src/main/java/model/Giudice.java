@@ -1,5 +1,6 @@
 package main.java.model;
 
+import main.java.controller.Controller;
 import main.java.gui.HomeGiudice;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class Giudice extends Utente {
     }
 
     @Override
-    public void apriFinestra(JFrame frameChiamante){
+    public void apriFinestra(JFrame frameChiamante, Controller controller){
         HomeGiudice homePartecipante = new HomeGiudice();
         homePartecipante.homeGiudiceFrame.setVisible(true);
         frameChiamante.setVisible(false);

@@ -15,16 +15,8 @@ public class HomePartecipante {
     public JFrame homePartecipanteFrame;
     private Controller controller;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("HomePartecipante");
-        frame.setContentPane(new HomePartecipante().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public HomePartecipante() {
-        controller = new Controller();
+    public HomePartecipante(Controller controller) {
+        this.controller = controller;
         this.homePartecipanteFrame = new JFrame("HomePartecipante");
         homePartecipanteFrame.setContentPane(panel1);
         homePartecipanteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +27,16 @@ public class HomePartecipante {
             public void actionPerformed(ActionEvent e) {
                 CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame);
                 creaTeam.creaTeamFrame.setVisible(true);
+                homePartecipanteFrame.setVisible(false);
+
+            }
+        });
+
+        gestioneInvitiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GestioneInvitiPartecipante gestioneInvitiPartecipante = new GestioneInvitiPartecipante(homePartecipanteFrame, controller);
+                gestioneInvitiPartecipante.gestioneInvitiPartecipanteFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
