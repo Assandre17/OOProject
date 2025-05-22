@@ -18,7 +18,7 @@ public class Controller {
         //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Giudice.
 
 
-        return new Partecipante();
+        return new Organizzatore(); //o new Partecipante();
     }
     public void iscriviti(){}
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){

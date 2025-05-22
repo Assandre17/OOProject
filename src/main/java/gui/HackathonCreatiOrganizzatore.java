@@ -5,10 +5,10 @@ import main.java.model.Hackathon;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
+
 
 public class HackathonCreatiOrganizzatore {
 
@@ -19,12 +19,12 @@ public class HackathonCreatiOrganizzatore {
     public JFrame homeOrganizzatoreFrame;
     public DefaultTableModel listaHackathonCModel;
     private Controller controller;
-    public Dialog hcoFrame;
+    public JFrame hcoFrame;
 
 
-    /*public ListaHackathonCreati(JFrame homeOrganizzatoreFrame, Controller controller) {
+    public HackathonCreatiOrganizzatore(JFrame homeOrganizzatoreFrame){//, Controller controller) {
     this.homeOrganizzatoreFrame = homeOrganizzatoreFrame;
-    this.listaHackathonCFrame = new JFrame("Lista Hackathon Creati");
+    this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
     this.controller = controller;
 
     listaHackathonCFrame.setContentPane(panel1);
@@ -106,12 +106,14 @@ class ButtonEditor extends DefaultCellEditor {
     }
 }
 
-private List<Hackathon> getMockHackathon() {
-    Hackathon h1 = new Hackathon("Hack for Health");
-    Hackathon h2 = new Hackathon("Green Code Challenge");
+private List getMockHackathon() {
+    Hackathon h1 = new Hackathon();
+    Hackathon h2 = new Hackathon();
+    h1.setNome("Hackathon 1");
+    h2.setNome("Hackathon 2");
     return List.of(h1, h2);
 }
-*/
+
 
 
     {
