@@ -32,6 +32,16 @@ public class HomePartecipante {
             }
         });
 
+        inviaRichiestaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(homePartecipanteFrame, controller);
+                inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                homePartecipanteFrame.setVisible(false);
+
+            }
+        });
+
         gestioneInvitiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

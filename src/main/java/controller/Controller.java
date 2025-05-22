@@ -55,7 +55,14 @@ public class Controller {
 
 
     }
-    public void richiestaIngressoTeam(){}
+    public void richiestaIngressoTeam(Partecipante partecipante, Team team){
+
+        Invito invito = new Invito();
+        invito.setTeam(team);
+        invito.setPartecipanteInvitato(partecipante);
+        System.out.println("Richiesta d'invito in corso...");
+        //TODO: salvataggio a DB dell'invito
+    }
 
     public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Team team){
 

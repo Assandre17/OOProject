@@ -21,15 +21,17 @@ public class GestioneInvitiPartecipante {
     private JPanel panel1;
     private JTable table1;
     public JFrame gestioneInvitiPartecipanteFrame;
-    public JFrame homeInvitoFrame;
+    public JFrame homePartecipanteFrame;
     private Controller controller;
     private JButton accettaButton;
     private JButton rifiutaButton;
+    private JButton tornaAllaHomeButton;
 
 
-    public GestioneInvitiPartecipante(JFrame homeInvitoFrame, Controller controller) {
 
-        this.homeInvitoFrame = homeInvitoFrame;
+    public GestioneInvitiPartecipante(JFrame homePartecipanteFrame, Controller controller) {
+
+        this.homePartecipanteFrame = homePartecipanteFrame;
         this.gestioneInvitiPartecipanteFrame = new JFrame("GestioneInvitiPartecipante");
         this.controller = controller;
         gestioneInvitiPartecipanteFrame.setContentPane(panel1);
@@ -99,6 +101,17 @@ public class GestioneInvitiPartecipante {
                 }
             }
         });
+
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePartecipanteFrame.setVisible(true);
+                gestioneInvitiPartecipanteFrame.setVisible(false);
+                gestioneInvitiPartecipanteFrame.dispose();
+
+
+            }
+        });
         table1.setModel(tabellaInviti);
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -149,7 +162,7 @@ public class GestioneInvitiPartecipante {
         label1.setText("LISTA PARTECIPANTI DA INVITARE");
         panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         table1 = new JTable();
         JScrollPane scrollPane = new JScrollPane(table1);
@@ -160,6 +173,9 @@ public class GestioneInvitiPartecipante {
         rifiutaButton = new JButton();
         rifiutaButton.setText("Rifiuta");
         panel1.add(rifiutaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tornaAllaHomeButton = new JButton();
+        tornaAllaHomeButton.setText("torna alla home");
+        panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
 
     }

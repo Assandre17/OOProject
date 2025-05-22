@@ -3,6 +3,7 @@ package main.java.model;
 import java.util.List;
 
 public class Team {
+    private Long id;
     private String nome;
     private List<Partecipante> partecipanti;
 
@@ -26,5 +27,13 @@ public class Team {
 
     public void setPartecipanti(List<Partecipante> partecipanti) {
         this.partecipanti = partecipanti;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

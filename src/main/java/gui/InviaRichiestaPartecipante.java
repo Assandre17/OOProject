@@ -1,7 +1,9 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
+import main.java.model.Team;
 import main.java.model.Partecipante;
+import main.java.model.Team;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,70 +12,71 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Optional;
 
-import static main.java.utils.Utils.COLONNE_LISTA_PARTECIPANTI;
+import static main.java.utils.Utils.*;
 
-public class ListaPartecipanti {
+public class InviaRichiestaPartecipante {
     private JPanel panel1;
     private JTable table1;
-    private JButton invitaButton;
-    private JButton tornaAllaHomeButton;
-    public JFrame listaPartecipantiFrame;
-    public JFrame creaTeamFrame;
+    public JFrame inviaRichiestaPartecipanteFrame;
     public JFrame homePartecipanteFrame;
-    public DefaultTableModel listaPartecipantiModel;
     private Controller controller;
+    private JButton inviaRichiestaButton;
+    private JButton tornaAllaHomeButton;
 
 
-    public ListaPartecipanti(JFrame creaTeamFrame, JFrame homePartecipanteFrame, Controller controller) {
 
-        this.creaTeamFrame = creaTeamFrame;
+    public InviaRichiestaPartecipante(JFrame homePartecipanteFrame, Controller controller) {
+
         this.homePartecipanteFrame = homePartecipanteFrame;
-        this.listaPartecipantiFrame = new JFrame("ListaPartecipanti");
+        this.inviaRichiestaPartecipanteFrame = new JFrame("InviaRichiestaPartecipante");
         this.controller = controller;
+        inviaRichiestaPartecipanteFrame.setContentPane(panel1);
+        inviaRichiestaPartecipanteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        inviaRichiestaPartecipanteFrame.pack();
 
-        listaPartecipantiFrame.setContentPane(panel1);
-        listaPartecipantiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        listaPartecipantiFrame.pack();
+        List<Team> listaTeam = getMockTeam();
 
-        List<Partecipante> listaPartecipanti = getMockPartecipanti();
-        String nomeTeam = controller.getNomeTeam();
+        Object[][] datiTable = new Object[listaTeam.size()][4];
 
-        Object[][] datiTable = new Object[listaPartecipanti.size()][4];
-
-        for (int i = 0; i < listaPartecipanti.size(); i++) {
-            datiTable[i][0] = false;
-            datiTable[i][1] = listaPartecipanti.get(i).getId();
-            datiTable[i][2] = listaPartecipanti.get(i).getNome();
-            datiTable[i][3] = listaPartecipanti.get(i).getCognome();
+        for (int i = 0; i < listaTeam.size(); i++) {
+            datiTable[i][0] = listaTeam.get(i).getId();
+            datiTable[i][1] = listaTeam.get(i).getNome();
         }
 
 
-        DefaultTableModel tabellaPartecipanti = new DefaultTableModel(datiTable, COLONNE_LISTA_PARTECIPANTI) {
+        DefaultTableModel tabellaTeam = new DefaultTableModel(datiTable, COLONNE_LISTA_TEAM) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
-                    case 0 -> Boolean.class;
-                    case 1 -> Long.class;
+                    case 0 -> Long.class;
                     default -> String.class;
                 };
             }
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 0;
+                return false;
             }
         };
-        this.listaPartecipantiModel = tabellaPartecipanti;
-        table1.setModel(tabellaPartecipanti);
 
-        invitaButton.addActionListener(new ActionListener() {
+        inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Partecipante> partecipantiChecked = getCheckedPartecipanti(tabellaPartecipanti,listaPartecipanti);
-                controller.creaTeam(nomeTeam, partecipantiChecked);
-                JOptionPane.showMessageDialog(panel1, "Invito inviato con successo");
+                int rigaSelezionata = table1.getSelectedRow();
+                if (rigaSelezionata < 0) {
+                    JOptionPane.showMessageDialog(panel1, "Seleziona un Team");
+                    return;
+                }
+                Long idTeam = (Long) table1.getValueAt(rigaSelezionata, 0);
+                Optional<Team> teamRichiesto = listaTeam.stream()
+                        .filter(Team -> Team.getId().equals(idTeam))
+                        .findFirst();
+                if (teamRichiesto.isPresent()) {
+                    controller.richiestaIngressoTeam((Partecipante) controller.getUtente(),teamRichiesto.get());
+                    JOptionPane.showMessageDialog(panel1, "Richiesta d'ingresso inviata");
+                }
             }
         });
 
@@ -81,42 +84,30 @@ public class ListaPartecipanti {
             @Override
             public void actionPerformed(ActionEvent e) {
                 homePartecipanteFrame.setVisible(true);
-                listaPartecipantiFrame.setVisible(false);
-                listaPartecipantiFrame.dispose();
+                inviaRichiestaPartecipanteFrame.setVisible(false);
+                inviaRichiestaPartecipanteFrame.dispose();
 
 
             }
         });
 
+        table1.setModel(tabellaTeam);
+        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+
     }
 
-    private List<Partecipante> getCheckedPartecipanti(DefaultTableModel tabellaPartecipanti, List<Partecipante> listaPartecipanti){
-        List<Partecipante> partecipantiChecked = new ArrayList<>();
-        for (int i = 0; i < listaPartecipanti.size(); i++) {
-            Boolean check = (Boolean) tabellaPartecipanti.getValueAt(i,0);
+    private List<Team> getMockTeam() {
+        Team Team1 = new Team("team1");
+        Team1.setId(1L);
 
-            if (Boolean.TRUE.equals(check)) {
-                Long id = (Long) tabellaPartecipanti.getValueAt(i,1);
-                Partecipante partecipantechecked = listaPartecipanti.stream()
-                        .filter(partecipante -> partecipante.getId().equals(id))
-                        .findFirst().orElse(null);
-                partecipantiChecked.add(partecipantechecked);
-            }
-        }
+        Team Team2 = new Team("team2");
+        Team2.setId(2L);
 
-        return partecipantiChecked;
-    }
-
-    //metodo temporaneo che restituisce una lista di partecipanti mockata
-    private List<Partecipante> getMockPartecipanti() {
-        Partecipante partecipante1 = new Partecipante("Marco", "Rossi");
-        partecipante1.setId(1L);
-        Partecipante partecipante2 = new Partecipante("Pippo", "Pluto");
-        partecipante2.setId(2L);
-        List<Partecipante> listaPartecipanti = new ArrayList<>();
-        listaPartecipanti.add(partecipante1);
-        listaPartecipanti.add(partecipante2);
-        return listaPartecipanti;
+        List<Team> listaTeam = new ArrayList<>();
+        listaTeam.add(Team1);
+        listaTeam.add(Team2);
+        return listaTeam;
 
     }
 
@@ -147,13 +138,12 @@ public class ListaPartecipanti {
         table1 = new JTable();
         JScrollPane scrollPane = new JScrollPane(table1);
         panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        invitaButton = new JButton();
-        invitaButton.setText("Invita");
-        panel1.add(invitaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        inviaRichiestaButton = new JButton();
+        inviaRichiestaButton.setText("Invia richiesta");
+        panel1.add(inviaRichiestaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tornaAllaHomeButton = new JButton();
         tornaAllaHomeButton.setText("torna alla home");
         panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-
 
     }
 

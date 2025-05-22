@@ -39,7 +39,7 @@ public class Login {
             @Override
             public void focusLost(FocusEvent e) {
                 String email = emailField.getText();
-                if (!email.isEmpty() && !email.contains("@")) {
+                if (!email.contains("@")) {
                     JOptionPane.showMessageDialog(loginFrame, "Email non valida");
                 }
 
