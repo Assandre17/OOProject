@@ -6,7 +6,6 @@ import main.java.model.*;
 
 public class Controller {
     private String nomeTeam;
-    private Utente utente;
 
     public Hackathon creaHackathon(){return new Hackathon();}
     public void invitaGiudice(Giudice giudice){}
@@ -79,11 +78,11 @@ public class Controller {
     public void setNomeTeam(String nomeTeam) {
         this.nomeTeam = nomeTeam;
     }
-    
+
     public Utente getUtente(){
         return utente;
     }
-    
+
     private void setUtente(Utente utente){
         this.utente = utente;
     }
