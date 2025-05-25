@@ -12,3 +12,6 @@
 2. Avviare l'applicativo come citato sopra
 
 Ovviamente questo procedimento è solo temporaneo in quanto al momento non è presente un sistema di persistenza dei dati da cui ricavare l'utente che ha effettuato l'accesso.
+
+## Git Repository
+https://github.com/Assandre17/OOProject
