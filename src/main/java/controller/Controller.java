@@ -16,9 +16,10 @@ public class Controller {
 
         System.out.println("accesso in corso...");
 
-        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Giudice.
+        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Partecipante.
 
         createMockUtente();
+        //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
         return new Partecipante();
     }
 
