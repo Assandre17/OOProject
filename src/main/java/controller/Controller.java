@@ -41,7 +41,7 @@ public class Controller {
 
 
     }
-    public void invitaPartecipanti(List<Partecipante> partecipanti, Team team){
+    private void invitaPartecipanti(List<Partecipante> partecipanti, Team team){
         System.out.println("invitaPartecipanti in corso...");
         partecipanti.forEach(partecipante -> {
             Invito invito = new Invito();
