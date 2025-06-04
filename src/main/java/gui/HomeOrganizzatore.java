@@ -15,11 +15,12 @@ public class HomeOrganizzatore {
     private Controller controller;
 
     public HomeOrganizzatore(Controller controller) {
-        controller = new Controller();
+        this.controller = controller; //invece di controller=new Controller();
         this.homeOrganizzatoreFrame = new JFrame("HomeOrganizzatore");
         homeOrganizzatoreFrame.setContentPane(panel1);
         homeOrganizzatoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         homeOrganizzatoreFrame.pack();
+        homeOrganizzatoreFrame.setVisible(true); //appena aggiunta
         vediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

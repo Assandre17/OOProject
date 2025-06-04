@@ -2,19 +2,29 @@ package main.java.gui;
 
 import main.java.controller.Controller;
 import main.java.model.Hackathon;
+import main.java.model.Invito;
+import main.java.model.Partecipante;
+import main.java.model.Team;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static main.java.utils.Utils.COLONNE_LISTA_HACKATHON;
+import static main.java.utils.Utils.COLONNE_LISTA_INVITI;
 
 
 public class HackathonCreatiOrganizzatore {
-
-    private JPanel panel1;
+    private JPanel panel1 = new JPanel(); // proviamo a inizializzarlo
     private JTable table1;
     private JButton dettaglioButton;
+    private JButton tornaAllaHomeButton;
     public JFrame listaHackathonCFrame;
     public JFrame homeOrganizzatoreFrame;
     public DefaultTableModel listaHackathonCModel;
@@ -24,95 +34,66 @@ public class HackathonCreatiOrganizzatore {
 
     public HackathonCreatiOrganizzatore(JFrame homeOrganizzatoreFrame){//, Controller controller) {
     this.homeOrganizzatoreFrame = homeOrganizzatoreFrame;
-    this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
     this.controller = controller;
 
-    listaHackathonCFrame.setContentPane(panel1);
-    listaHackathonCFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    listaHackathonCFrame.pack();
+    this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
+    hcoFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
+    hcoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    hcoFrame.pack();
 
-    List<Hackathon> listaHackathon = getMockHackathon();
-    Object[][] datiTable = new Object[listaHackathon.size()][3];
+        List<Hackathon> listaHackathon = getMockHackathon();
 
-    for (int i = 0; i < listaHackathon.size(); i++) {
-        datiTable[i][0] = i + 1; // numero progressivo hackathon
-        datiTable[i][1] = listaHackathon.get(i).getNome();
-        datiTable[i][2] = "Vedi";
-    }
+        Object[][] datiTable = new Object[listaHackathon.size()][3];
 
-    DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, new String[]{"ID", "Nome", "Azione"}) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return column == 2;
+        for (int i = 0; i < listaHackathon.size(); i++) {
+            datiTable[i][0] = listaHackathon.get(i).getId();
+            datiTable[i][1] = listaHackathon.get(i).getNome();
+            datiTable[i][2] = listaHackathon.get(i).getDescrizione();
         }
-    };
-    this.listaHackathonCModel = tabellaHackathon;
-    table1.setModel(tabellaHackathon);
 
-    table1.getColumn("Azione").setCellRenderer(new ButtonRenderer());
-    table1.getColumn("Azione").setCellEditor(new ButtonEditor(listaHackathon));
 
-    listaHackathonCFrame.setVisible(true);
-}
+        DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, COLONNE_LISTA_HACKATHON) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0 -> Long.class;
+                    default -> String.class;
+                };
+            }
 
-class ButtonRenderer extends JButton implements TableCellRenderer {
-    public ButtonRenderer() {
-        setText("Vedi");
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };
+
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homeOrganizzatoreFrame.setVisible(true);
+                hcoFrame.setVisible(false);
+                hcoFrame.dispose();
+            }
+        });
+        table1.setModel(tabellaHackathon);
     }
 
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected, boolean hasFocus,
-                                                   int row, int column) {
-        return this;
+    private List<Hackathon> getMockHackathon() {
+        Hackathon hackathon1 = new Hackathon();
+        hackathon1.setId(1L);
+        hackathon1.setNome("Hackathon1");
+        hackathon1.setDescrizione("Questo è Hackathon1");
+
+        Hackathon hackathon2 = new Hackathon();
+        hackathon2.setId(2L);
+        hackathon2.setNome("Hackathon2");
+        hackathon2.setDescrizione("Questo è Hackathon2");
+
+        List<Hackathon> listaHackathon = new ArrayList<>();
+        listaHackathon.add(hackathon1);
+        listaHackathon.add(hackathon2);
+        return listaHackathon;
     }
-}
-
-class ButtonEditor extends DefaultCellEditor {
-    private JButton button;
-    private boolean clicked;
-    private Hackathon selectedHackathon;
-    private List<Hackathon> hackathonList;
-
-    public ButtonEditor(List<Hackathon> hackathonList) {
-        super(new JTextField()); // niente checkbox
-        this.hackathonList = hackathonList;
-        button = new JButton("Vedi");
-        button.addActionListener(e -> fireEditingStopped());
-    }
-
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value,
-                                                 boolean isSelected, int row, int col) {
-        selectedHackathon = hackathonList.get(row);
-        clicked = true;
-        return button;
-    }
-
-    @Override
-    public Object getCellEditorValue() {
-        if (clicked) {
-            JOptionPane.showMessageDialog(button,
-                "Dettagli Hackathon:\nNome: " + selectedHackathon.getNome());
-        }
-        clicked = false;
-        return "Vedi";
-    }
-
-    @Override
-    public boolean stopCellEditing() {
-        clicked = false;
-        return super.stopCellEditing();
-    }
-}
-
-private List getMockHackathon() {
-    Hackathon h1 = new Hackathon();
-    Hackathon h2 = new Hackathon();
-    h1.setNome("Hackathon 1");
-    h2.setNome("Hackathon 2");
-    return List.of(h1, h2);
-}
 
 
 
@@ -131,14 +112,19 @@ private List getMockHackathon() {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1 = new JPanel();
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("Lista Hackathon creati dall'organizzatore:");
-        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        label1.setText("LISTA HACKATHON");
+        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         table1 = new JTable();
-        panel1.add(table1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        JScrollPane scrollPane = new JScrollPane(table1);
+        panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        tornaAllaHomeButton = new JButton();
+        tornaAllaHomeButton.setText("torna alla home");
+        panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 }

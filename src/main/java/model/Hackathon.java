@@ -2,6 +2,7 @@ package main.java.model;
 import java.time.LocalDate;
 
 public class Hackathon {
+    private Long id;
     private String nome;
     private String sede;
     private LocalDate dataInizio;
@@ -12,6 +13,8 @@ public class Hackathon {
     private LocalDate fineiscrizioni;
     private String descrizione;
 
+    public void setId(Long id) {this.id = id;}
+    public Long getId() {return id;}
     public void setNome(String nome) {this.nome = nome;}
     public String getNome() {return nome;}
     public void setSede(String sede) {
