@@ -21,14 +21,17 @@ public class HackathonCreatiOrganizzatore {
     private JButton dettaglioButton;
     private JButton tornaAllaHomeButton;
     public JFrame listaHackathonCFrame;
-    public JFrame homeOrganizzatoreFrame;
+    public JFrame homeUtenteFrame;
     public DefaultTableModel listaHackathonCModel;
     private Controller controller;
+    private ActionButton actionButton;
     public JFrame hcoFrame;
 
-    public HackathonCreatiOrganizzatore(JFrame homeOrganizzatoreFrame, Controller controller) {
-    this.homeOrganizzatoreFrame = homeOrganizzatoreFrame;
+    public HackathonCreatiOrganizzatore(JFrame homeUtenteFrame, Controller controller) {
+    this.homeUtenteFrame = homeUtenteFrame;
     this.controller = controller;
+    this.actionButton = controller.getActionButton();
+    this.dettaglioButton.setText(controller.getNomeButton());
 
     this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
     hcoFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
@@ -64,7 +67,7 @@ public class HackathonCreatiOrganizzatore {
         tornaAllaHomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homeOrganizzatoreFrame.setVisible(true);
+                homeUtenteFrame.setVisible(true);
                 hcoFrame.setVisible(false);
                 hcoFrame.dispose();
             }
@@ -76,8 +79,7 @@ public class HackathonCreatiOrganizzatore {
                 int riga = table1.getSelectedRow();
                 Long id = Long.parseLong(table1.getValueAt(riga, 0).toString());
                 controller.setIdHackathon(id);
-                DettagliHackathon dettagliHackathon = new DettagliHackathon(controller);
-                dettagliHackathon.dettaglioFrame.setVisible(true);
+                actionButton.doAction();
                 hcoFrame.setVisible(false);
                 hcoFrame.dispose();
             }
@@ -131,7 +133,6 @@ public class HackathonCreatiOrganizzatore {
         JScrollPane scrollPane = new JScrollPane(table1);
         panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         dettaglioButton = new JButton();
-        dettaglioButton.setText("Vedi Dettaglio");
         panel1.add(dettaglioButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tornaAllaHomeButton = new JButton();
         tornaAllaHomeButton.setText("torna alla home");

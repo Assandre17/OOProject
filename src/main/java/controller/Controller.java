@@ -2,12 +2,16 @@ package main.java.controller;
 import javax.swing.*;
 import java.nio.file.Path;
 import java.util.*;
+
+import main.java.gui.ActionButton;
 import main.java.model.*;
 
 public class Controller {
     private String nomeTeam;
     private Utente utente;
     private Long idHackathon;
+    private ActionButton actionButton;
+    private String nomeButton;
 
     public Long getIdHackathon() {
         return idHackathon;
@@ -25,7 +29,7 @@ public class Controller {
 
         System.out.println("accesso in corso...");
 
-        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla. Al momento il ritorno è mockato con Partecipante.
+        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla.
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
@@ -39,7 +43,10 @@ public class Controller {
         setUtente(utente);
     }
 
-    public void iscriviti(){}
+    public void iscriviti(){
+        System.out.println("iscriviti");
+
+    }
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){
         Team team = new Team();
         team.setPartecipanti(listaPartecipanti);
@@ -103,5 +110,21 @@ public class Controller {
 
     private void setUtente(Utente utente){
         this.utente = utente;
+    }
+
+    public ActionButton getActionButton() {
+        return actionButton;
+    }
+
+    public void setActionButton(ActionButton actionButton) {
+        this.actionButton = actionButton;
+    }
+
+    public String getNomeButton() {
+        return nomeButton;
+    }
+
+    public void setNomeButton(String nomeButton) {
+        this.nomeButton = nomeButton;
     }
 }

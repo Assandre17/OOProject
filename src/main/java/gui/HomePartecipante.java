@@ -12,6 +12,7 @@ public class HomePartecipante {
     private JButton creaTeamButton;
     private JButton gestioneInvitiButton;
     private JButton inviaRichiestaButton;
+    private JButton iscrivitiAdHackathonButton;
     public JFrame homePartecipanteFrame;
     private Controller controller;
 
@@ -51,6 +52,25 @@ public class HomePartecipante {
 
             }
         });
+
+        iscrivitiAdHackathonButton.addActionListener(new ActionListener() {
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    controller.iscriviti();
+                    homePartecipanteFrame.setVisible(true);
+                }
+            };
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Iscriviti");
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                homePartecipanteFrame.setVisible(false);
+
+            }
+        });
     }
 
 
@@ -81,7 +101,7 @@ public class HomePartecipante {
         label1.setText("PARTECIPANTE");
         panel3.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         creaTeamButton = new JButton();
         creaTeamButton.setText("Crea Team");
@@ -92,6 +112,9 @@ public class HomePartecipante {
         gestioneInvitiButton = new JButton();
         gestioneInvitiButton.setText("Gestione Inviti");
         panel4.add(gestioneInvitiButton, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        iscrivitiAdHackathonButton = new JButton();
+        iscrivitiAdHackathonButton.setText("Iscriviti ad Hackathon");
+        panel4.add(iscrivitiAdHackathonButton, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

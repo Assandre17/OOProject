@@ -2,7 +2,6 @@ package main.java.model;
 
 import main.java.controller.Controller;
 import main.java.gui.HomeOrganizzatore;
-import main.java.gui.HomePartecipante;
 
 import javax.swing.*;
 

@@ -22,8 +22,18 @@ public class HomeOrganizzatore {
         homeOrganizzatoreFrame.pack();
         homeOrganizzatoreFrame.setVisible(true); //appena aggiunta
         vediButton.addActionListener(new ActionListener() {
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller);
+                    dettagliHackathon.dettaglioFrame.setVisible(true);
+                }
+            };
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Vedi dettaglio");
                 HackathonCreatiOrganizzatore hco = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
                 hco.hcoFrame.setVisible(true);
                 homeOrganizzatoreFrame.setVisible(false);
