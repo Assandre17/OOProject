@@ -30,7 +30,6 @@ public class GestioneInvitiPartecipante {
 
 
     public GestioneInvitiPartecipante(JFrame homePartecipanteFrame, Controller controller) {
-
         this.homePartecipanteFrame = homePartecipanteFrame;
         this.gestioneInvitiPartecipanteFrame = new JFrame("GestioneInvitiPartecipante");
         this.controller = controller;
@@ -108,14 +107,10 @@ public class GestioneInvitiPartecipante {
                 homePartecipanteFrame.setVisible(true);
                 gestioneInvitiPartecipanteFrame.setVisible(false);
                 gestioneInvitiPartecipanteFrame.dispose();
-
-
             }
         });
         table1.setModel(tabellaInviti);
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-
     }
 
     private List<Invito> getMockInviti() {
@@ -137,7 +132,6 @@ public class GestioneInvitiPartecipante {
         listaInviti.add(invito1);
         listaInviti.add(invito2);
         return listaInviti;
-
     }
 
 
@@ -176,8 +170,6 @@ public class GestioneInvitiPartecipante {
         tornaAllaHomeButton = new JButton();
         tornaAllaHomeButton.setText("torna alla home");
         panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-
-
     }
 
     /**

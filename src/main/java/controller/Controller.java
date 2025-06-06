@@ -7,6 +7,15 @@ import main.java.model.*;
 public class Controller {
     private String nomeTeam;
     private Utente utente;
+    private Long idHackathon;
+
+    public Long getIdHackathon() {
+        return idHackathon;
+    }
+
+    public void setIdHackathon(Long idHackathon) {
+        this.idHackathon = idHackathon;
+    }
 
     public Hackathon creaHackathon(){return new Hackathon();}
     public void invitaGiudice(Giudice giudice){}
@@ -20,7 +29,7 @@ public class Controller {
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Partecipante();
+        return new Organizzatore();
     }
 
 
