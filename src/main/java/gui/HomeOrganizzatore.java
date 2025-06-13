@@ -25,7 +25,8 @@ public class HomeOrganizzatore {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller);
+                    HackathonCreatiOrganizzatore hco = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hco.hcoFrame);
                     dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
