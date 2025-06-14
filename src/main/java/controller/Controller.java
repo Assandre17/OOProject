@@ -33,12 +33,12 @@ public class Controller {
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Organizzatore();
+        return new Giudice();
     }
 
 
     private void createMockUtente() {
-        Partecipante utente = new Partecipante("Pippo", "Pluto");
+        Giudice utente = new Giudice("Pippo", "Pluto");
         utente.setEmail("prova@prova.it");
         setUtente(utente);
     }
@@ -88,7 +88,12 @@ public class Controller {
 
 
     }
-    public String pubblicaProblema(){return "";}
+    public String pubblicaProblema(String problema, Long idHackathon){
+        System.out.println("pubblica problema in corso...");
+
+        return "";
+
+    }
     public int assegnaVoto(){return 0;}
     public Documento pubblicaDocumento(Documento documento){return null;}
     public void stampaClassifica(HashMap<String,Integer> classifica){}

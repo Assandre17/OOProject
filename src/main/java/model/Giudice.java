@@ -17,7 +17,7 @@ public class Giudice extends Utente {
 
     @Override
     public void apriFinestra(JFrame frameChiamante, Controller controller){
-        HomeGiudice homePartecipante = new HomeGiudice();
+        HomeGiudice homePartecipante = new HomeGiudice(controller);
         homePartecipante.homeGiudiceFrame.setVisible(true);
         frameChiamante.setVisible(false);
         frameChiamante.dispose();
