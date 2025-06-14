@@ -34,6 +34,7 @@ public class PubblicaProblema {
                 }
 
                 controller.pubblicaProblema(problema, controller.getIdHackathon());
+                JOptionPane.showMessageDialog(panel1, "Problema pubblicato!");
                 HomeGiudice homeGiudice = new HomeGiudice(controller);
                 homeGiudice.homeGiudiceFrame.setVisible(true);
                 pubblicaProblemaFrame.setVisible(false);

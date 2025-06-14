@@ -10,6 +10,7 @@ public class Controller {
     private String nomeTeam;
     private Utente utente;
     private Long idHackathon;
+    private Long idTeam;
     private ActionButton actionButton;
     private String nomeButton;
 
@@ -35,12 +36,12 @@ public class Controller {
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Organizzatore();
+        return new Giudice();
     }
 
 
     private void createMockUtente() {
-        Organizzatore utente = new Organizzatore("Pippo", "Pluto");
+        Giudice utente = new Giudice("Pippo", "Pluto");
         utente.setEmail("prova@prova.it");
         setUtente(utente);
     }
@@ -96,7 +97,12 @@ public class Controller {
         return "";
 
     }
-    public int assegnaVoto(){return 0;}
+    public int assegnaVoto(Voto voto, Long idTeam){
+        System.out.println("pubblica voto in corso...");
+        return 0;
+    }
+
+
     public Documento pubblicaDocumento(Documento documento){return null;}
     public void stampaClassifica(HashMap<String,Integer> classifica){}
     /*classifica l'ho pensata come una Map cosi che si possa
@@ -133,5 +139,13 @@ public class Controller {
 
     public void setNomeButton(String nomeButton) {
         this.nomeButton = nomeButton;
+    }
+
+    public Long getIdTeam() {
+        return idTeam;
+    }
+
+    public void setIdTeam(Long idTeam) {
+        this.idTeam = idTeam;
     }
 }

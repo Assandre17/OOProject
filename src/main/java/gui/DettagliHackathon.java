@@ -55,10 +55,19 @@ public class DettagliHackathon {
             });
 
             assegnaVotoButton.addActionListener(new ActionListener() {
+                final ActionButton actionButton = new ActionButton() {
+                    @Override
+                    public void doAction() {
+                        AssegnaVoto assegnaVoto = new AssegnaVoto(controller);
+                        assegnaVoto.assegnaVotoFrame.setVisible(true);
+                    }
+                };
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    PubblicaProblema pubblicaProblema = new PubblicaProblema(controller,dettaglioFrame);
-                    pubblicaProblema.pubblicaProblemaFrame.setVisible(true);
+                    controller.setActionButton(actionButton);
+                    controller.setNomeButton("Assegna Voto");
+                    InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(dettaglioFrame, controller);
+                    inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
                     dettaglioFrame.setVisible(false);
                     dettaglioFrame.dispose();
                 }

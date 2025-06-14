@@ -20,21 +20,24 @@ public class InviaRichiestaPartecipante {
     private JPanel panel1;
     private JTable table1;
     public JFrame inviaRichiestaPartecipanteFrame;
-    public JFrame homePartecipanteFrame;
+    public JFrame mittenteFrame;
     private Controller controller;
     private JButton inviaRichiestaButton;
-    private JButton tornaAllaHomeButton;
+    private JButton tornaIndietroButton;
+    private ActionButton actionButton;
 
 
 
-    public InviaRichiestaPartecipante(JFrame homePartecipanteFrame, Controller controller) {
+    public InviaRichiestaPartecipante(JFrame mittenteFrame, Controller controller) {
 
-        this.homePartecipanteFrame = homePartecipanteFrame;
+        this.mittenteFrame = mittenteFrame;
         this.inviaRichiestaPartecipanteFrame = new JFrame("InviaRichiestaPartecipante");
         this.controller = controller;
         inviaRichiestaPartecipanteFrame.setContentPane(panel1);
         inviaRichiestaPartecipanteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         inviaRichiestaPartecipanteFrame.pack();
+        this.actionButton = controller.getActionButton();
+        this.inviaRichiestaButton.setText(controller.getNomeButton());
 
         List<Team> listaTeam = getMockTeam();
 
@@ -70,20 +73,23 @@ public class InviaRichiestaPartecipante {
                     return;
                 }
                 Long idTeam = (Long) table1.getValueAt(rigaSelezionata, 0);
-                Optional<Team> teamRichiesto = listaTeam.stream()
-                        .filter(Team -> Team.getId().equals(idTeam))
-                        .findFirst();
-                if (teamRichiesto.isPresent()) {
-                    controller.richiestaIngressoTeam((Partecipante) controller.getUtente(),teamRichiesto.get());
-                    JOptionPane.showMessageDialog(panel1, "Richiesta d'ingresso inviata");
+                controller.setIdTeam(idTeam);
+
+                if(inviaRichiestaButton.getText().equals("Invia richiesta")) {
+                    inviaRichiestaIngressoTeam(idTeam,listaTeam);
                 }
+
+                actionButton.doAction();
+                inviaRichiestaPartecipanteFrame.setVisible(false);
+                inviaRichiestaPartecipanteFrame.dispose();
+
             }
         });
 
-        tornaAllaHomeButton.addActionListener(new ActionListener() {
+        tornaIndietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePartecipanteFrame.setVisible(true);
+                mittenteFrame.setVisible(true);
                 inviaRichiestaPartecipanteFrame.setVisible(false);
                 inviaRichiestaPartecipanteFrame.dispose();
 
@@ -94,6 +100,21 @@ public class InviaRichiestaPartecipante {
         table1.setModel(tabellaTeam);
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+
+    }
+
+    private void inviaRichiestaIngressoTeam(Long idTeam, List<Team> listaTeam){
+        Optional<Team> teamRichiesto = listaTeam.stream()
+                .filter(Team -> Team.getId().equals(idTeam))
+                .findFirst();
+
+        this.actionButton = new ActionButton() {
+            @Override
+            public void doAction() {
+                controller.richiestaIngressoTeam((Partecipante) controller.getUtente(),teamRichiesto.get());
+                JOptionPane.showMessageDialog(panel1, "Richiesta d'ingresso inviata");
+            }
+        };
 
     }
 
@@ -141,9 +162,9 @@ public class InviaRichiestaPartecipante {
         inviaRichiestaButton = new JButton();
         inviaRichiestaButton.setText("Invia richiesta");
         panel1.add(inviaRichiestaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tornaAllaHomeButton = new JButton();
-        tornaAllaHomeButton.setText("torna alla home");
-        panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tornaIndietroButton = new JButton();
+        tornaIndietroButton.setText("Torna indietro");
+        panel2.add(tornaIndietroButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
     }
 

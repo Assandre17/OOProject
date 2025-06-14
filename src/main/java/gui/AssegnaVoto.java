@@ -1,18 +1,61 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
+import main.java.model.Voto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class AssegnaVoto {
     private JPanel panel1;
-    private JFrame assegnaVotoFrame;
+    private JLabel AssegnaVotoTeamLabel;
+    private JComboBox comboBox1;
+    private JTextArea textArea1;
+    private JButton pubblicaVotoButton;
+    private JButton tornaAllaHomeButton;
+    public JFrame assegnaVotoFrame;
     private Controller controller;
 
 
     public AssegnaVoto(Controller controller) {
+        System.out.println("ID TEAM: "+controller.getIdTeam());
         this.controller = controller;
+        this.assegnaVotoFrame = new JFrame("AssegnaVoto");
+        assegnaVotoFrame.setContentPane(panel1);
+        assegnaVotoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        assegnaVotoFrame.pack();
+
+        pubblicaVotoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int valutazione = Integer.parseInt(Objects.requireNonNull(comboBox1.getSelectedItem()).toString());
+                String commento = textArea1.getText();
+                Voto voto = new Voto(valutazione,commento);
+                controller.assegnaVoto(voto,controller.getIdTeam());
+
+                JOptionPane.showMessageDialog(panel1, "Voto pubblicato!");
+                HomeGiudice homeGiudice = new HomeGiudice(controller);
+                homeGiudice.homeGiudiceFrame.setVisible(true);
+                assegnaVotoFrame.setVisible(false);
+                assegnaVotoFrame.dispose();
+
+            }
+        });
+
+
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HomeGiudice homeGiudice = new HomeGiudice(controller);
+                homeGiudice.homeGiudiceFrame.setVisible(true);
+                assegnaVotoFrame.setVisible(false);
+                assegnaVotoFrame.dispose();
+
+            }
+        });
 
 
     }
@@ -33,7 +76,43 @@ public class AssegnaVoto {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
+        AssegnaVotoTeamLabel = new JLabel();
+        AssegnaVotoTeamLabel.setText("Assegna Voto Team");
+        panel1.add(AssegnaVotoTeamLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Voto");
+        panel2.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        comboBox1 = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("1");
+        defaultComboBoxModel1.addElement("2");
+        defaultComboBoxModel1.addElement("3");
+        defaultComboBoxModel1.addElement("4");
+        defaultComboBoxModel1.addElement("5");
+        defaultComboBoxModel1.addElement("6");
+        defaultComboBoxModel1.addElement("7");
+        defaultComboBoxModel1.addElement("8");
+        defaultComboBoxModel1.addElement("9");
+        defaultComboBoxModel1.addElement("10");
+        comboBox1.setModel(defaultComboBoxModel1);
+        panel2.add(comboBox1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Commento");
+        panel2.add(label2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        textArea1 = new JTextArea();
+        panel2.add(textArea1, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        pubblicaVotoButton = new JButton();
+        pubblicaVotoButton.setText("Pubblica voto");
+        panel1.add(pubblicaVotoButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tornaAllaHomeButton = new JButton();
+        tornaAllaHomeButton.setText("Torna alla Home");
+        panel1.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -42,4 +121,5 @@ public class AssegnaVoto {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }

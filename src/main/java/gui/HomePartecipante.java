@@ -36,6 +36,7 @@ public class HomePartecipante {
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.setNomeButton("Invia richiesta");
                 InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(homePartecipanteFrame, controller);
                 inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);

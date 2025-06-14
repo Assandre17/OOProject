@@ -1,15 +1,23 @@
 package main.java.model;
 
 public class Voto {
-    private int voto;
+    private int valutazione;
     private String commento;
 
-    public int getVoto() {
-        return voto;
+    public Voto() {
     }
 
-    public void setVoto(int voto) {
-        this.voto = voto;
+    public Voto(int valutazione, String commento) {
+        this.valutazione = valutazione;
+        this.commento = commento;
+    }
+
+    public int getValutazione() {
+        return valutazione;
+    }
+
+    public void setValutazione(int valutazione) {
+        this.valutazione = valutazione;
     }
 
     public String getCommento() {
