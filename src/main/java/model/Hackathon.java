@@ -14,19 +14,11 @@ public class Hackathon {
     private LocalDate inizioiscrizioni;
     private LocalDate fineiscrizioni;
     private String descrizione;
-    private DettagliHackathon dettagliHackathon;
 
     public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}
     public void setNome(String nome) {this.nome = nome;}
     public String getNome() {return nome;}
-    public void setDettagliHackathon(DettagliHackathon dettagliHackathon) {
-        this.dettagliHackathon = dettagliHackathon;
-    }
-    public DettagliHackathon getDettagliHackathon() {
-        dettagliHackathon = new DettagliHackathon();
-        return dettagliHackathon;
-    }
     public void setSede(String sede) {this.sede = sede;}
     public String getSede() {return sede;}
     public void setDataInizio(LocalDate dataInizio) {this.dataInizio = dataInizio;}

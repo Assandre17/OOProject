@@ -5,6 +5,7 @@ import java.util.List;
 public class Team {
     private Long id;
     private String nome;
+    private Voto voto;
     private List<Partecipante> partecipanti;
 
     public Team() {}
@@ -35,5 +36,13 @@ public class Team {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Voto getVoto() {
+        return voto;
+    }
+
+    public void setVoto(Voto voto) {
+        this.voto = voto;
     }
 }

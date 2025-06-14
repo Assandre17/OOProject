@@ -53,6 +53,16 @@ public class DettagliHackathon {
                     dettaglioFrame.dispose();
                 }
             });
+
+            assegnaVotoButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    PubblicaProblema pubblicaProblema = new PubblicaProblema(controller,dettaglioFrame);
+                    pubblicaProblema.pubblicaProblemaFrame.setVisible(true);
+                    dettaglioFrame.setVisible(false);
+                    dettaglioFrame.dispose();
+                }
+            });
         }
 
 
