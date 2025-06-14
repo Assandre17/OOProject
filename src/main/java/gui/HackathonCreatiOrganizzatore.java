@@ -40,13 +40,14 @@ public class HackathonCreatiOrganizzatore {
 
         List<Hackathon> listaHackathon = getMockHackathon();
 
-        Object[][] datiTable = new Object[listaHackathon.size()][3];
+        Object[][] datiTable = new Object[listaHackathon.size()][4];
 
         for (int i = 0; i < listaHackathon.size(); i++) {
             datiTable[i][0] = listaHackathon.get(i).getId();
             datiTable[i][1] = listaHackathon.get(i).getNome();
             datiTable[i][2] = listaHackathon.get(i).getDescrizione();
-        }
+            datiTable[i][3] = listaHackathon.get(i).getDettagliHackathon();
+         }
 
 
         DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, COLONNE_LISTA_HACKATHON) {
@@ -93,11 +94,21 @@ public class HackathonCreatiOrganizzatore {
         hackathon1.setId(1L);
         hackathon1.setNome("Hackathon1");
         hackathon1.setDescrizione("Questo è Hackathon1");
+        DettagliHackathon dettagliHackathon1 = new DettagliHackathon();
+        dettagliHackathon1.setTextField1("dettaglio1");
+        dettagliHackathon1.setTextField2("dettaglio2");
+        dettagliHackathon1.setTextField3("dettaglio3");
+        hackathon1.setDettagliHackathon(new DettagliHackathon());
 
         Hackathon hackathon2 = new Hackathon();
         hackathon2.setId(2L);
         hackathon2.setNome("Hackathon2");
         hackathon2.setDescrizione("Questo è Hackathon2");
+        DettagliHackathon dettagliHackathon2 = new DettagliHackathon();
+        dettagliHackathon2.setTextField1("dettaglio1");
+        dettagliHackathon2.setTextField2("dettaglio2");
+        dettagliHackathon2.setTextField3("dettaglio3");
+        hackathon2.setDettagliHackathon(new DettagliHackathon()); //da ArrayOutOfBoundsException
 
         List<Hackathon> listaHackathon = new ArrayList<>();
         listaHackathon.add(hackathon1);

@@ -1,4 +1,6 @@
 package main.java.model;
+import main.java.gui.DettagliHackathon;
+
 import java.time.LocalDate;
 
 public class Hackathon {
@@ -12,57 +14,33 @@ public class Hackathon {
     private LocalDate inizioiscrizioni;
     private LocalDate fineiscrizioni;
     private String descrizione;
+    private DettagliHackathon dettagliHackathon;
 
     public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}
     public void setNome(String nome) {this.nome = nome;}
     public String getNome() {return nome;}
-    public void setSede(String sede) {
-        this.sede = sede;
+    public void setDettagliHackathon(DettagliHackathon dettagliHackathon) {
+        this.dettagliHackathon = dettagliHackathon;
     }
-    public String getSede() {
-        return sede;
+    public DettagliHackathon getDettagliHackathon() {
+        dettagliHackathon = new DettagliHackathon();
+        return dettagliHackathon;
     }
-    public void setDataInizio(LocalDate dataInizio) {
-        this.dataInizio = dataInizio;
-    }
-    public LocalDate getDataInizio() {
-        return dataInizio;
-    }
-    public void setDataFine(LocalDate dataFine) {
-        this.dataFine = dataFine;
-    }
-    public LocalDate getDataFine() {
-        return dataFine;
-    }
-    public void setNumpartecipanti(int numpartecipanti) {
-        this.numpartecipanti = numpartecipanti;
-    }
-    public int getNumpartecipanti() {
-        return numpartecipanti;
-    }
-    public void setNummaxpartecipanti(int nummaxpartecipanti) {
-        this.nummaxpartecipanti = nummaxpartecipanti;
-    }
-    public int getNummaxpartecipanti() {
-        return nummaxpartecipanti;
-    }
-    public void setInizioiscrizioni() {
-        this.inizioiscrizioni = LocalDate.now();
-    }
-    public LocalDate getInizioiscrizioni() {
-        return inizioiscrizioni;
-    }
-    public void setFineiscrizioni() {
-        this.fineiscrizioni = LocalDate.now();
-    }
-    public LocalDate getFineiscrizioni() {
-        return fineiscrizioni;
-    }
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-    public String getDescrizione() {
-        return descrizione;
-    }
+    public void setSede(String sede) {this.sede = sede;}
+    public String getSede() {return sede;}
+    public void setDataInizio(LocalDate dataInizio) {this.dataInizio = dataInizio;}
+    public LocalDate getDataInizio() {return dataInizio;}
+    public void setDataFine(LocalDate dataFine) {this.dataFine = dataFine;}
+    public LocalDate getDataFine() {return dataFine;}
+    public void setNumpartecipanti(int numpartecipanti) {this.numpartecipanti = numpartecipanti;}
+    public int getNumpartecipanti() {return numpartecipanti;}
+    public void setNummaxpartecipanti(int nummaxpartecipanti) {this.nummaxpartecipanti = nummaxpartecipanti;}
+    public int getNummaxpartecipanti() {return nummaxpartecipanti;}
+    public void setInizioiscrizioni() {this.inizioiscrizioni = LocalDate.now();}
+    public LocalDate getInizioiscrizioni() {return inizioiscrizioni;}
+    public void setFineiscrizioni() {this.fineiscrizioni = LocalDate.now();}
+    public LocalDate getFineiscrizioni() {return fineiscrizioni;}
+    public void setDescrizione(String descrizione) {this.descrizione = descrizione;}
+    public String getDescrizione() {return descrizione;}
 }

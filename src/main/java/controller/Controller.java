@@ -33,12 +33,12 @@ public class Controller {
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Giudice();
+        return new Partecipante();
     }
 
 
     private void createMockUtente() {
-        Giudice utente = new Giudice("Pippo", "Pluto");
+        Partecipante utente = new Partecipante("Pippo", "Pluto");
         utente.setEmail("prova@prova.it");
         setUtente(utente);
     }

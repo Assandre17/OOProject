@@ -20,7 +20,6 @@ public class Login {
     private JPasswordField passwordField;
     private JButton accediButton;
     private JButton tornaAllaHomeButton;
-
     public JFrame loginFrame;
     private JFrame welcomeFrame;
     private Controller controller;
