@@ -7,6 +7,7 @@ public class Team {
     private String nome;
     private Voto voto;
     private List<Partecipante> partecipanti;
+    private Hackathon hackathon;
 
     public Team() {}
 
@@ -44,5 +45,13 @@ public class Team {
 
     public void setVoto(Voto voto) {
         this.voto = voto;
+    }
+
+    public Hackathon getHackathon() {
+        return hackathon;
+    }
+
+    public void setHackathon(Hackathon hackathon) {
+        this.hackathon = hackathon;
     }
 }

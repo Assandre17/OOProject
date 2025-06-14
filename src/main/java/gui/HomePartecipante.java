@@ -1,6 +1,7 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
+import main.java.model.Partecipante;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,24 +25,50 @@ public class HomePartecipante {
         homePartecipanteFrame.pack();
 
         creaTeamButton.addActionListener(new ActionListener() {
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame);
+                    creaTeam.creaTeamFrame.setVisible(true);
+                }
+            };
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame);
-                creaTeam.creaTeamFrame.setVisible(true);
+                if(controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente())){
+                    JOptionPane.showMessageDialog(panel1, "Non puoi creare un team in quanto già sei presente in un altro team!");
+                    return;
+                }
+
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Avanti");
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
         });
 
         inviaRichiestaButton.addActionListener(new ActionListener() {
+
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    controller.setNomeButton("Invia richiesta");
+                    HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                    InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(hackathonCreatiOrganizzatore.hcoFrame, controller);
+                    inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                }
+            };
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.setNomeButton("Invia richiesta");
-                InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(homePartecipanteFrame, controller);
-                inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Avanti");
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
+
         });
 
         gestioneInvitiButton.addActionListener(new ActionListener() {

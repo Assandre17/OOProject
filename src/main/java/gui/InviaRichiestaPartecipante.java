@@ -77,6 +77,7 @@ public class InviaRichiestaPartecipante {
 
                 if(inviaRichiestaButton.getText().equals("Invia richiesta")) {
                     inviaRichiestaIngressoTeam(idTeam,listaTeam);
+                    mittenteFrame.setVisible(true);
                 }
 
                 actionButton.doAction();

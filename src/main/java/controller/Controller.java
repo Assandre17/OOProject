@@ -108,6 +108,11 @@ public class Controller {
     /*classifica l'ho pensata come una Map cosi che si possa
     facilmente ordinare in base al voto assegnato dal giudice*/
 
+    public boolean checkPartecipanteHaveTeam(Partecipante partecipante){
+        //TODO: verificare se il partecipante è già in un team. La verifica verrà fatta lato DB
+        return false;
+    }
+
 
     public String getNomeTeam() {
         return nomeTeam;

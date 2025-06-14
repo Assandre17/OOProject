@@ -1,6 +1,7 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
+import main.java.model.Hackathon;
 import main.java.model.Invito;
 import main.java.model.Partecipante;
 import main.java.model.Team;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static main.java.utils.Utils.COLONNE_LISTA_INVITI;
-import static main.java.utils.Utils.COLONNE_LISTA_PARTECIPANTI;
 
 public class GestioneInvitiPartecipante {
     private JPanel panel1;
@@ -45,6 +45,7 @@ public class GestioneInvitiPartecipante {
             datiTable[i][0] = listaInviti.get(i).getId();
             datiTable[i][1] = listaInviti.get(i).getTeam().getNome();
             datiTable[i][2] = listaInviti.get(i).getPartecipanteInvitato().getEmail();
+            datiTable[i][3] = listaInviti.get(i).getTeam().getHackathon().getNome();
         }
 
 
@@ -114,16 +115,22 @@ public class GestioneInvitiPartecipante {
     }
 
     private List<Invito> getMockInviti() {
+        Hackathon hackathon = new Hackathon();
+        hackathon.setNome("Hackathon 1");
+        Team team = new Team("Team 1");
+        team.setHackathon(hackathon);
         Invito invito1 = new Invito();
         invito1.setId(1L);
-        invito1.setTeam(new Team("team1"));
+        invito1.setTeam(team);
         Partecipante partecipante1 = new Partecipante("Marco", "Rossi");
         partecipante1.setEmail("prova@prova.it");
         invito1.setPartecipanteInvitato(partecipante1);
 
+        Team team2 = new Team("Team 2");
+        team2.setHackathon(hackathon);
         Invito invito2 = new Invito();
         invito2.setId(2L);
-        invito2.setTeam(new Team("team2"));
+        invito2.setTeam(team2);
         Partecipante partecipante2 = new Partecipante("Pippo", "Pluto");
         partecipante2.setEmail("prova1@prova1.it");
         invito2.setPartecipanteInvitato(partecipante2);
