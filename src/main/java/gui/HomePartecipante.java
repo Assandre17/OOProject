@@ -53,6 +53,7 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
+                    //INVIA RICHIESTA DI ACCESSO A UN TEAM
                     controller.setNomeButton("Invia richiesta");
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
                     InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(hackathonCreatiOrganizzatore.hcoFrame, controller);
