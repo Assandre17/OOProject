@@ -21,7 +21,9 @@ public class Controller {
         this.idHackathon = idHackathon;
     }
 
-    public Hackathon creaHackathon(){return new Hackathon();}
+    public Hackathon creaHackathon(){
+        System.out.println("creazione Hackathon in corso...");
+        return new Hackathon();}
     public void invitaGiudice(Giudice giudice){}
     public void apriRegistrazioni(){}
     public void registrati(){}

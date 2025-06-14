@@ -40,6 +40,14 @@ public class HomeOrganizzatore {
                 homeOrganizzatoreFrame.setVisible(false);
             }
         });
+        creaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CreaHackathon creaHackathon = new CreaHackathon(controller, homeOrganizzatoreFrame);
+                creaHackathon.creaFrame.setVisible(true);
+                homeOrganizzatoreFrame.setVisible(false);
+            }
+        });
     }
 
     {
