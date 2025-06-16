@@ -1,44 +1,53 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
+import main.java.model.Documento;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
-public class PubblicaProblema {
+public class Pubblicazione {
     private JPanel panel1;
     private JLabel descrizioneProblemaLabel;
     private JTextPane textPane1;
     private JButton pubblicaButton;
     private JButton tornaIndietroButton;
-    public JFrame pubblicaProblemaFrame;
+    public JFrame pubblicazioneFrame;
     private Controller controller;
+    private ActionButton actionButton;
 
-    public PubblicaProblema(Controller controller, JFrame dettaglioFrame) {
-        pubblicaProblemaFrame = new JFrame("PubblicaProblema");
+    public Pubblicazione(Controller controller, JFrame mittenteFrame) {
+        pubblicazioneFrame = new JFrame("Pubblicazione");
         this.controller = controller;
-        pubblicaProblemaFrame.setContentPane(panel1);
-        pubblicaProblemaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pubblicaProblemaFrame.pack();
+        pubblicazioneFrame.setContentPane(panel1);
+        pubblicazioneFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pubblicazioneFrame.pack();
+        this.actionButton = controller.getActionButton();
+        this.pubblicaButton.setText(controller.getNomeButton());
 
 
         pubblicaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String problema = textPane1.getText();
+                String descrizione = textPane1.getText();
 
-                if (checkProblemaIsEmpty(problema)) {
+                if (checkDescrizioneIsEmpty(descrizione)) {
                     return;
                 }
 
-                controller.pubblicaProblema(problema, controller.getIdHackathon());
-                JOptionPane.showMessageDialog(panel1, "Problema pubblicato!");
-                HomeGiudice homeGiudice = new HomeGiudice(controller);
-                homeGiudice.homeGiudiceFrame.setVisible(true);
-                pubblicaProblemaFrame.setVisible(false);
-                pubblicaProblemaFrame.dispose();
+                if (pubblicaButton.getText().equals("Pubblica Problema")) {
+                    pubblicaProblema(descrizione);
+                } else {
+                    pubblicaProgresso(descrizione);
+                }
+
+                actionButton.doAction();
+
+                pubblicazioneFrame.setVisible(false);
+                pubblicazioneFrame.dispose();
 
             }
         });
@@ -46,18 +55,45 @@ public class PubblicaProblema {
         tornaIndietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dettaglioFrame.setVisible(true);
-                pubblicaProblemaFrame.setVisible(false);
-                pubblicaProblemaFrame.dispose();
+                mittenteFrame.setVisible(true);
+                pubblicazioneFrame.setVisible(false);
+                pubblicazioneFrame.dispose();
 
             }
         });
 
     }
 
-    private boolean checkProblemaIsEmpty(String problema) {
+    private void pubblicaProblema(String descrizione) {
+        this.actionButton = new ActionButton() {
+            @Override
+            public void doAction() {
+                controller.pubblicaProblema(descrizione, controller.getIdHackathon());
+                JOptionPane.showMessageDialog(panel1, "Problema pubblicato!");
+                HomeGiudice homeGiudice = new HomeGiudice(controller);
+                homeGiudice.homeGiudiceFrame.setVisible(true);
+            }
+        };
+
+    }
+
+    private void pubblicaProgresso(String descrizione) {
+        Documento documento = new Documento(descrizione, "1.0", LocalDate.now());
+        this.actionButton = new ActionButton() {
+            @Override
+            public void doAction() {
+                controller.pubblicaDocumento(documento);
+                JOptionPane.showMessageDialog(panel1, "Documento pubblicato!");
+                HomePartecipante homePartecipante = new HomePartecipante(controller);
+                homePartecipante.homePartecipanteFrame.setVisible(true);
+            }
+        };
+
+    }
+
+    private boolean checkDescrizioneIsEmpty(String problema) {
         if (problema.isBlank()) {
-            JOptionPane.showMessageDialog(pubblicaProblemaFrame, "Inserisci descrizione problema");
+            JOptionPane.showMessageDialog(pubblicazioneFrame, "Inserisci descrizione!");
             return true;
         }
         return false;
@@ -81,12 +117,12 @@ public class PubblicaProblema {
         panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("Pubblica Problema");
+        label1.setText("Pubblica");
         panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         descrizioneProblemaLabel = new JLabel();
-        descrizioneProblemaLabel.setText("Descrivi il problema:");
+        descrizioneProblemaLabel.setText("Descrizione");
         panel1.add(descrizioneProblemaLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textPane1 = new JTextPane();
         panel1.add(textPane1, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
