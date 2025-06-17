@@ -90,6 +90,7 @@ public class HomePartecipante {
                 @Override
                 public void doAction() {
                     controller.iscriviti();
+                    JOptionPane.showMessageDialog(homePartecipanteFrame, "Iscrizione effettuata con successo!");
                     homePartecipanteFrame.setVisible(true);
                 }
             };
