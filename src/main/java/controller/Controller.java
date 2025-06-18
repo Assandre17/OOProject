@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 import main.java.gui.ActionButton;
+import main.java.gui.ListaGiudici;
 import main.java.model.*;
 
 public class Controller {
@@ -25,7 +26,7 @@ public class Controller {
     public Hackathon creaHackathon(){
         System.out.println("creazione Hackathon in corso...");
         return new Hackathon();}
-    public void invitaGiudice(Giudice giudice){}
+    public void invitaGiudice(List<Giudice> listaGiudici, Long idHackathon) {}
     public void apriRegistrazioni(){}
     public void registrati(){}
     public Utente accedi(String email, String password){
@@ -36,12 +37,12 @@ public class Controller {
 
         createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Giudice();
+        return new Organizzatore();
     }
 
 
     private void createMockUtente() {
-        Giudice utente = new Giudice("Pippo", "Pluto");
+        Organizzatore utente = new Organizzatore("Pippo", "Pluto");
         utente.setEmail("prova@prova.it");
         setUtente(utente);
     }

@@ -1,7 +1,7 @@
 package main.java.gui;
 
 import main.java.controller.Controller;
-import main.java.model.Partecipante;
+import main.java.model.Giudice;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,43 +14,41 @@ import java.util.regex.Pattern;
 
 import static main.java.utils.Utils.COLONNE_LISTA_PARTECIPANTI;
 
-public class ListaPartecipanti {
+public class ListaGiudici {
     private JPanel panel1;
     private JTable table1;
     private JButton invitaButton;
     private JButton tornaAllaHomeButton;
-    public JFrame listaPartecipantiFrame;
-    public JFrame creaTeamFrame;
-    public JFrame homePartecipanteFrame;
-    public DefaultTableModel listaPartecipantiModel;
+    public JFrame listaGiudiciFrame;
+    public JFrame mittenteFrame;
+    public DefaultTableModel listaGiudiciModel;
     private Controller controller;
 
 
-    public ListaPartecipanti(JFrame creaTeamFrame, JFrame homePartecipanteFrame, Controller controller) {
+    public ListaGiudici(JFrame mittenteFrame, Controller controller) {
 
-        this.creaTeamFrame = creaTeamFrame;
-        this.homePartecipanteFrame = homePartecipanteFrame;
-        this.listaPartecipantiFrame = new JFrame("ListaPartecipanti");
+        this.mittenteFrame = mittenteFrame;
+        this.listaGiudiciFrame = new JFrame("ListaGiudici");
         this.controller = controller;
 
-        listaPartecipantiFrame.setContentPane(panel1);
-        listaPartecipantiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        listaPartecipantiFrame.pack();
+        listaGiudiciFrame.setContentPane(panel1);
+        listaGiudiciFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        listaGiudiciFrame.pack();
 
-        List<Partecipante> listaPartecipanti = getMockPartecipanti();
+        List<Giudice> listaGiudici = getMockGiudici();
         String nomeTeam = controller.getNomeTeam();
 
-        Object[][] datiTable = new Object[listaPartecipanti.size()][4];
+        Object[][] datiTable = new Object[listaGiudici.size()][4];
 
-        for (int i = 0; i < listaPartecipanti.size(); i++) {
+        for (int i = 0; i < listaGiudici.size(); i++) {
             datiTable[i][0] = false;
-            datiTable[i][1] = listaPartecipanti.get(i).getId();
-            datiTable[i][2] = listaPartecipanti.get(i).getNome();
-            datiTable[i][3] = listaPartecipanti.get(i).getCognome();
+            datiTable[i][1] = listaGiudici.get(i).getId();
+            datiTable[i][2] = listaGiudici.get(i).getNome();
+            datiTable[i][3] = listaGiudici.get(i).getCognome();
         }
 
 
-        DefaultTableModel tabellaPartecipanti = new DefaultTableModel(datiTable, COLONNE_LISTA_PARTECIPANTI) {
+        DefaultTableModel tabellaGiudici = new DefaultTableModel(datiTable, COLONNE_LISTA_PARTECIPANTI) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
@@ -65,58 +63,59 @@ public class ListaPartecipanti {
                 return columnIndex == 0;
             }
         };
-        this.listaPartecipantiModel = tabellaPartecipanti;
-        table1.setModel(tabellaPartecipanti);
+        this.listaGiudiciModel = tabellaGiudici;
+        table1.setModel(tabellaGiudici);
 
         invitaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Partecipante> partecipantiChecked = getCheckedPartecipanti(tabellaPartecipanti,listaPartecipanti);
-                controller.creaTeam(nomeTeam, partecipantiChecked);
+                List<Giudice> GiudiciChecked = getCheckedGiudici(tabellaGiudici,listaGiudici);
+                controller.invitaGiudice(GiudiciChecked, controller.getIdHackathon());
                 JOptionPane.showMessageDialog(panel1, "Invito inviato con successo");
+                mittenteFrame.setVisible(true);
+                listaGiudiciFrame.setVisible(false);
+                listaGiudiciFrame.dispose();
             }
         });
 
         tornaAllaHomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePartecipanteFrame.setVisible(true);
-                listaPartecipantiFrame.setVisible(false);
-                listaPartecipantiFrame.dispose();
-
-
+                mittenteFrame.setVisible(true);
+                listaGiudiciFrame.setVisible(false);
+                listaGiudiciFrame.dispose();
             }
         });
 
     }
 
-    private List<Partecipante> getCheckedPartecipanti(DefaultTableModel tabellaPartecipanti, List<Partecipante> listaPartecipanti){
-        List<Partecipante> partecipantiChecked = new ArrayList<>();
-        for (int i = 0; i < listaPartecipanti.size(); i++) {
-            Boolean check = (Boolean) tabellaPartecipanti.getValueAt(i,0);
+    private List<Giudice> getCheckedGiudici(DefaultTableModel tabellaGiudici, List<Giudice> listaGiudici){
+        List<Giudice> GiudiciChecked = new ArrayList<>();
+        for (int i = 0; i < listaGiudici.size(); i++) {
+            Boolean check = (Boolean) tabellaGiudici.getValueAt(i,0);
 
             if (Boolean.TRUE.equals(check)) {
-                Long id = (Long) tabellaPartecipanti.getValueAt(i,1);
-                Partecipante partecipantechecked = listaPartecipanti.stream()
-                        .filter(partecipante -> partecipante.getId().equals(id))
+                Long id = (Long) tabellaGiudici.getValueAt(i,1);
+                Giudice Giudicechecked = listaGiudici.stream()
+                        .filter(Giudice -> Giudice.getId().equals(id))
                         .findFirst().orElse(null);
-                partecipantiChecked.add(partecipantechecked);
+                GiudiciChecked.add(Giudicechecked);
             }
         }
 
-        return partecipantiChecked;
+        return GiudiciChecked;
     }
 
-    //metodo temporaneo che restituisce una lista di partecipanti mockata
-    private List<Partecipante> getMockPartecipanti() {
-        Partecipante partecipante1 = new Partecipante("Marco", "Rossi");
-        partecipante1.setId(1L);
-        Partecipante partecipante2 = new Partecipante("Pippo", "Pluto");
-        partecipante2.setId(2L);
-        List<Partecipante> listaPartecipanti = new ArrayList<>();
-        listaPartecipanti.add(partecipante1);
-        listaPartecipanti.add(partecipante2);
-        return listaPartecipanti;
+    //metodo temporaneo che restituisce una lista di Giudici mockata
+    private List<Giudice> getMockGiudici() {
+        Giudice Giudice1 = new Giudice("Marco", "Rossi");
+        Giudice1.setId(1L);
+        Giudice Giudice2 = new Giudice("Pippo", "Pluto");
+        Giudice2.setId(2L);
+        List<Giudice> listaGiudici = new ArrayList<>();
+        listaGiudici.add(Giudice1);
+        listaGiudici.add(Giudice2);
+        return listaGiudici;
     }
 
 
@@ -138,7 +137,7 @@ public class ListaPartecipanti {
         panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
-        label1.setText("LISTA PARTECIPANTI DA INVITARE");
+        label1.setText("LISTA Giudici DA INVITARE");
         panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
