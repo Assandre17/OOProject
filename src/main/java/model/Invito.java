@@ -4,6 +4,7 @@ public class Invito {
     private Long id;
     private Partecipante partecipanteInvitato;
     private Team team;
+    private String stato;
 
     public Long getId() {
         return id;
@@ -27,5 +28,13 @@ public class Invito {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
     }
 }
