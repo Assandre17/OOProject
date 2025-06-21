@@ -1,11 +1,10 @@
-package main.java.controller;
-import javax.swing.*;
-import java.nio.file.Path;
-import java.util.*;
+package controller;
 
-import main.java.gui.ActionButton;
-import main.java.gui.ListaGiudici;
-import main.java.model.*;
+import gui.ActionButton;
+import model.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class Controller {
     private String nomeTeam;

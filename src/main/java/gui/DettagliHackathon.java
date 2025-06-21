@@ -1,9 +1,10 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Giudice;
-import main.java.model.Organizzatore;
-import main.java.model.Utente;
+
+import controller.Controller;
+import model.Giudice;
+import model.Organizzatore;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.*;

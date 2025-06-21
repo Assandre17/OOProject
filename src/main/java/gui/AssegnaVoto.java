@@ -1,7 +1,8 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Voto;
+
+import controller.Controller;
+import model.Voto;
 
 import javax.swing.*;
 import java.awt.*;

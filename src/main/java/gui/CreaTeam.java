@@ -1,13 +1,12 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
+
+import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class CreaTeam {
     public JFrame creaTeamFrame;

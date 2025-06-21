@@ -1,18 +1,17 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Hackathon;
+import controller.Controller;
+import model.Hackathon;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static main.java.utils.Utils.COLONNE_LISTA_HACKATHON;
+import static utils.Utils.COLONNE_LISTA_HACKATHON;
 
 
 public class HackathonCreatiOrganizzatore {

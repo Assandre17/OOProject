@@ -1,7 +1,8 @@
-package main.java.model;
+package model;
 
-import main.java.controller.Controller;
-import main.java.gui.HomeOrganizzatore;
+
+import controller.Controller;
+import gui.HomeOrganizzatore;
 
 import javax.swing.*;
 

@@ -1,8 +1,9 @@
 package main.java;
 
-import main.java.model.Giudice;
-import main.java.model.Partecipante;
-import main.java.model.Utente;
+
+import model.Giudice;
+import model.Partecipante;
+import model.Utente;
 
 public class Main {
     public static void main(String[] args) {

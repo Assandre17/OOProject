@@ -1,9 +1,9 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Team;
-import main.java.model.Partecipante;
-import main.java.model.Team;
+
+import controller.Controller;
+import model.Partecipante;
+import model.Team;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static main.java.utils.Utils.*;
+import static utils.Utils.COLONNE_LISTA_TEAM;
+
 
 public class InviaRichiestaPartecipante {
     private JPanel panel1;

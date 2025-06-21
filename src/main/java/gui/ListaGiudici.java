@@ -1,7 +1,8 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Giudice;
+
+import controller.Controller;
+import model.Giudice;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,9 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import static main.java.utils.Utils.COLONNE_LISTA_PARTECIPANTI;
+import static utils.Utils.COLONNE_LISTA_PARTECIPANTI;
+
 
 public class ListaGiudici {
     private JPanel panel1;

@@ -1,7 +1,7 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
-import main.java.model.Documento;
+import controller.Controller;
+import model.Documento;
 
 import javax.swing.*;
 import java.awt.*;

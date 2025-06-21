@@ -1,5 +1,4 @@
-package main.java.model;
-import main.java.gui.DettagliHackathon;
+package model;
 
 import java.time.LocalDate;
 

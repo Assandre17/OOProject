@@ -1,6 +1,7 @@
-package main.java.gui;
+package gui;
 
-import main.java.controller.Controller;
+
+import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;

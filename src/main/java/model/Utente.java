@@ -1,6 +1,7 @@
-package main.java.model;
+package model;
 
-import main.java.controller.Controller;
+
+import controller.Controller;
 
 import javax.swing.*;
 
