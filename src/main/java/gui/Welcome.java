@@ -13,8 +13,12 @@ public class Welcome {
     public JFrame welcomeFrame;
     private JPanel panel1;
 
-    public Welcome(JFrame welcomeFrame) {
-        this.welcomeFrame = welcomeFrame;
+    public Welcome() {
+        this.welcomeFrame = new JFrame("Welcome");
+        welcomeFrame.setContentPane(panel1);
+        welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        welcomeFrame.pack();
+
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -23,14 +27,6 @@ public class Welcome {
                 welcomeFrame.setVisible(false);
             }
         });
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Welcome");
-        frame.setContentPane(new Welcome(frame).panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     {
