@@ -14,9 +14,11 @@ public abstract class Utente {
 
     protected Utente() {}
 
-    protected Utente(String nome, String cognome){
+    protected Utente(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;
+        this.email = email;
+        this.password = password;
     }
     public String getNome() {
         return nome;

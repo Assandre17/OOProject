@@ -12,8 +12,8 @@ public class Giudice extends Utente {
         super();
     }
 
-    public Giudice(String nome, String cognome) {
-        super(nome, cognome);
+    public Giudice(String nome, String cognome, String email, String password) {
+        super(nome, cognome, email, password);
     }
 
     @Override

@@ -9,8 +9,8 @@ import javax.swing.*;
 public class Organizzatore extends Utente {
     public Organizzatore() {super();}
 
-    public Organizzatore(String nome, String cognome) {
-        super(nome, cognome);
+    public Organizzatore(String nome, String cognome, String email, String password) {
+        super(nome, cognome, email, password);
     }
 
     @Override

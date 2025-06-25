@@ -1,6 +1,7 @@
 package controller;
 
 import gui.ActionButton;
+import implementazionePostgresDAO.UtenteImplentazionePostgresDAO;
 import model.*;
 
 import java.util.HashMap;
@@ -27,24 +28,25 @@ public class Controller {
         return new Hackathon();}
     public void invitaGiudice(List<Giudice> listaGiudici, Long idHackathon) {}
     public void apriRegistrazioni(){}
-    public void registrati(){}
+    public void registrati(Utente utente){
+        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
+        utenteDAO.insertUtente(utente);
+    }
     public Utente accedi(String email, String password){
 
         System.out.println("accesso in corso...");
-
-        //TODO: nel 3o homework si dovrà prendere l'entita dal DB e ritornarla.
-
-        createMockUtente();
+        
+//        createMockUtente();
         //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
         return new Organizzatore();
     }
 
 
-    private void createMockUtente() {
-        Organizzatore utente = new Organizzatore("Pippo", "Pluto");
-        utente.setEmail("prova@prova.it");
-        setUtente(utente);
-    }
+//    private void createMockUtente() {
+//        Organizzatore utente = new Organizzatore("Pippo", "Pluto");
+//        utente.setEmail("prova@prova.it");
+//        setUtente(utente);
+//    }
 
     public void iscriviti(){
         System.out.println("iscriviti");

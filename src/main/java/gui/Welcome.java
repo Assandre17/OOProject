@@ -27,6 +27,16 @@ public class Welcome {
                 welcomeFrame.setVisible(false);
             }
         });
+
+        registratiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Registrazione registrazione = new Registrazione(welcomeFrame);
+                registrazione.registrationFrame.setVisible(true);
+                welcomeFrame.setVisible(false);
+            }
+        });
+
     }
 
     {

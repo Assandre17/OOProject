@@ -1,5 +1,9 @@
 package utils;
 
+import model.Organizzatore;
+import model.Partecipante;
+import model.Utente;
+
 public class Utils {
 
     public static final String[] COLONNE_LISTA_PARTECIPANTI = {"","ID", "Nome", "Cognome"};
@@ -10,4 +14,15 @@ public class Utils {
     public static final String TIPO_GIUDICE = "GIUDICE";
     public static final String TIPO_ORGANIZZATORE = "ORGANIZZATORE";
     public static final String TIPO_PARTECIPANTE = "PARTECIPANTE";
+
+    public static String getTipo(Utente utente) {
+        if (utente instanceof Organizzatore) {
+            return TIPO_ORGANIZZATORE;
+        } else if (utente instanceof Partecipante) {
+            return TIPO_PARTECIPANTE;
+        }
+
+        return TIPO_GIUDICE;
+
+    }
 }

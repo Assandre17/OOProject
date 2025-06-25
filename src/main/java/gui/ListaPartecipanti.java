@@ -110,9 +110,9 @@ public class ListaPartecipanti {
 
     //metodo temporaneo che restituisce una lista di partecipanti mockata
     private List<Partecipante> getMockPartecipanti() {
-        Partecipante partecipante1 = new Partecipante("Marco", "Rossi");
+        Partecipante partecipante1 = new Partecipante("Marco", "Rossi", "prova", "prova");
         partecipante1.setId(1L);
-        Partecipante partecipante2 = new Partecipante("Pippo", "Pluto");
+        Partecipante partecipante2 = new Partecipante("Pippo", "Pluto", "prova", "prova");
         partecipante2.setId(2L);
         List<Partecipante> listaPartecipanti = new ArrayList<>();
         listaPartecipanti.add(partecipante1);
