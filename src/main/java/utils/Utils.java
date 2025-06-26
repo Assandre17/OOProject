@@ -3,6 +3,7 @@ package utils;
 import model.Organizzatore;
 import model.Partecipante;
 import model.Utente;
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class Utils {
 
@@ -23,6 +24,14 @@ public class Utils {
         }
 
         return TIPO_GIUDICE;
+
+    }
+
+    public static boolean isValidEmail(String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+
+        return validator.isValid(email);
+
 
     }
 }

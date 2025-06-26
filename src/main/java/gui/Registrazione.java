@@ -8,6 +8,7 @@ import model.Giudice;
 import model.Organizzatore;
 import model.Partecipante;
 import model.Utente;
+import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +45,7 @@ public class Registrazione {
         registratiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!checkEmptyField()){
+                if(!checkField()){
                     return;
                 }
 
@@ -67,10 +68,12 @@ public class Registrazione {
         };
     }
 
-    private boolean checkEmptyField(){
+    private boolean checkField(){
         if(passwordField1.getText().isBlank() || emailField.getText().isBlank() || cognomeField.getText().isBlank() || nomeField.getText().isBlank()){
-
             JOptionPane.showMessageDialog(panel1, "Tutti i campi sono obbligatori!");
+            return false;
+        } else if (!Utils.isValidEmail(emailField.getText())) {
+            JOptionPane.showMessageDialog(panel1, "Email non valida!");
             return false;
         }
         return true;

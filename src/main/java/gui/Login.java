@@ -3,6 +3,7 @@ package gui;
 
 import controller.Controller;
 import model.Utente;
+import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,8 +39,8 @@ public class Login {
             @Override
             public void focusLost(FocusEvent e) {
                 String email = emailField.getText();
-                if (!email.contains("@")) {
-                    JOptionPane.showMessageDialog(loginFrame, "Email non valida");
+                if (Utils.isValidEmail(email)) {
+                    JOptionPane.showMessageDialog(loginFrame, "Email non valida!");
                 }
 
             }
