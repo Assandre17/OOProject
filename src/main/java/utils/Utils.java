@@ -1,5 +1,6 @@
 package utils;
 
+import model.Giudice;
 import model.Organizzatore;
 import model.Partecipante;
 import model.Utente;
@@ -33,5 +34,14 @@ public class Utils {
         return validator.isValid(email);
 
 
+    }
+
+    public static Utente getUtenteModel(String nome, String cognome, String email, String password, String tipo) {
+        return switch (tipo) {
+            case TIPO_ORGANIZZATORE -> new Organizzatore(nome, cognome, email, password);
+            case TIPO_GIUDICE -> new Giudice(nome, cognome, email, password);
+            case TIPO_PARTECIPANTE-> new Partecipante(nome, cognome, email, password);
+            default -> null;
+        };
     }
 }

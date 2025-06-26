@@ -8,8 +8,6 @@ import utils.Utils;
 import java.util.HashMap;
 import java.util.List;
 
-import static utils.Utils.*;
-
 public class Controller {
     private String nomeTeam;
     private Utente utente;
@@ -36,18 +34,26 @@ public class Controller {
             return false;
         }
 
-        Utente utenteRegistrato = getUtenteModel(nome,cognome,email,password,tipo);
+        Utente utenteRegistrato = Utils.getUtenteModel(nome,cognome,email,password,tipo);
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
         utenteDAO.insertUtente(utenteRegistrato);
         return true;
     }
     public Utente accedi(String email, String password){
+        if(!checkField("nome","cognome",email,password)){
+            return null;
+        }
+        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
 
-        System.out.println("accesso in corso...");
-        
-//        createMockUtente();
-        //Cambiare il tipo di oggetto in base al ruolo che si vuole testare (Partecipante, Organizzatore, Giudice)
-        return new Organizzatore();
+        Utente utenteLoggato = utenteDAO.getUtenteByEmailAndPassword(email,password);
+
+        if(utenteLoggato == null){
+            return null;
+        }
+
+        setUtente(utenteLoggato);
+
+        return utenteLoggato;
     }
 
 
@@ -126,15 +132,6 @@ public class Controller {
 
     private boolean checkField(String nome,String cognome, String email, String password){
         return !password.isBlank() && !email.isBlank() && !cognome.isBlank() && !nome.isBlank() && Utils.isValidEmail(email);
-    }
-
-    private Utente getUtenteModel(String nome, String cognome, String email, String password, String tipo) {
-        return switch (tipo) {
-            case TIPO_ORGANIZZATORE -> new Organizzatore(nome, cognome, email, password);
-            case TIPO_GIUDICE -> new Giudice(nome, cognome, email, password);
-            case TIPO_PARTECIPANTE-> new Partecipante(nome, cognome, email, password);
-            default -> null;
-        };
     }
 
 

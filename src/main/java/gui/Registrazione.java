@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static utils.Utils.*;
@@ -41,8 +42,9 @@ public class Registrazione {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(!controller.registrati(nomeField.getText(),cognomeField.getText(),emailField.getText(),passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())){
+                if(!controller.registrati(nomeField.getText(),cognomeField.getText(),emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())){
                     JOptionPane.showMessageDialog(panel1, "Compilazione campi errata!");
+                    Arrays.fill(passwordField1.getPassword(), '0');
                 }
                 welcomeFrame.setVisible(true);
                 registrationFrame.setVisible(false);

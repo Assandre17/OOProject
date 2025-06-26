@@ -4,5 +4,6 @@ import model.Utente;
 
 public interface UtenteDAO {
 
-    public void insertUtente(Utente utente);
+    void insertUtente(Utente utente);
+    Utente getUtenteByEmailAndPassword(String email, String password);
 }

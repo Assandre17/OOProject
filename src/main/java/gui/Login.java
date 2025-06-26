@@ -3,15 +3,11 @@ package gui;
 
 import controller.Controller;
 import model.Utente;
-import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.util.Arrays;
 
 public class Login {
     private JPanel panel1;
@@ -33,18 +29,8 @@ public class Login {
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.pack();
 
-        String password = Arrays.toString(passwordField.getPassword());
 
-        emailField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                String email = emailField.getText();
-                if (Utils.isValidEmail(email)) {
-                    JOptionPane.showMessageDialog(loginFrame, "Email non valida!");
-                }
 
-            }
-        });
         tornaAllaHomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,7 +46,12 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
+                String password = new String(passwordField.getText());
                 Utente utente = controller.accedi(email,password);
+                if(utente == null){
+                    JOptionPane.showMessageDialog(panel1,"Accesso errato!");
+                    return;
+                }
                 utente.apriFinestra(loginFrame, controller);
             }
         });

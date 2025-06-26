@@ -7,6 +7,7 @@ import utils.Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UtenteImplentazionePostgresDAO implements UtenteDAO {
@@ -39,5 +40,24 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
 
 
 
+    }
+
+    @Override
+    public Utente getUtenteByEmailAndPassword(String email, String password) {
+        try(            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String nome = rs.getString("nome");
+                String cognome = rs.getString("cognome");
+                String tipo = rs.getString("tipo");
+                return Utils.getUtenteModel(nome,cognome,email,password,tipo);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }
