@@ -4,11 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
-import model.Giudice;
-import model.Organizzatore;
-import model.Partecipante;
-import model.Utente;
-import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,38 +40,16 @@ public class Registrazione {
         registratiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!checkField()){
-                    return;
-                }
 
-                Utente utenteRegistrato = getUtenteModel(nomeField.getText(), cognomeField.getText(), emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString());
-                controller.registrati(utenteRegistrato);
+                if(!controller.registrati(nomeField.getText(),cognomeField.getText(),emailField.getText(),passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())){
+                    JOptionPane.showMessageDialog(panel1, "Compilazione campi errata!");
+                }
                 welcomeFrame.setVisible(true);
                 registrationFrame.setVisible(false);
                 registrationFrame.dispose();
             }
         });
 
-    }
-
-    private Utente getUtenteModel(String nome, String cognome, String email, String password, String tipo) {
-        return switch (tipo) {
-            case TIPO_ORGANIZZATORE -> new Organizzatore(nome, cognome, email, password);
-            case TIPO_GIUDICE -> new Giudice(nome, cognome, email, password);
-            case TIPO_PARTECIPANTE-> new Partecipante(nome, cognome, email, password);
-            default -> null;
-        };
-    }
-
-    private boolean checkField(){
-        if(passwordField1.getText().isBlank() || emailField.getText().isBlank() || cognomeField.getText().isBlank() || nomeField.getText().isBlank()){
-            JOptionPane.showMessageDialog(panel1, "Tutti i campi sono obbligatori!");
-            return false;
-        } else if (!Utils.isValidEmail(emailField.getText())) {
-            JOptionPane.showMessageDialog(panel1, "Email non valida!");
-            return false;
-        }
-        return true;
     }
 
     {

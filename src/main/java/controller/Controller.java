@@ -3,9 +3,12 @@ package controller;
 import gui.ActionButton;
 import implementazionePostgresDAO.UtenteImplentazionePostgresDAO;
 import model.*;
+import utils.Utils;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static utils.Utils.*;
 
 public class Controller {
     private String nomeTeam;
@@ -28,9 +31,15 @@ public class Controller {
         return new Hackathon();}
     public void invitaGiudice(List<Giudice> listaGiudici, Long idHackathon) {}
     public void apriRegistrazioni(){}
-    public void registrati(Utente utente){
+    public boolean registrati(String nome,String cognome, String email, String password, String tipo){
+        if (!checkField(nome, cognome, email, password)){
+            return false;
+        }
+
+        Utente utenteRegistrato = getUtenteModel(nome,cognome,email,password,tipo);
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
-        utenteDAO.insertUtente(utente);
+        utenteDAO.insertUtente(utenteRegistrato);
+        return true;
     }
     public Utente accedi(String email, String password){
 
@@ -114,6 +123,20 @@ public class Controller {
         //TODO: verificare se il partecipante è già in un team. La verifica verrà fatta lato DB
         return false;
     }
+
+    private boolean checkField(String nome,String cognome, String email, String password){
+        return !password.isBlank() && !email.isBlank() && !cognome.isBlank() && !nome.isBlank() && Utils.isValidEmail(email);
+    }
+
+    private Utente getUtenteModel(String nome, String cognome, String email, String password, String tipo) {
+        return switch (tipo) {
+            case TIPO_ORGANIZZATORE -> new Organizzatore(nome, cognome, email, password);
+            case TIPO_GIUDICE -> new Giudice(nome, cognome, email, password);
+            case TIPO_PARTECIPANTE-> new Partecipante(nome, cognome, email, password);
+            default -> null;
+        };
+    }
+
 
 
     public String getNomeTeam() {
