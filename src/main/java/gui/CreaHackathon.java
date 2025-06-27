@@ -46,15 +46,9 @@ public class CreaHackathon {
         creaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Hackathon hackathon = new Hackathon();
-                hackathon.setSede(sede.getText());
-                hackathon.setNome(nomefield.getText());
-                hackathon.setNummaxpartecipanti(Integer.parseInt(numMaxPartecipanti.getText()));
-                hackathon.setDataInizio(LocalDate.parse(inizioIscrizioni.getText()));
-                hackathon.setDataFine(LocalDate.parse(fineIscrizioni.getText()));
-                hackathon.setDescrizione(descrizione.getText());
+
                 try {
-                    controller.creaHackathon(hackathon);
+                    controller.creaHackathon(sede.getText(), nomefield.getText(), numMaxPartecipanti.getText(), inizioIscrizioni.getText(), fineIscrizioni.getText(), descrizione.getText() );
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

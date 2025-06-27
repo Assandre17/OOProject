@@ -7,6 +7,7 @@ import model.*;
 import utils.Utils;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,8 +27,15 @@ public class Controller {
         this.idHackathon = idHackathon;
     }
 
-    public Hackathon creaHackathon(Hackathon hackathon) throws SQLException {
+    public Hackathon creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
+        Hackathon hackathon = new Hackathon();
+        hackathon.setSede(sede);
+        hackathon.setNome(nome);
+        hackathon.setNummaxpartecipanti(Integer.parseInt(numMaxPartecipanti));
+        hackathon.setDataInizio(LocalDate.parse(inizioIscrizioni));
+        hackathon.setDataFine(LocalDate.parse(fineIscrizioni));
+        hackathon.setDescrizione(descrizione);
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         organizzatoreDAO.insertHackathon(hackathon);
         return new Hackathon();
