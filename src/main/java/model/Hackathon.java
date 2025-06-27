@@ -13,6 +13,7 @@ public class Hackathon {
     private LocalDate inizioiscrizioni;
     private LocalDate fineiscrizioni;
     private String descrizione;
+    private Organizzatore organizzatore;
 
     public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}
@@ -28,10 +29,12 @@ public class Hackathon {
     public int getNumpartecipanti() {return numpartecipanti;}
     public void setNummaxpartecipanti(int nummaxpartecipanti) {this.nummaxpartecipanti = nummaxpartecipanti;}
     public int getNummaxpartecipanti() {return nummaxpartecipanti;}
-    public void setInizioiscrizioni() {this.inizioiscrizioni = LocalDate.now();}
+    public void setInizioiscrizioni(LocalDate inizioIscrizioni) {this.inizioiscrizioni = LocalDate.now();}
     public LocalDate getInizioiscrizioni() {return inizioiscrizioni;}
-    public void setFineiscrizioni() {this.fineiscrizioni = LocalDate.now();}
+    public void setFineiscrizioni(LocalDate fineIscrizioni) {this.fineiscrizioni = LocalDate.now();}
     public LocalDate getFineiscrizioni() {return fineiscrizioni;}
     public void setDescrizione(String descrizione) {this.descrizione = descrizione;}
     public String getDescrizione() {return descrizione;}
+    public void setOrganizzatore(){this.organizzatore = new Organizzatore();}
+    public Organizzatore getOrganizzatore() {return organizzatore;}
 }

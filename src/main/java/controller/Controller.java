@@ -1,10 +1,12 @@
 package controller;
 
 import gui.ActionButton;
+import implementazionePostgresDAO.OrganizzatoreImplementazionePostgresDAO;
 import implementazionePostgresDAO.UtenteImplentazionePostgresDAO;
 import model.*;
 import utils.Utils;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,10 +26,24 @@ public class Controller {
         this.idHackathon = idHackathon;
     }
 
-    public Hackathon creaHackathon(){
+    public Hackathon creaHackathon(Hackathon hackathon) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
-        return new Hackathon();}
-    public void invitaGiudice(List<Giudice> listaGiudici, Long idHackathon) {}
+        OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
+        organizzatoreDAO.insertHackathon(hackathon);
+        return new Hackathon();
+    }
+
+    public List<Hackathon> vediHackathonCreati(Utente user) throws SQLException {
+        System.out.println("visualizzazione Hackathon creati");
+        OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
+        organizzatoreDAO.getListHackathon(user);
+        return organizzatoreDAO.getListHackathon(user);
+    }
+
+    public void invitaGiudice(Long idHackathon) throws SQLException {
+        OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
+        organizzatoreDAO.getListGiudice();
+    }
     public void apriRegistrazioni(){}
     public boolean registrati(String nome,String cognome, String email, String password, String tipo){
         if (!checkField(nome, cognome, email, password)){

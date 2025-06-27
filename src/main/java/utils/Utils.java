@@ -37,7 +37,7 @@ public class Utils {
     }
 
     public static Utente getUtenteModel(String nome, String cognome, String email, String password, String tipo) {
-        return switch (tipo) {
+        return switch (tipo.toUpperCase()) {
             case TIPO_ORGANIZZATORE -> new Organizzatore(nome, cognome, email, password);
             case TIPO_GIUDICE -> new Giudice(nome, cognome, email, password);
             case TIPO_PARTECIPANTE-> new Partecipante(nome, cognome, email, password);

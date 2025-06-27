@@ -1,6 +1,7 @@
 package gui;
 
 
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Giudice;
 
@@ -9,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,8 +72,12 @@ public class ListaGiudici {
         invitaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Giudice> GiudiciChecked = getCheckedGiudici(tabellaGiudici,listaGiudici);
-                controller.invitaGiudice(GiudiciChecked, controller.getIdHackathon());
+                List<Giudice> GiudiciChecked = getCheckedGiudici(tabellaGiudici, listaGiudici);
+                try {
+                    controller.invitaGiudice(controller.getIdHackathon()); //veniva passato anche list<giudici> come parametro ma l'ho tolta pk se devo fare il get... (vuol dire che mi serve e allora come la passo??)
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(panel1, "Invito inviato con successo");
                 mittenteFrame.setVisible(true);
                 listaGiudiciFrame.setVisible(false);
@@ -90,13 +96,13 @@ public class ListaGiudici {
 
     }
 
-    private List<Giudice> getCheckedGiudici(DefaultTableModel tabellaGiudici, List<Giudice> listaGiudici){
+    private List<Giudice> getCheckedGiudici(DefaultTableModel tabellaGiudici, List<Giudice> listaGiudici) {
         List<Giudice> GiudiciChecked = new ArrayList<>();
         for (int i = 0; i < listaGiudici.size(); i++) {
-            Boolean check = (Boolean) tabellaGiudici.getValueAt(i,0);
+            Boolean check = (Boolean) tabellaGiudici.getValueAt(i, 0);
 
             if (Boolean.TRUE.equals(check)) {
-                Long id = (Long) tabellaGiudici.getValueAt(i,1);
+                Long id = (Long) tabellaGiudici.getValueAt(i, 1);
                 Giudice Giudicechecked = listaGiudici.stream()
                         .filter(Giudice -> Giudice.getId().equals(id))
                         .findFirst().orElse(null);
@@ -136,24 +142,7 @@ public class ListaGiudici {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
-        final JLabel label1 = new JLabel();
-        label1.setText("LISTA Giudici DA INVITARE");
-        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        table1 = new JTable();
-        JScrollPane scrollPane = new JScrollPane(table1);
-        panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        invitaButton = new JButton();
-        invitaButton.setText("Invita");
-        panel1.add(invitaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tornaAllaHomeButton = new JButton();
-        tornaAllaHomeButton.setText("torna alla home");
-        panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-
-
+        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
     }
 
     /**

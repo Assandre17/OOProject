@@ -1,13 +1,19 @@
 package gui;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
 import model.Hackathon;
+import model.Organizzatore;
+import model.Utente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,17 +33,22 @@ public class HackathonCreatiOrganizzatore {
     public JFrame hcoFrame;
 
     public HackathonCreatiOrganizzatore(JFrame homeUtenteFrame, Controller controller) {
-    this.homeUtenteFrame = homeUtenteFrame;
-    this.controller = controller;
-    this.actionButton = controller.getActionButton();
-    this.dettaglioButton.setText(controller.getNomeButton());
+        this.homeUtenteFrame = homeUtenteFrame;
+        this.controller = controller;
+        this.actionButton = controller.getActionButton();
+        this.dettaglioButton.setText(controller.getNomeButton());
 
-    this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
-    hcoFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
-    hcoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    hcoFrame.pack();
+        this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
+        hcoFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
+        hcoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        hcoFrame.pack();
 
-        List<Hackathon> listaHackathon = getMockHackathon();
+        List<Hackathon> listaHackathon = null;
+        try {
+            listaHackathon = getMockHackathon(controller.getUtente());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         Object[][] datiTable = new Object[listaHackathon.size()][4];
 
@@ -45,7 +56,7 @@ public class HackathonCreatiOrganizzatore {
             datiTable[i][0] = listaHackathon.get(i).getId();
             datiTable[i][1] = listaHackathon.get(i).getNome();
             datiTable[i][2] = listaHackathon.get(i).getDescrizione();
-         }
+        }
 
 
         DefaultTableModel tabellaHackathon = new DefaultTableModel(datiTable, COLONNE_LISTA_HACKATHON) {
@@ -76,7 +87,7 @@ public class HackathonCreatiOrganizzatore {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int riga = table1.getSelectedRow();
-                if(riga == -1){
+                if (riga == -1) {
                     JOptionPane.showMessageDialog(panel1, "Seleziona un hackathon");
                     return;
                 }
@@ -91,7 +102,10 @@ public class HackathonCreatiOrganizzatore {
     }
 
 
-    private List<Hackathon> getMockHackathon() {
+    private List<Hackathon> getMockHackathon(Utente user) throws SQLException {
+        if (user instanceof Organizzatore) {
+            controller.vediHackathonCreati(user);
+        }
         Hackathon hackathon1 = new Hackathon();
         hackathon1.setId(1L);
         hackathon1.setNome("Hackathon1");
@@ -124,21 +138,14 @@ public class HackathonCreatiOrganizzatore {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
-        final JLabel label1 = new JLabel();
-        label1.setText("LISTA HACKATHON");
-        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        final JLabel label1 = new JLabel();
+        label1.setText("Lista Hackathon creati dall'organizzatore:");
+        panel2.add(label1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel2.add(spacer1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         table1 = new JTable();
-        JScrollPane scrollPane = new JScrollPane(table1);
-        panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        dettaglioButton = new JButton();
-        panel1.add(dettaglioButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tornaAllaHomeButton = new JButton();
-        tornaAllaHomeButton.setText("torna alla home");
-        panel2.add(tornaAllaHomeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(table1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
     }
 }

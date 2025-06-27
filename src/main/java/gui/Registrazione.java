@@ -4,6 +4,10 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
+import model.Giudice;
+import model.Organizzatore;
+import model.Partecipante;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +46,7 @@ public class Registrazione {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(!controller.registrati(nomeField.getText(),cognomeField.getText(),emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())){
+                if (!controller.registrati(nomeField.getText(), cognomeField.getText(), emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())) {
                     JOptionPane.showMessageDialog(panel1, "Compilazione campi errata!");
                     Arrays.fill(passwordField1.getPassword(), '0');
                 }
@@ -107,9 +111,9 @@ public class Registrazione {
         panel1.add(passwordField1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tipoBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-        defaultComboBoxModel1.addElement(TIPO_ORGANIZZATORE);
-        defaultComboBoxModel1.addElement(TIPO_GIUDICE);
-        defaultComboBoxModel1.addElement(TIPO_PARTECIPANTE);
+        defaultComboBoxModel1.addElement("Organizzatore");
+        defaultComboBoxModel1.addElement("Giudice");
+        defaultComboBoxModel1.addElement("Partecipante");
         tipoBox.setModel(defaultComboBoxModel1);
         panel1.add(tipoBox, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

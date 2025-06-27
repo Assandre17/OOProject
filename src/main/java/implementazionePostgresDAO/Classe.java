@@ -3,7 +3,6 @@ package implementazionePostgresDAO;
 import dao.ClasseDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +29,5 @@ public class Classe implements ClasseDAO {
         Hackathon hackathon = new Hackathon();
         hackathon.setNome(nome);
         return hackathon;
-
     }
-
 }

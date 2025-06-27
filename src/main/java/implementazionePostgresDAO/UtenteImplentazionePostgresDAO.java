@@ -37,9 +37,6 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-
-
     }
 
     @Override
