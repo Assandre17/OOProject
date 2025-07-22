@@ -14,7 +14,8 @@ public abstract class Utente {
 
     protected Utente() {}
 
-    protected Utente(String nome, String cognome, String email, String password) {
+    protected Utente(Long id, String nome, String cognome, String email, String password) {
+        this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;

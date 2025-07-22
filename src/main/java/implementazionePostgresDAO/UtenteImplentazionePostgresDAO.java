@@ -46,10 +46,11 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
+                Long id = rs.getLong("id");
                 String nome = rs.getString("nome");
                 String cognome = rs.getString("cognome");
                 String tipo = rs.getString("tipo");
-                return Utils.getUtenteModel(nome,cognome,email,password,tipo);
+                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo);
             }
             rs.close();
         } catch (SQLException e) {

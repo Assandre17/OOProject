@@ -32,8 +32,7 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame);
-                    creaTeam.creaTeamFrame.setVisible(true);
+
                 }
             };
 
@@ -44,11 +43,14 @@ public class HomePartecipante {
                     return;
                 }
 
-                controller.setActionButton(actionButton);
-                controller.setNomeButton("Avanti");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
-                homePartecipanteFrame.setVisible(false);
+                CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame, controller);
+                creaTeam.creaTeamFrame.setVisible(true);
+
+//                controller.setActionButton(actionButton);
+//                controller.setNomeButton("Avanti");
+//                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+//                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+//                homePartecipanteFrame.setVisible(false);
 
             }
         });

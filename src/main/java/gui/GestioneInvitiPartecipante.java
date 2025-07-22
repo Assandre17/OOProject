@@ -124,7 +124,7 @@ public class GestioneInvitiPartecipante {
         Invito invito1 = new Invito();
         invito1.setId(1L);
         invito1.setTeam(team);
-        Partecipante partecipante1 = new Partecipante("Marco", "Rossi", "prova", "prova");
+        Partecipante partecipante1 = new Partecipante(null, "Marco", "Rossi", "prova", "prova");
         partecipante1.setEmail("prova@prova.it");
         invito1.setPartecipanteInvitato(partecipante1);
 
@@ -133,7 +133,7 @@ public class GestioneInvitiPartecipante {
         Invito invito2 = new Invito();
         invito2.setId(2L);
         invito2.setTeam(team2);
-        Partecipante partecipante2 = new Partecipante("Pippo", "Pluto", "prova", "prova");
+        Partecipante partecipante2 = new Partecipante(null, "Pippo", "Pluto", "prova", "prova");
         partecipante2.setEmail("prova1@prova1.it");
         invito2.setPartecipanteInvitato(partecipante2);
 

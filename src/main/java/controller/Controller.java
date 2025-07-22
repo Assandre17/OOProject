@@ -2,6 +2,7 @@ package controller;
 
 import gui.ActionButton;
 import implementazionePostgresDAO.OrganizzatoreImplementazionePostgresDAO;
+import implementazionePostgresDAO.PartecipanteImplementazionePostgresDAO;
 import implementazionePostgresDAO.UtenteImplentazionePostgresDAO;
 import model.*;
 import utils.Utils;
@@ -44,8 +45,13 @@ public class Controller {
     public List<Hackathon> vediHackathonCreati(Utente user) throws SQLException {
         System.out.println("visualizzazione Hackathon creati");
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
-        organizzatoreDAO.getListHackathon(user);
         return organizzatoreDAO.getListHackathon(user);
+    }
+
+    public List<Partecipante> getPartecipantiWithoutTeam(){
+        System.out.println("visualizzazione partecipanti senza team");
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
+        return partecipanteDAO.getPartecipantiWithoutTeam(getUtente().getId());
     }
 
     public void invitaGiudice(Long idHackathon) throws SQLException {
@@ -58,7 +64,7 @@ public class Controller {
             return false;
         }
 
-        Utente utenteRegistrato = Utils.getUtenteModel(nome,cognome,email,password,tipo);
+        Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo);
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
         utenteDAO.insertUtente(utenteRegistrato);
         return true;

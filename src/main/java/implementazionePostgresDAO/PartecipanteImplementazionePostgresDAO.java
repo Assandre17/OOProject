@@ -3,7 +3,10 @@ package implementazionePostgresDAO;
 import dao.PartecipanteDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
+import model.Partecipante;
 import model.Utente;
+import org.apache.commons.collections.list.TreeList;
+import utils.Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +19,12 @@ import java.util.List;
 public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
     private Connection connection;
 
-    public PartecipanteImplementazionePostgresDAO() throws SQLException {
-        this.connection = ConnessioneDatabase.getInstance().connection;
+    public PartecipanteImplementazionePostgresDAO() {
+        try {
+            connection = ConnessioneDatabase.getInstance().connection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Hackathon> getListHackathon(Utente user) throws SQLException {
@@ -43,5 +50,27 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             list.add(hackathon);
         }
         return list;
+    }
+
+
+    public List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante) {
+        List<Partecipante> partecipantiList = new TreeList();
+        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE tipo = 'PARTECIPANTE' AND id_team IS NULL AND id != ?" )) {
+            ps.setLong(1, idPartecipante);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String cognome = rs.getString("cognome");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String tipo = rs.getString("tipo");
+                partecipantiList.add((Partecipante) Utils.getUtenteModel(id,nome,cognome,email,password,tipo));
+            }
+            rs.close();
+            return partecipantiList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

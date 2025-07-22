@@ -19,10 +19,10 @@ public class CreaTeam {
     private JButton avantiButton;
 
 
-    public CreaTeam(JFrame homePartecipanteFrame) {
+    public CreaTeam(JFrame homePartecipanteFrame, Controller controller) {
         this.creaTeamFrame = new JFrame("CreaTeam");
         this.homePartecipanteFrame = homePartecipanteFrame;
-        controller = new Controller();
+        this.controller = controller;
         creaTeamFrame.setContentPane(panel1);
         creaTeamFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         creaTeamFrame.pack();
