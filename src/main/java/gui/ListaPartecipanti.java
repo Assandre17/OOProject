@@ -75,6 +75,10 @@ public class ListaPartecipanti {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<Partecipante> partecipantiChecked = getCheckedPartecipanti(tabellaPartecipanti, listaPartecipanti);
+                if (partecipantiChecked.isEmpty()){
+                    JOptionPane.showMessageDialog(panel1, "Seleziona un partecipante da invitare");
+                    return;
+                }
                 controller.creaTeam(nomeTeam, partecipantiChecked);
                 JOptionPane.showMessageDialog(panel1, "Invito inviato con successo");
             }

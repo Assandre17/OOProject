@@ -32,25 +32,26 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-
+                    CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame, controller);
+                    creaTeam.creaTeamFrame.setVisible(true);
                 }
             };
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO: DA FARE IL CHECK
                 if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente())) {
                     JOptionPane.showMessageDialog(panel1, "Non puoi creare un team in quanto già sei presente in un altro team!");
                     return;
                 }
 
-                CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame, controller);
-                creaTeam.creaTeamFrame.setVisible(true);
 
-//                controller.setActionButton(actionButton);
-//                controller.setNomeButton("Avanti");
-//                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-//                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
-//                homePartecipanteFrame.setVisible(false);
+
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Avanti");
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                homePartecipanteFrame.setVisible(false);
 
             }
         });

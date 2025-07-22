@@ -1,9 +1,7 @@
 package controller;
 
 import gui.ActionButton;
-import implementazionePostgresDAO.OrganizzatoreImplementazionePostgresDAO;
-import implementazionePostgresDAO.PartecipanteImplementazionePostgresDAO;
-import implementazionePostgresDAO.UtenteImplentazionePostgresDAO;
+import implementazionePostgresDAO.*;
 import model.*;
 import utils.Utils;
 
@@ -98,28 +96,17 @@ public class Controller {
 
     }
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){
-        Team team = new Team();
-        team.setPartecipanti(listaPartecipanti);
-        team.setNome(nome);
+        //TODO: ASSEGNARE IL TEAM CREATO ALL'UTENTE LOGGATO
+        TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
+        Long idTeam = teamDAO.insertTeam(nome,getIdHackathon());
 
-        //TODO: aggiunta del nuovo team a DB
-
-        invitaPartecipanti(listaPartecipanti,team);
+        invitaPartecipanti(listaPartecipanti,idTeam);
 
 
     }
-    private void invitaPartecipanti(List<Partecipante> partecipanti, Team team){
-        System.out.println("invitaPartecipanti in corso...");
-        partecipanti.forEach(partecipante -> {
-            Invito invito = new Invito();
-            invito.setTeam(team);
-            invito.setPartecipanteInvitato(partecipante);
-
-            //TODO: salvataggio a DB dell'invito
-
-        });
-
-
+    private void invitaPartecipanti(List<Partecipante> partecipanti, Long idTeam){
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam));
 
     }
     public void richiestaIngressoTeam(Partecipante partecipante, Team team){

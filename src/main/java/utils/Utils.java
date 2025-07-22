@@ -17,6 +17,13 @@ public class Utils {
     public static final String TIPO_ORGANIZZATORE = "ORGANIZZATORE";
     public static final String TIPO_PARTECIPANTE = "PARTECIPANTE";
 
+    public static final String STATO_IN_ATTESA = "IN ATTESA";
+    public static final String STATO_ACCETTATO = "ACCETTATO";
+    public static final String STATO_RIFIUTATO = "RIFIUTATO";
+
+
+
+
     public static String getTipo(Utente utente) {
         if (utente instanceof Organizzatore) {
             return TIPO_ORGANIZZATORE;

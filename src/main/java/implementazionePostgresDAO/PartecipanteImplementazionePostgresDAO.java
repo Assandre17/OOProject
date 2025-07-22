@@ -26,7 +26,7 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             e.printStackTrace();
         }
     }
-
+    @Override
     public List<Hackathon> getListHackathon(Utente user) throws SQLException {
         //preparo la query
         Long id = user.getId();
@@ -52,7 +52,7 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
         return list;
     }
 
-
+    @Override
     public List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante) {
         List<Partecipante> partecipantiList = new TreeList();
         try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE tipo = 'PARTECIPANTE' AND id_team IS NULL AND id != ?" )) {
