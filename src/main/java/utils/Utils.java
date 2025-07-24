@@ -1,9 +1,6 @@
 package utils;
 
-import model.Giudice;
-import model.Organizzatore;
-import model.Partecipante;
-import model.Utente;
+import model.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class Utils {
@@ -43,11 +40,11 @@ public class Utils {
 
     }
 
-    public static Utente getUtenteModel(Long id, String nome, String cognome, String email, String password, String tipo) {
+    public static Utente getUtenteModel(Long id, String nome, String cognome, String email, String password, String tipo, Team team) {
         return switch (tipo.toUpperCase()) {
             case TIPO_ORGANIZZATORE -> new Organizzatore(id, nome, cognome, email, password);
             case TIPO_GIUDICE -> new Giudice(id, nome, cognome, email, password);
-            case TIPO_PARTECIPANTE-> new Partecipante(id, nome, cognome, email, password);
+            case TIPO_PARTECIPANTE-> new Partecipante(id, nome, cognome, email, password,team);
             default -> null;
         };
     }

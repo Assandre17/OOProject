@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller {
     private String nomeTeam;
@@ -62,7 +63,7 @@ public class Controller {
             return false;
         }
 
-        Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo);
+        Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo,null);
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
         utenteDAO.insertUtente(utenteRegistrato);
         return true;
@@ -96,9 +97,11 @@ public class Controller {
 
     }
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){
-        //TODO: ASSEGNARE IL TEAM CREATO ALL'UTENTE LOGGATO
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
         Long idTeam = teamDAO.insertTeam(nome,getIdHackathon());
+
+        //inserisco l'utente loggato nel suo team
+        accettaORifiutaInvitoTeam(true,(Partecipante) getUtente(),idTeam);
 
         invitaPartecipanti(listaPartecipanti,idTeam);
 
@@ -118,7 +121,7 @@ public class Controller {
         //TODO: salvataggio a DB dell'invito
     }
 
-    public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Team team){
+    public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Long idTeam){
 
         System.out.println("gestione invito in corso...");
         //TODO: verificare se il partecipante fa già parte di un team una volta implementato il DB, e poi inserirlo o meno nel team
@@ -143,8 +146,7 @@ public class Controller {
     facilmente ordinare in base al voto assegnato dal giudice*/
 
     public boolean checkPartecipanteHaveTeam(Partecipante partecipante){
-        //TODO: verificare se il partecipante è già in un team. La verifica verrà fatta lato DB
-        return false;
+        return Objects.nonNull(partecipante.getTeam());
     }
 
     private boolean checkField(String nome,String cognome, String email, String password){

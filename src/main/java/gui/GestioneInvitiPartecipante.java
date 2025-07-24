@@ -79,7 +79,7 @@ public class GestioneInvitiPartecipante {
                         .filter(invito -> invito.getId().equals(idInvito))
                         .findFirst();
                 if (invitoDaAccettare.isPresent()) {
-                    controller.accettaORifiutaInvitoTeam(true, invitoDaAccettare.get().getPartecipanteInvitato(), invitoDaAccettare.get().getTeam());
+                    controller.accettaORifiutaInvitoTeam(true, invitoDaAccettare.get().getPartecipanteInvitato(), invitoDaAccettare.get().getTeam().getId());
                     JOptionPane.showMessageDialog(panel1, "invito Accettato");
                 }
             }
@@ -98,7 +98,7 @@ public class GestioneInvitiPartecipante {
                         .filter(invito -> invito.getId().equals(idInvito))
                         .findFirst();
                 if (invitoDaAccettare.isPresent()) {
-                    controller.accettaORifiutaInvitoTeam(false, invitoDaAccettare.get().getPartecipanteInvitato(), invitoDaAccettare.get().getTeam());
+                    controller.accettaORifiutaInvitoTeam(false, invitoDaAccettare.get().getPartecipanteInvitato(), invitoDaAccettare.get().getTeam().getId());
                     JOptionPane.showMessageDialog(panel1, "invito rifiutato");
                 }
             }
@@ -124,7 +124,7 @@ public class GestioneInvitiPartecipante {
         Invito invito1 = new Invito();
         invito1.setId(1L);
         invito1.setTeam(team);
-        Partecipante partecipante1 = new Partecipante(null, "Marco", "Rossi", "prova", "prova");
+        Partecipante partecipante1 = new Partecipante(null, "Marco", "Rossi", "prova", "prova",null);
         partecipante1.setEmail("prova@prova.it");
         invito1.setPartecipanteInvitato(partecipante1);
 
@@ -133,7 +133,7 @@ public class GestioneInvitiPartecipante {
         Invito invito2 = new Invito();
         invito2.setId(2L);
         invito2.setTeam(team2);
-        Partecipante partecipante2 = new Partecipante(null, "Pippo", "Pluto", "prova", "prova");
+        Partecipante partecipante2 = new Partecipante(null, "Pippo", "Pluto", "prova", "prova",null);
         partecipante2.setEmail("prova1@prova1.it");
         invito2.setPartecipanteInvitato(partecipante2);
 

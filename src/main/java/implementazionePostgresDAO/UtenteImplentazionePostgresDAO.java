@@ -2,6 +2,7 @@ package implementazionePostgresDAO;
 
 import dao.UtenteDAO;
 import database.ConnessioneDatabase;
+import model.Team;
 import model.Utente;
 import utils.Utils;
 
@@ -41,7 +42,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
 
     @Override
     public Utente getUtenteByEmailAndPassword(String email, String password) {
-        try(            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT u.*, t.nome AS nome_team FROM users u LEFT JOIN teams t ON u.id_team = t.id WHERE u.email = ? AND u.password = ?")) {
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -50,7 +51,17 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
                 String nome = rs.getString("nome");
                 String cognome = rs.getString("cognome");
                 String tipo = rs.getString("tipo");
-                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo);
+                Long idTeam = rs.getLong("id_team");
+                String nomeTeam = rs.getString("nome_team");
+
+                if(idTeam.equals(0L)){
+                    return Utils.getUtenteModel(id, nome,cognome,email,password,tipo, null);
+                }
+
+                Team team = new Team();
+                team.setId(idTeam);
+                team.setNome(nomeTeam);
+                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo, team);
             }
             rs.close();
         } catch (SQLException e) {
