@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.*;
 
 public class Controller {
     private String nomeTeam;
@@ -29,6 +30,19 @@ public class Controller {
 
     public Hackathon creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
+
+        //regex per formato AAAA-MM-GG
+        String dateRegex = "^\\d{4}-\\d{2}-\\d{2}$";
+        Pattern pattern = Pattern.compile(dateRegex);
+
+        //check sul formato della data
+        if(!pattern.matcher(inizioIscrizioni).matches()){
+            throw new IllegalArgumentException("formato data inizio iscrizioni non valido! il formato deve essere AAAA-MM-GG");
+        }
+        if(!pattern.matcher(fineIscrizioni).matches()){
+            throw new IllegalArgumentException("formato data fine iscrizioni non valido! il formato deve essere AAAA-MM-GG");
+        }
+
         Hackathon hackathon = new Hackathon();
         hackathon.setSede(sede);
         hackathon.setNome(nome);
