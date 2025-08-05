@@ -73,4 +73,18 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void addTeamToPartecipante(Long idPartecipante, Long idTeam) {
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET id_team = ? WHERE id = ?")) {
+            ps.setLong(1, idTeam);
+            ps.setLong(2, idPartecipante);
+            ps.executeUpdate();
+
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

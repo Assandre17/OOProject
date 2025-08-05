@@ -10,4 +10,5 @@ public interface PartecipanteDAO {
     public List<Hackathon> getListHackathon(Utente user) throws SQLException;
 
     List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante);
+    void addTeamToPartecipante(Long idPartecipante, Long idTeam);
 }

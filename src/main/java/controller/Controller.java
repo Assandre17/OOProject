@@ -79,6 +79,11 @@ public class Controller {
 
         Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo,null);
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
+
+        //verifica se la mail inserita in fase di registrazione è già esistente
+        if(Objects.nonNull(utenteDAO.getUtenteByEmail(email))){
+            return false;
+        }
         utenteDAO.insertUtente(utenteRegistrato);
         return true;
     }
@@ -99,13 +104,6 @@ public class Controller {
         return utenteLoggato;
     }
 
-
-//    private void createMockUtente() {
-//        Organizzatore utente = new Organizzatore("Pippo", "Pluto");
-//        utente.setEmail("prova@prova.it");
-//        setUtente(utente);
-//    }
-
     public void iscriviti(){
         System.out.println("iscriviti");
 
@@ -114,8 +112,9 @@ public class Controller {
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
         Long idTeam = teamDAO.insertTeam(nome,getIdHackathon());
 
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
         //inserisco l'utente loggato nel suo team
-        accettaORifiutaInvitoTeam(true,(Partecipante) getUtente(),idTeam);
+        partecipanteDAO.addTeamToPartecipante(getUtente().getId(), idTeam);
 
         invitaPartecipanti(listaPartecipanti,idTeam);
 
@@ -135,10 +134,28 @@ public class Controller {
         //TODO: salvataggio a DB dell'invito
     }
 
-    public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Long idTeam){
+    public List<Invito> getInvitiPartecipante(Partecipante partecipante){
+        System.out.println("visualizzazione inviti del partecipante");
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        return invitoDAO.getInvitiPartecipante(partecipante);
+    }
 
+    public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Long idTeam, Long idInvito){
         System.out.println("gestione invito in corso...");
-        //TODO: verificare se il partecipante fa già parte di un team una volta implementato il DB, e poi inserirlo o meno nel team
+
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
+
+        String statoInvito = null;
+
+        if(decisione){
+            statoInvito = Utils.STATO_ACCETTATO;
+            partecipanteDAO.addTeamToPartecipante(partecipante.getId(), idTeam);
+        }else{
+            statoInvito = Utils.STATO_RIFIUTATO;
+        }
+
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        invitoDAO.updateStatoInvito(idInvito,statoInvito);
 
 
     }
@@ -165,6 +182,14 @@ public class Controller {
 
     private boolean checkField(String nome,String cognome, String email, String password){
         return !password.isBlank() && !email.isBlank() && !cognome.isBlank() && !nome.isBlank() && Utils.isValidEmail(email);
+    }
+
+    public String checkPartecipanteInvitatoIsUtenteLoggato(String email){
+        if(email.equals(utente.getEmail())){
+            return "TU";
+        }else {
+            return email;
+        }
     }
 
 

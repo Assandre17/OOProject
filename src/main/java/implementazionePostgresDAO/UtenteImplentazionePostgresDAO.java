@@ -40,6 +40,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
         }
     }
 
+    //serve per trovare utente che accede, quindi per fare l'accesso
     @Override
     public Utente getUtenteByEmailAndPassword(String email, String password) {
         try(PreparedStatement ps = connection.prepareStatement("SELECT u.*, t.nome AS nome_team FROM users u LEFT JOIN teams t ON u.id_team = t.id WHERE u.email = ? AND u.password = ?")) {
@@ -69,4 +70,27 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
         }
         return null;
     }
+
+    //serve per evitare di far registrare un utente con un'email già esistente
+    @Override
+    public Utente getUtenteByEmail(String email) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT u.*, t.nome AS nome_team FROM users u LEFT JOIN teams t ON u.id_team = t.id WHERE u.email = ?")) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String password =  rs.getString("password");
+                String cognome = rs.getString("cognome");
+                String tipo = rs.getString("tipo");
+
+                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo, null);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 }

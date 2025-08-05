@@ -11,8 +11,12 @@ public class Team {
 
     public Team() {}
 
-    public Team(String nome) {
+    public Team(Long id, String nome, Voto voto, List<Partecipante> partecipanti, Hackathon hackathon) {
+        this.id = id;
         this.nome = nome;
+        this.voto = voto;
+        this.partecipanti = partecipanti;
+        this.hackathon = hackathon;
     }
 
     public String getNome() {

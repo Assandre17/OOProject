@@ -121,10 +121,10 @@ public class InviaRichiestaPartecipante {
     }
 
     private List<Team> getMockTeam() {
-        Team Team1 = new Team("team1");
+        Team Team1 = new Team();
         Team1.setId(1L);
 
-        Team Team2 = new Team("team2");
+        Team Team2 = new Team();
         Team2.setId(2L);
 
         List<Team> listaTeam = new ArrayList<>();
