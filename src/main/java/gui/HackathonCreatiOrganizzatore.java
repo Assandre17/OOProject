@@ -4,7 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Hackathon;
-import model.Organizzatore;
+import model.Partecipante;
 import model.Utente;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.Utils.COLONNE_LISTA_HACKATHON;
+import static utils.Utils.*;
 
 
 public class HackathonCreatiOrganizzatore {
@@ -102,9 +102,17 @@ public class HackathonCreatiOrganizzatore {
 
 
     private List<Hackathon> getMockHackathon(Utente user) throws SQLException {
-        if (user instanceof Organizzatore) {
-            controller.vediHackathonCreati(user);
+        String userType = getTipo(user);
+        switch (userType) {
+            case TIPO_ORGANIZZATORE:
+                return controller.vediHackathonCreati(user);
+            case TIPO_PARTECIPANTE:
+                return controller.getHackathonPartecipante((Partecipante) user);
+            default:
+                break;
+
         }
+
         Hackathon hackathon1 = new Hackathon();
         hackathon1.setId(1L);
         hackathon1.setNome("Hackathon1");
@@ -146,7 +154,8 @@ public class HackathonCreatiOrganizzatore {
         panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         table1 = new JTable();
-        panel2.add(table1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        JScrollPane scrollPane = new JScrollPane(table1);
+        panel2.add(scrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         dettaglioButton = new JButton();
         panel1.add(dettaglioButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tornaAllaHomeButton = new JButton();

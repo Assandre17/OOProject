@@ -1,7 +1,6 @@
 package gui;
 
 
-import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Partecipante;
 import model.Team;
@@ -40,8 +39,7 @@ public class InviaRichiestaPartecipante {
         this.actionButton = controller.getActionButton();
         this.inviaRichiestaButton.setText(controller.getNomeButton());
 
-        List<Team> listaTeam = getMockTeam();
-
+        List<Team> listaTeam = controller.getTeamByIdHackathon(controller.getIdHackathon());
         Object[][] datiTable = new Object[listaTeam.size()][4];
 
         for (int i = 0; i < listaTeam.size(); i++) {
@@ -77,6 +75,10 @@ public class InviaRichiestaPartecipante {
                 controller.setIdTeam(idTeam);
 
                 if (inviaRichiestaButton.getText().equals("Invia richiesta")) {
+                    if(controller.hasParticipantSentInvite((Partecipante) controller.getUtente(),idTeam)){
+                        JOptionPane.showMessageDialog(panel1, "Hai già inviato una richiesta di partecipazione a questo team");
+                        return;
+                    }
                     inviaRichiestaIngressoTeam(idTeam, listaTeam);
                     mittenteFrame.setVisible(true);
                 }
@@ -113,14 +115,18 @@ public class InviaRichiestaPartecipante {
         this.actionButton = new ActionButton() {
             @Override
             public void doAction() {
-                controller.richiestaIngressoTeam((Partecipante) controller.getUtente(), teamRichiesto.get());
-                JOptionPane.showMessageDialog(panel1, "Richiesta d'ingresso inviata");
+                if (teamRichiesto.isPresent()) {
+                    controller.richiestaIngressoTeam((Partecipante) controller.getUtente(), teamRichiesto.get());
+                    JOptionPane.showMessageDialog(panel1, "Richiesta d'ingresso inviata");
+                }
             }
         };
 
     }
 
     private List<Team> getMockTeam() {
+
+
         Team Team1 = new Team();
         Team1.setId(1L);
 
@@ -151,7 +157,23 @@ public class InviaRichiestaPartecipante {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
+        final JLabel label1 = new JLabel();
+        label1.setText("LISTA TEAM");
+        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        table1 = new JTable();
+        JScrollPane scrollPane = new JScrollPane(table1);
+        panel2.add(scrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        inviaRichiestaButton = new JButton();
+        inviaRichiestaButton.setText("Invia richiesta");
+        panel1.add(inviaRichiestaButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tornaIndietroButton = new JButton();
+        tornaIndietroButton.setText("Torna indietro");
+        panel2.add(tornaIndietroButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+
     }
 
     /**

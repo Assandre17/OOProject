@@ -4,7 +4,6 @@ import dao.PartecipanteDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
 import model.Partecipante;
-import model.Utente;
 import org.apache.commons.collections.list.TreeList;
 import utils.Utils;
 
@@ -27,10 +26,12 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
         }
     }
     @Override
-    public List<Hackathon> getListHackathon(Utente user) throws SQLException {
+    public List<Hackathon> getListHackathon(Partecipante partecipante) throws SQLException {
         //preparo la query
-        Long id = user.getId();
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM hackathon WHERE idPartecipante = ?");
+        Long id = partecipante.getId();
+        PreparedStatement ps = connection.prepareStatement("SELECT ph.*, h.* FROM partecipante_hackathon ph " +
+                "LEFT JOIN hackathon h ON ph.id_hackathon = h.id " +
+                " WHERE id_partecipante = ?");
         //eseguire la query
         ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();
@@ -45,8 +46,8 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             hackathon.setNumpartecipanti(rs.getInt("num_partecipanti"));
             hackathon.setNummaxpartecipanti(rs.getInt("num_max_partecipanti"));
             hackathon.setDescrizione(rs.getString("descrizione"));
-            hackathon.setInizioiscrizioni(LocalDate.parse(rs.getString("inizio_iscrizioni")));
-            hackathon.setFineiscrizioni(LocalDate.parse(rs.getString("fine_iscrizioni")));
+            hackathon.setInizioiscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
+            hackathon.setFineiscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
             list.add(hackathon);
         }
         return list;

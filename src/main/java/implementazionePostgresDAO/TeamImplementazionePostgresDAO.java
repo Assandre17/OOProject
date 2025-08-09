@@ -2,8 +2,12 @@ package implementazionePostgresDAO;
 
 import dao.TeamDAO;
 import database.ConnessioneDatabase;
+import model.Hackathon;
+import model.Team;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeamImplementazionePostgresDAO implements TeamDAO {
     private Connection connection;
@@ -37,4 +41,34 @@ public class TeamImplementazionePostgresDAO implements TeamDAO {
         }
         return idTeam;
     }
+
+    @Override
+    public List<Team> getTeamByIdHackathon(Long idHackathon) {
+        List<Team> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT t.*,h.nome AS nome_hackathon FROM teams t " +
+                    "LEFT JOIN hackathon h ON t.id_hackathon = h.id " +
+                    "WHERE id_hackathon = ?");
+            ps.setLong(1, idHackathon);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Team team = new Team();
+                team.setId(rs.getLong("id"));
+                team.setNome(rs.getString("nome"));
+
+                String nomeHackathon = rs.getString("nome_hackathon");
+                Hackathon hackathon = new Hackathon();
+                hackathon.setNome(nomeHackathon);
+                hackathon.setId(idHackathon);
+                team.setHackathon(hackathon);
+
+                list.add(team);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

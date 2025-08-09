@@ -71,6 +71,10 @@ public class HomePartecipante {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente())) {
+                    JOptionPane.showMessageDialog(panel1, "Non puoi inviare una richiesta di invito ad un team in quanto già sei presente in un altro team!");
+                    return;
+                }
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Avanti");
                 HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);

@@ -61,6 +61,21 @@ public class Controller {
         return organizzatoreDAO.getListHackathon(user);
     }
 
+
+    public List<Hackathon> getHackathonPartecipante(Partecipante user) throws SQLException {
+        System.out.println("visualizzazione Hackathon del partecipante");
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
+        return partecipanteDAO.getListHackathon(user);
+    }
+
+    public List<Team> getTeamByIdHackathon(Long idHackathon) {
+        System.out.println("visualizzazione dei team appartenenti all'hackathon con id " + idHackathon);
+        TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
+        return teamDAO.getTeamByIdHackathon(idHackathon);
+    }
+
+
+
     public List<Partecipante> getPartecipantiWithoutTeam(){
         System.out.println("visualizzazione partecipanti senza team");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
@@ -126,12 +141,8 @@ public class Controller {
 
     }
     public void richiestaIngressoTeam(Partecipante partecipante, Team team){
-
-        Invito invito = new Invito();
-        invito.setTeam(team);
-        invito.setPartecipanteInvitato(partecipante);
-        System.out.println("Richiesta d'invito in corso...");
-        //TODO: salvataggio a DB dell'invito
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        invitoDAO.insertInvito(partecipante.getId(), team.getId());
     }
 
     public List<Invito> getInvitiPartecipante(Partecipante partecipante){
@@ -178,6 +189,13 @@ public class Controller {
 
     public boolean checkPartecipanteHaveTeam(Partecipante partecipante){
         return Objects.nonNull(partecipante.getTeam());
+    }
+
+    public boolean hasParticipantSentInvite(Partecipante partecipante, Long  idTeam){
+        List<Invito> listaInviti = getInvitiPartecipante(partecipante);
+
+        return listaInviti.stream()
+                .anyMatch(invito -> invito.getTeam().getId().equals(idTeam));
     }
 
     private boolean checkField(String nome,String cognome, String email, String password){
