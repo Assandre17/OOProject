@@ -187,8 +187,13 @@ public class Controller {
     /*classifica l'ho pensata come una Map cosi che si possa
     facilmente ordinare in base al voto assegnato dal giudice*/
 
-    public boolean checkPartecipanteHaveTeam(Partecipante partecipante){
-        return Objects.nonNull(partecipante.getTeam());
+    public boolean checkPartecipanteHaveTeam(Partecipante partecipante, Long idHackathon){
+        if (partecipante.getTeam() == null) {
+            return false;
+        }
+
+        return partecipante.getTeam().stream()
+                .anyMatch(team -> team.getHackathon().getId().equals(idHackathon));
     }
 
     public boolean hasParticipantSentInvite(Partecipante partecipante, Long  idTeam){

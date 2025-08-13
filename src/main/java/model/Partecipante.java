@@ -5,13 +5,14 @@ import controller.Controller;
 import gui.HomePartecipante;
 
 import javax.swing.*;
+import java.util.List;
 
 public class Partecipante extends Utente {
 
-    private Team team;
+    private List<Team> team;
     public Partecipante() {super();}
 
-    public Partecipante(Long id, String nome, String cognome, String email, String password, Team team) {
+    public Partecipante(Long id, String nome, String cognome, String email, String password, List<Team> team) {
         super(id, nome, cognome, email, password);
         this.team = team;
     }
@@ -24,11 +25,11 @@ public class Partecipante extends Utente {
         frameChiamante.dispose();
     }
 
-    public Team getTeam() {
+    public List<Team> getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(List<Team> team) {
         this.team = team;
     }
 }

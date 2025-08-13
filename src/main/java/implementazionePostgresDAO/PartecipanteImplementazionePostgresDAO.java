@@ -38,7 +38,7 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
         List<Hackathon> list = new ArrayList<>();
         while (rs.next()) {
             Hackathon hackathon = new Hackathon();
-            hackathon.setId(rs.getLong("id"));
+            hackathon.setId(rs.getLong("id_hackathon"));
             hackathon.setNome(rs.getString("nome"));
             hackathon.setSede(rs.getString("sede"));
             hackathon.setDataInizio(LocalDate.parse(rs.getString("data_inizio")));
@@ -56,8 +56,9 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
     @Override
     public List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante) {
         List<Partecipante> partecipantiList = new TreeList();
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE tipo = 'PARTECIPANTE' AND id_team IS NULL AND id != ?" )) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE tipo = 'PARTECIPANTE' AND NOT EXISTS(SELECT 1 FROM partecipante_team WHERE id_partecipante = ?) AND id != ?" )) {
             ps.setLong(1, idPartecipante);
+            ps.setLong(2, idPartecipante);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 Long id = rs.getLong("id");
@@ -77,9 +78,9 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
 
     @Override
     public void addTeamToPartecipante(Long idPartecipante, Long idTeam) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE users SET id_team = ? WHERE id = ?")) {
-            ps.setLong(1, idTeam);
-            ps.setLong(2, idPartecipante);
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO partecipante_team (id_partecipante, id_team) VALUES(?,?)")) {
+            ps.setLong(2, idTeam);
+            ps.setLong(1, idPartecipante);
             ps.executeUpdate();
 
             connection.close();

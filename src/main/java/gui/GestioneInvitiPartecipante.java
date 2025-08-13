@@ -75,6 +75,10 @@ public class GestioneInvitiPartecipante {
                         .filter(invito -> invito.getId().equals(idInvito))
                         .findFirst();
                 if (invitoDaAccettare.isPresent()) {
+                    if (invitoDaAccettare.get().getPartecipanteInvitato().getId().equals(controller.getUtente().getId()) && controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), invitoDaAccettare.get().getTeam().getHackathon().getId())) {
+                        JOptionPane.showMessageDialog(panel1, "Non puoi accettare l'invito di un team in quanto già sei presente in un altro team!");
+                        return;
+                    }
                     controller.accettaORifiutaInvitoTeam(true, invitoDaAccettare.get().getPartecipanteInvitato(), invitoDaAccettare.get().getTeam().getId(), invitoDaAccettare.get().getId());
                     JOptionPane.showMessageDialog(panel1, "Invito Accettato");
                     homePartecipanteFrame.setVisible(true);
