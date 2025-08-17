@@ -68,6 +68,13 @@ public class Controller {
         return partecipanteDAO.getListHackathon(user);
     }
 
+    public List<Hackathon> getHackathonLiberi(Partecipante user) throws SQLException {
+        System.out.println("visualizzazione Hackathon  a cui può iscriversi il partecipante");
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
+        return partecipanteDAO.getHackathonLiberi(user);
+
+    }
+
     public List<Team> getTeamByIdHackathon(Long idHackathon) {
         System.out.println("visualizzazione dei team appartenenti all'hackathon con id " + idHackathon);
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
@@ -119,8 +126,14 @@ public class Controller {
         return utenteLoggato;
     }
 
-    public void iscriviti(){
-        System.out.println("iscriviti");
+    public void iscriviti(Long idPartecipante, Long idHackathon){
+        System.out.println("iscrizione ad Hackathon in corso...");
+
+        PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
+        partecipanteDAO.addPartecipanteToHackathon(idPartecipante,idHackathon);
+
+        HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
+        hackathonDAO.addNumPartecipante(idHackathon);
 
     }
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){

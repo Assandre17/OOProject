@@ -107,6 +107,9 @@ public class HackathonCreatiOrganizzatore {
             case TIPO_ORGANIZZATORE:
                 return controller.vediHackathonCreati(user);
             case TIPO_PARTECIPANTE:
+                if(dettaglioButton.getText().equals("Iscriviti")){
+                    return controller.getHackathonLiberi((Partecipante) user);
+                }
                 return controller.getHackathonPartecipante((Partecipante) user);
             default:
                 break;

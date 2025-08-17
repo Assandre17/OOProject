@@ -89,4 +89,51 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<Hackathon> getHackathonLiberi(Partecipante partecipante) throws SQLException {
+        //preparo la query
+        Long id = partecipante.getId();
+        PreparedStatement ps = connection.prepareStatement("SELECT h.* " +
+                "FROM hackathon h " +
+                "LEFT JOIN partecipante_hackathon ph " +
+                "    ON h.id = ph.id_hackathon AND ph.id_partecipante = ? " +
+                "WHERE ph.id_hackathon IS NULL " +
+                "AND h.inizio_iscrizioni <= NOW() " +
+                "  AND h.fine_iscrizioni >= NOW() " +
+                "AND h.num_partecipanti < h.num_max_partecipanti ");
+        //eseguire la query
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        List<Hackathon> list = new ArrayList<>();
+        while (rs.next()) {
+            Hackathon hackathon = new Hackathon();
+            hackathon.setId(rs.getLong("id"));
+            hackathon.setNome(rs.getString("nome"));
+            hackathon.setSede(rs.getString("sede"));
+            hackathon.setDataInizio(LocalDate.parse(rs.getString("data_inizio")));
+            hackathon.setDataFine(LocalDate.parse(rs.getString("data_fine")));
+            hackathon.setNumpartecipanti(rs.getInt("num_partecipanti"));
+            hackathon.setNummaxpartecipanti(rs.getInt("num_max_partecipanti"));
+            hackathon.setDescrizione(rs.getString("descrizione"));
+            hackathon.setInizioiscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
+            hackathon.setFineiscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
+            list.add(hackathon);
+        }
+        return list;
+    }
+
+    @Override
+    public void addPartecipanteToHackathon(Long idPartecipante, Long idHackathon) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO partecipante_hackathon (id_partecipante, id_hackathon) VALUES(?,?)")) {
+            ps.setLong(2, idHackathon);
+            ps.setLong(1, idPartecipante);
+            ps.executeUpdate();
+
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

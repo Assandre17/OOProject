@@ -96,7 +96,7 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    controller.iscriviti();
+                    controller.iscriviti(controller.getUtente().getId(), controller.getIdHackathon());
                     JOptionPane.showMessageDialog(homePartecipanteFrame, "Iscrizione effettuata con successo!");
                     homePartecipanteFrame.setVisible(true);
                 }
