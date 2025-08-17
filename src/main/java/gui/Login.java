@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
 import model.Utente;
 
+import javax.management.InstanceNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -49,12 +50,14 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
                 String password = new String(passwordField.getText());
-                Utente utente = controller.accedi(email, password);
-                if (utente == null) {
-                    JOptionPane.showMessageDialog(panel1, "Accesso errato!");
-                    return;
+                try{
+                    Utente utente = controller.accedi(email, password);
+                    utente.apriFinestra(loginFrame, controller);
+                } catch (InstanceNotFoundException ex) {
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                    throw new RuntimeException(ex);
                 }
-                utente.apriFinestra(loginFrame, controller);
+
             }
         });
     }

@@ -97,7 +97,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
     //serve per evitare di far registrare un utente con un'email già esistente
     @Override
     public Utente getUtenteByEmail(String email) {
-        try(PreparedStatement ps = connection.prepareStatement("SELECT u.*, t.nome AS nome_team FROM users u LEFT JOIN teams t ON u.id_team = t.id WHERE u.email = ?")) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT u.*, t.nome AS nome_team FROM users u LEFT JOIN partecipante_team pt ON u.id = pt.id_partecipante LEFT JOIN teams t ON pt.id_team = t.id  WHERE u.email = ?")) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){

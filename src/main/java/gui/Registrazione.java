@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
 
+import javax.management.InstanceAlreadyExistsException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,10 +41,15 @@ public class Registrazione {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!controller.registrati(nomeField.getText(), cognomeField.getText(), emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString())) {
-                    JOptionPane.showMessageDialog(panel1, "Compilazione campi errata o email già esistente!");
-                    Arrays.fill(passwordField1.getPassword(), '0');
+                try {
+                    controller.registrati(nomeField.getText(), cognomeField.getText(), emailField.getText(), passwordField1.getText(), Objects.requireNonNull(tipoBox.getSelectedItem()).toString());
+                } catch (InstanceAlreadyExistsException | IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                    throw new RuntimeException(ex);
                 }
+
+                Arrays.fill(passwordField1.getPassword(), '0');
+
                 welcomeFrame.setVisible(true);
                 registrationFrame.setVisible(false);
                 registrationFrame.dispose();

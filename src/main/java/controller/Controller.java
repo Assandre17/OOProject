@@ -5,6 +5,8 @@ import implementazionePostgresDAO.*;
 import model.*;
 import utils.Utils;
 
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.InstanceNotFoundException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -93,31 +95,28 @@ public class Controller {
         organizzatoreDAO.getListGiudice();
     }
     public void apriRegistrazioni(){}
-    public boolean registrati(String nome,String cognome, String email, String password, String tipo){
-        if (!checkField(nome, cognome, email, password)){
-            return false;
+    public void registrati(String nome,String cognome, String email, String password, String tipo) throws InstanceAlreadyExistsException {
+        checkField(nome, cognome, email, password);
+
+        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
+        //verifica se la mail inserita in fase di registrazione è già esistente
+        if(Objects.nonNull(utenteDAO.getUtenteByEmail(email))){
+            throw new InstanceAlreadyExistsException("Utente già esistente nel sistema");
         }
 
         Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo,null);
-        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
 
-        //verifica se la mail inserita in fase di registrazione è già esistente
-        if(Objects.nonNull(utenteDAO.getUtenteByEmail(email))){
-            return false;
-        }
         utenteDAO.insertUtente(utenteRegistrato);
-        return true;
     }
-    public Utente accedi(String email, String password){
-        if(!checkField("nome","cognome",email,password)){
-            return null;
-        }
+    public Utente accedi(String email, String password) throws InstanceNotFoundException {
+        checkField("nome","cognome",email,password);
+
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
 
         Utente utenteLoggato = utenteDAO.getUtenteByEmailAndPassword(email,password);
 
-        if(utenteLoggato == null){
-            return null;
+        if(Objects.isNull(utenteDAO.getUtenteByEmail(email))){
+            throw new InstanceNotFoundException("Accesso errato!");
         }
 
         setUtente(utenteLoggato);
@@ -215,9 +214,24 @@ public class Controller {
                 .anyMatch(invito -> invito.getTeam().getId().equals(idTeam));
     }
 
-    private boolean checkField(String nome,String cognome, String email, String password){
-        return !password.isBlank() && !email.isBlank() && !cognome.isBlank() && !nome.isBlank() && Utils.isValidEmail(email);
+    private void checkField(String nome, String cognome, String email, String password) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Il nome è obbligatorio.");
+        }
+        if (cognome == null || cognome.isBlank()) {
+            throw new IllegalArgumentException("Il cognome è obbligatorio.");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("L'email è obbligatoria.");
+        }
+        if (!Utils.isValidEmail(email)) {
+            throw new IllegalArgumentException("L'email non è valida.");
+        }
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("La password è obbligatoria.");
+        }
     }
+
 
     public String checkPartecipanteInvitatoIsUtenteLoggato(String email){
         if(email.equals(utente.getEmail())){
