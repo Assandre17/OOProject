@@ -117,7 +117,7 @@ public class ListaGiudici {
     private List<Giudice> getMockGiudici() {
         Giudice Giudice1 = new Giudice(null, "Marco", "Rossi", "prova", "prova");
         Giudice1.setId(1L);
-        Giudice Giudice2 = new Giudice(null,"Pippo", "Pluto", "prova", "prova");
+        Giudice Giudice2 = new Giudice(null, "Pippo", "Pluto", "prova", "prova");
         Giudice2.setId(2L);
         List<Giudice> listaGiudici = new ArrayList<>();
         listaGiudici.add(Giudice1);

@@ -48,8 +48,11 @@ public class CreaHackathon {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    controller.creaHackathon(sede.getText(), nomefield.getText(), numMaxPartecipanti.getText(), inizioIscrizioni.getText(), fineIscrizioni.getText(), descrizione.getText() );
+                    controller.creaHackathon(sede.getText(), nomefield.getText(), numMaxPartecipanti.getText(), inizioIscrizioni.getText(), fineIscrizioni.getText(), descrizione.getText());
                 } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
                     throw new RuntimeException(ex);
                 }
                 hcoFrame.setVisible(true);

@@ -58,7 +58,7 @@ public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO
         //preparo la query
         Long id = user.getId();
         PreparedStatement ps = connection.prepareStatement
-                ("SELECT * FROM hackathon WHERE idOrganizzatore = ?");
+                ("SELECT * FROM hackathon WHERE id_Organizzatore = ?");
         //eseguire la query
         ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();

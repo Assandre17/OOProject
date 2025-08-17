@@ -28,7 +28,7 @@ public class Controller {
         this.idHackathon = idHackathon;
     }
 
-    public Hackathon creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
+    public void creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
 
         //regex per formato AAAA-MM-GG
@@ -41,7 +41,7 @@ public class Controller {
         }
         if(!pattern.matcher(fineIscrizioni).matches()){
             throw new IllegalArgumentException("formato data fine iscrizioni non valido! il formato deve essere AAAA-MM-GG");
-        }
+        } //check data fatto
 
         Hackathon hackathon = new Hackathon();
         hackathon.setSede(sede);
@@ -52,13 +52,12 @@ public class Controller {
         hackathon.setDescrizione(descrizione);
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         organizzatoreDAO.insertHackathon(hackathon);
-        return new Hackathon();
     }
 
     public List<Hackathon> vediHackathonCreati(Utente user) throws SQLException {
         System.out.println("visualizzazione Hackathon creati");
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
-        return organizzatoreDAO.getListHackathon(user);
+        return organizzatoreDAO.getListHackathon(user); //visualizzazione hackathon creati fatta
     }
 
 
