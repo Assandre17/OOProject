@@ -115,7 +115,7 @@ public class Controller {
 
         Utente utenteLoggato = utenteDAO.getUtenteByEmailAndPassword(email,password);
 
-        if(Objects.isNull(utenteDAO.getUtenteByEmail(email))){
+        if(Objects.isNull(utenteLoggato)){
             throw new InstanceNotFoundException("Accesso errato!");
         }
 
@@ -193,7 +193,11 @@ public class Controller {
     }
 
 
-    public Documento pubblicaDocumento(Documento documento){return null;}
+    public void pubblicaDocumento(String descrizione, String versione, LocalDate dataPubblicazione){
+
+        DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
+        documentoDAO.addDocumento(descrizione,versione,dataPubblicazione, idTeam);
+    }
     public void stampaClassifica(HashMap<String,Integer> classifica){}
     /*classifica l'ho pensata come una Map cosi che si possa
     facilmente ordinare in base al voto assegnato dal giudice*/

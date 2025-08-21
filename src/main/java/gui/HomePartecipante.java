@@ -5,7 +5,9 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Partecipante;
+import model.Team;
 
+import javax.management.InstanceNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -119,6 +121,23 @@ public class HomePartecipante {
                 @Override
                 public void doAction() {
                     //INVIA RICHIESTA DI ACCESSO A UN TEAM
+                    try {
+                        Partecipante utenteLoggato = (Partecipante) controller.getUtente();
+                        Long idTeam = utenteLoggato.getTeam().stream()
+                                .filter(team -> team.getHackathon().getId().equals(controller.getIdHackathon()))
+                                .map(Team::getId)
+                                .findFirst()
+                                .orElse(null);
+
+                        if (idTeam == null) {
+                            JOptionPane.showMessageDialog(null, "Non puoi pubblicare un progresso in quanto non sei membro di un team in questo hackathon selezionato");
+                            throw new InstanceNotFoundException("Non puoi pubblicare un progresso in quanto non sei membro di un team in qeusto hackathon selezionato");
+
+                        }
+                        controller.setIdTeam(idTeam);
+                    }catch (InstanceNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
                     controller.setNomeButton("Pubblica Progresso");
                     Pubblicazione pubblicazione = new Pubblicazione(controller, hackathonCreatiOrganizzatore.hcoFrame);

@@ -4,7 +4,8 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
-import model.Documento;
+import model.Partecipante;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +13,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import static utils.Utils.*;
+
 public class Pubblicazione {
     private JPanel panel1;
     private JLabel descrizioneProblemaLabel;
     private JTextPane textPane1;
     private JButton pubblicaButton;
     private JButton tornaIndietroButton;
+    private JTextField versioneField;
+    private JLabel versioneLabel;
     public JFrame pubblicazioneFrame;
     private Controller controller;
     private ActionButton actionButton;
@@ -30,21 +35,33 @@ public class Pubblicazione {
         pubblicazioneFrame.pack();
         this.actionButton = controller.getActionButton();
         this.pubblicaButton.setText(controller.getNomeButton());
+        versioneField.setVisible(false);
+        versioneLabel.setVisible(false);
 
+        Utente user = controller.getUtente();
+        String userType = getTipo(user);
+
+        seePartecipanteField(user);
 
         pubblicaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String descrizione = textPane1.getText();
+                String versione = versioneField.getText();
 
-                if (checkDescrizioneIsEmpty(descrizione)) {
-                    return;
-                }
+                checkDescrizioneIsEmpty(descrizione);
 
-                if (pubblicaButton.getText().equals("Pubblica Problema")) {
-                    pubblicaProblema(descrizione);
-                } else {
-                    pubblicaProgresso(descrizione);
+
+                switch (userType) {
+                    case TIPO_ORGANIZZATORE:
+                        pubblicaProblema(descrizione);
+                        break;
+                    case TIPO_PARTECIPANTE:
+                        pubblicaProgresso(descrizione, versione);
+                        break;
+                    default:
+                        break;
+
                 }
 
                 actionButton.doAction();
@@ -80,12 +97,11 @@ public class Pubblicazione {
 
     }
 
-    private void pubblicaProgresso(String descrizione) {
-        Documento documento = new Documento(descrizione, "1.0", LocalDate.now());
+    private void pubblicaProgresso(String descrizione, String versione) {
         this.actionButton = new ActionButton() {
             @Override
             public void doAction() {
-                controller.pubblicaDocumento(documento);
+                controller.pubblicaDocumento(descrizione,versione,LocalDate.now());
                 JOptionPane.showMessageDialog(panel1, "Documento pubblicato!");
                 HomePartecipante homePartecipante = new HomePartecipante(controller);
                 homePartecipante.homePartecipanteFrame.setVisible(true);
@@ -94,9 +110,16 @@ public class Pubblicazione {
 
     }
 
-    private boolean checkDescrizioneIsEmpty(String problema) {
+    private void checkDescrizioneIsEmpty(String problema) {
         if (problema.isBlank()) {
-            JOptionPane.showMessageDialog(pubblicazioneFrame, "Inserisci descrizione!");
+            throw new IllegalArgumentException("la descrizione del problema non può essere vuota!");
+        }
+    }
+
+    private boolean seePartecipanteField(Utente utente) {
+        if (utente instanceof Partecipante) {
+            versioneField.setVisible(true);
+            versioneLabel.setVisible(true);
             return true;
         }
         return false;
@@ -118,23 +141,28 @@ public class Pubblicazione {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(7, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Pubblica");
-        panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(label1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel1.add(spacer1, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(spacer1, new GridConstraints(6, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         descrizioneProblemaLabel = new JLabel();
         descrizioneProblemaLabel.setText("Descrizione");
-        panel1.add(descrizioneProblemaLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(descrizioneProblemaLabel, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textPane1 = new JTextPane();
-        panel1.add(textPane1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        panel1.add(textPane1, new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         pubblicaButton = new JButton();
         pubblicaButton.setText("Pubblica");
-        panel1.add(pubblicaButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(pubblicaButton, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tornaIndietroButton = new JButton();
         tornaIndietroButton.setText("Torna indietro");
-        panel1.add(tornaIndietroButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(tornaIndietroButton, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        versioneLabel = new JLabel();
+        versioneLabel.setText("Versione");
+        panel1.add(versioneLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        versioneField = new JTextField();
+        panel1.add(versioneField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
