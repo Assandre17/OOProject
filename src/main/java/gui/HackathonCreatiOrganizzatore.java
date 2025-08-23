@@ -85,16 +85,21 @@ public class HackathonCreatiOrganizzatore {
         dettaglioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int riga = table1.getSelectedRow();
-                if (riga == -1) {
-                    JOptionPane.showMessageDialog(panel1, "Seleziona un hackathon");
-                    return;
+                try{
+                    int riga = table1.getSelectedRow();
+                    if (riga == -1) {
+                        JOptionPane.showMessageDialog(panel1, "Seleziona un hackathon");
+                        return;
+                    }
+                    Long id = Long.parseLong(table1.getValueAt(riga, 0).toString());
+                    controller.setIdHackathon(id);
+                    actionButton.doAction();
+                    hcoFrame.setVisible(false);
+                    hcoFrame.dispose();
+                }catch (Exception ex){
+                    throw new RuntimeException(ex);
                 }
-                Long id = Long.parseLong(table1.getValueAt(riga, 0).toString());
-                controller.setIdHackathon(id);
-                actionButton.doAction();
-                hcoFrame.setVisible(false);
-                hcoFrame.dispose();
+
             }
         });
         table1.setModel(tabellaHackathon);

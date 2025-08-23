@@ -15,6 +15,7 @@ public class Utils {
     public static final String TIPO_GIUDICE = "GIUDICE";
     public static final String TIPO_ORGANIZZATORE = "ORGANIZZATORE";
     public static final String TIPO_PARTECIPANTE = "PARTECIPANTE";
+    public static final String TIPO_TEAM = "TEAM";
 
     public static final String STATO_IN_ATTESA = "IN ATTESA";
     public static final String STATO_ACCETTATO = "ACCETTATO";

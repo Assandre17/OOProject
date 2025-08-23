@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.*;
 
+import static utils.Utils.TIPO_PARTECIPANTE;
+import static utils.Utils.TIPO_TEAM;
+
 public class Controller {
     private String nomeTeam;
     private Utente utente;
@@ -87,7 +90,7 @@ public class Controller {
     public List<Partecipante> getPartecipantiWithoutTeam(){
         System.out.println("visualizzazione partecipanti senza team");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
-        return partecipanteDAO.getPartecipantiWithoutTeam(getUtente().getId());
+        return partecipanteDAO.getPartecipantiWithoutTeam(getUtente().getId(), getIdHackathon());
     }
 
     public void invitaGiudice(Long idHackathon) throws SQLException {
@@ -148,12 +151,12 @@ public class Controller {
     }
     private void invitaPartecipanti(List<Partecipante> partecipanti, Long idTeam){
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
-        partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam));
+        partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam, TIPO_TEAM));
 
     }
     public void richiestaIngressoTeam(Partecipante partecipante, Team team){
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
-        invitoDAO.insertInvito(partecipante.getId(), team.getId());
+        invitoDAO.insertInvito(partecipante.getId(), team.getId(), TIPO_PARTECIPANTE);
     }
 
     public List<Invito> getInvitiPartecipante(Partecipante partecipante){
@@ -203,6 +206,8 @@ public class Controller {
     facilmente ordinare in base al voto assegnato dal giudice*/
 
     public boolean checkPartecipanteHaveTeam(Partecipante partecipante, Long idHackathon){
+        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
+        partecipante =(Partecipante) utenteDAO.getUtenteByEmailAndPassword(partecipante.getEmail(), partecipante.getPassword());
         if (partecipante.getTeam() == null) {
             return false;
         }
@@ -256,7 +261,8 @@ public class Controller {
     }
 
     public Utente getUtente(){
-        return utente;
+        UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
+        return utenteDAO.getUtenteByEmailAndPassword(utente.getEmail(), utente.getPassword());
     }
 
     private void setUtente(Utente utente){

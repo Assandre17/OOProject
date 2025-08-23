@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PartecipanteDAO {
     public List<Hackathon> getListHackathon(Partecipante partecipante) throws SQLException;
-    List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante);
+    List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante, Long idHackathon);
     void addTeamToPartecipante(Long idPartecipante, Long idTeam);
 
     List<Hackathon> getHackathonLiberi(Partecipante user) throws SQLException;

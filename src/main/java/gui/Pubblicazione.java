@@ -48,8 +48,13 @@ public class Pubblicazione {
             public void actionPerformed(ActionEvent e) {
                 String descrizione = textPane1.getText();
                 String versione = versioneField.getText();
+                try{
+                    checkFieldIsEmpty(descrizione, versione);
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
 
-                checkDescrizioneIsEmpty(descrizione);
 
 
                 switch (userType) {
@@ -110,9 +115,9 @@ public class Pubblicazione {
 
     }
 
-    private void checkDescrizioneIsEmpty(String problema) {
-        if (problema.isBlank()) {
-            throw new IllegalArgumentException("la descrizione del problema non può essere vuota!");
+    private void checkFieldIsEmpty(String problema, String versione) {
+        if (problema.isBlank() || (versioneField.isVisible() && versione.isBlank())) {
+            throw new IllegalArgumentException("i campi del problema non possono essere vuoti!");
         }
     }
 

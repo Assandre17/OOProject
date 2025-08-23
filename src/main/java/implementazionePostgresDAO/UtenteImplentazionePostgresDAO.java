@@ -60,7 +60,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
             Utente utente = null;
             List<Team> teams = new ArrayList<>();
 
-            if (rs.next()) {
+            while (rs.next()) {
 
                 Long id = rs.getLong("id");
                 String nome = rs.getString("nome");
@@ -85,13 +85,13 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
 
 
 
-                return utente;
+
             }
             rs.close();
+            return utente;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     //serve per evitare di far registrare un utente con un'email già esistente

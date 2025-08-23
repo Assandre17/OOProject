@@ -34,12 +34,17 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), controller.getIdHackathon())) {
-                        JOptionPane.showMessageDialog(panel1, "Non puoi creare un team in quanto già sei presente in un altro team!");
-                        return;
+                    try{
+                        if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), controller.getIdHackathon())) {
+                            JOptionPane.showMessageDialog(panel1, "Non puoi creare un team in quanto già sei presente in un altro team!");
+                            throw new IllegalArgumentException("Non puoi creare un team in quanto già sei presente in un altro team!");
+                        }
+                        CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame, controller);
+                        creaTeam.creaTeamFrame.setVisible(true);
+                    } catch (IllegalArgumentException e) {
+                        throw new RuntimeException(e);
                     }
-                    CreaTeam creaTeam = new CreaTeam(homePartecipanteFrame, controller);
-                    creaTeam.creaTeamFrame.setVisible(true);
+
                 }
             };
 
@@ -62,7 +67,8 @@ public class HomePartecipante {
                 public void doAction() {
                     if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), controller.getIdHackathon())) {
                         JOptionPane.showMessageDialog(panel1, "Non puoi inviare una richiesta di invito ad un team in quanto già sei presente in un altro team!");
-                        return;
+                        throw new IllegalArgumentException("Non puoi inviare una richiesta di invito ad un team in quanto già sei presente in un altro team!");
+
                     }
                     controller.setNomeButton("Invia richiesta");
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);

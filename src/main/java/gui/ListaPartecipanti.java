@@ -81,6 +81,9 @@ public class ListaPartecipanti {
                 }
                 controller.creaTeam(nomeTeam, partecipantiChecked);
                 JOptionPane.showMessageDialog(panel1, "Invito inviato con successo");
+                homePartecipanteFrame.setVisible(true);
+                listaPartecipantiFrame.setVisible(false);
+                listaPartecipantiFrame.dispose();
             }
         });
 
@@ -94,7 +97,6 @@ public class ListaPartecipanti {
 
             }
         });
-
     }
 
     private List<Partecipante> getCheckedPartecipanti(DefaultTableModel tabellaPartecipanti, List<Partecipante> listaPartecipanti) {
@@ -136,13 +138,18 @@ public class ListaPartecipanti {
         label1.setText("LISTA PARTECIPANTI DA INVITARE");
         panel1.add(label1, new GridConstraints(0, 0, 2, 3, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         table1 = new JTable();
-        panel2.add(table1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        JScrollPane scrollPane = new JScrollPane(table1);
+        panel2.add(scrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         invitaButton = new JButton();
         invitaButton.setText("Invita");
         panel1.add(invitaButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tornaAllaHomeButton = new JButton();
+        tornaAllaHomeButton.setText("Torna alla Home");
+        panel2.add(tornaAllaHomeButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+
     }
 
     /**

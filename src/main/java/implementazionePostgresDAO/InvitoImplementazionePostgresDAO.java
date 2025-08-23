@@ -26,12 +26,13 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
     }
 
     @Override
-    public void insertInvito(Long idPartecipante, Long idTeam){
+    public void insertInvito(Long idPartecipante, Long idTeam, String figuraInserimento){
         try{
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO inviti (id_partecipante,id_team,stato) VALUES(?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO inviti (id_partecipante,id_team,stato,figura_inserimento) VALUES(?,?,?,?)");
             ps.setLong(1, idPartecipante);
             ps.setLong(2,idTeam);
             ps.setString(3,STATO_IN_ATTESA);
+            ps.setString(4,figuraInserimento);
 
             ps.executeUpdate();
 
@@ -45,25 +46,25 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
     public List<Invito> getInvitiPartecipante(Partecipante partecipante) {
         List<Invito> invitiList = new ArrayList<>();
 
-        String sql = "SELECT i.id AS invito_id, i.id_partecipante, i.id_team, i.stato, " +
-                "       t.nome AS nome_team,t.id_hackathon AS id_hackathon, h.nome AS nome_hackathon, u.email " +
-                "FROM inviti i " +
-                "JOIN teams t ON i.id_team = t.id " +
-                "JOIN hackathon h ON t.id_hackathon = h.id " +
-                "JOIN users u ON i.id_partecipante = u.id " +
-                "WHERE (i.id_partecipante = ? " +
-                "       OR EXISTS (SELECT 1 FROM partecipante_team pt " +
-                "                  WHERE pt.id_partecipante = ? " +
-                "                    AND pt.id_team = i.id_team)) " +
-                "AND i.stato = ? " +
-                "AND NOT EXISTS (SELECT 1 FROM partecipante_team pt2 " +
-                "                WHERE pt2.id_partecipante = i.id_partecipante " +
-                "                  AND pt2.id_team = i.id_team)";
+        String sql =
+                "SELECT i.id AS invito_id, i.id_partecipante, i.id_team, i.stato, " +
+                        "t.nome AS nome_team, t.id_hackathon AS id_hackathon, h.nome AS nome_hackathon, u.email " +
+                        "FROM inviti i " +
+                        "JOIN teams t ON i.id_team=t.id " +
+                        "JOIN hackathon h ON t.id_hackathon=h.id " +
+                        "JOIN users u ON i.id_partecipante=u.id " +
+                        "WHERE (i.id_partecipante=? AND i.figura_inserimento='TEAM' AND i.stato = 'IN ATTESA') " +
+                        "OR (i.figura_inserimento='PARTECIPANTE' " +
+                        "AND i.stato = 'IN ATTESA' AND i.id_team IN(SELECT pt.id_team FROM partecipante_team pt WHERE pt.id_partecipante=?) " +
+                        "AND NOT EXISTS(SELECT 1 FROM partecipante_team pt2 " +
+                        "JOIN teams t2 ON t2.id=pt2.id_team " +
+                        "WHERE pt2.id_partecipante=i.id_partecipante AND t2.id_hackathon=t.id_hackathon))";
+
+
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, partecipante.getId());
             ps.setLong(2, partecipante.getId());
-            ps.setString(3, STATO_IN_ATTESA);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
