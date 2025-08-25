@@ -22,6 +22,7 @@ public class DettagliHackathon {
     private JButton invitaGiudiciButton;
     private JButton apriRegistrazioniButton;
     private JButton assegnaVotoButton;
+    private JButton visualizzaDocumentiButton;
     private Controller controller;
     private Utente utente;
 
@@ -32,6 +33,7 @@ public class DettagliHackathon {
         dettaglioFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dettaglioFrame.pack();
         assegnaVotoButton.setVisible(false);
+        visualizzaDocumentiButton.setVisible(false);
         pubblicaProblemaButton.setVisible(false);
         apriRegistrazioniButton.setVisible(false);
         invitaGiudiciButton.setVisible(false);
@@ -78,6 +80,17 @@ public class DettagliHackathon {
                     dettaglioFrame.dispose();
                 }
             });
+
+            visualizzaDocumentiButton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ListaDocumenti listaDocumenti = new ListaDocumenti(dettaglioFrame, controller);
+                    listaDocumenti.listaDocumentiFrame.setVisible(true);
+                    dettaglioFrame.setVisible(false);
+                    dettaglioFrame.dispose();
+                }
+            });
         }
 
         if (seeOrganizzatoreButtons(controller.getUtente())) {
@@ -108,6 +121,7 @@ public class DettagliHackathon {
         if (utente instanceof Giudice) {
             assegnaVotoButton.setVisible(true);
             pubblicaProblemaButton.setVisible(true);
+            visualizzaDocumentiButton.setVisible(true);
             return true;
         }
         return false;
@@ -143,20 +157,23 @@ public class DettagliHackathon {
         panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(2, 0, 1, 9, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel3, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         pubblicaProblemaButton = new JButton();
         pubblicaProblemaButton.setText("Pubblica problema");
         panel3.add(pubblicaProblemaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         assegnaVotoButton = new JButton();
         assegnaVotoButton.setText("Assegna voto");
-        panel3.add(assegnaVotoButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(assegnaVotoButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         apriRegistrazioniButton = new JButton();
         apriRegistrazioniButton.setText("Apri Registrazioni");
         panel3.add(apriRegistrazioniButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        visualizzaDocumentiButton = new JButton();
+        visualizzaDocumentiButton.setText("Visualizza documenti");
+        panel3.add(visualizzaDocumentiButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         invitaGiudiciButton = new JButton();
         invitaGiudiciButton.setText("Invita Giudici");
-        panel3.add(invitaGiudiciButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(invitaGiudiciButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel4, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

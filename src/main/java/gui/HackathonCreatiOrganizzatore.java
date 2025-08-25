@@ -3,6 +3,7 @@ package gui;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
+import model.Giudice;
 import model.Hackathon;
 import model.Partecipante;
 import model.Utente;
@@ -116,6 +117,8 @@ public class HackathonCreatiOrganizzatore {
                     return controller.getHackathonLiberi((Partecipante) user);
                 }
                 return controller.getHackathonPartecipante((Partecipante) user);
+            case TIPO_GIUDICE:
+                return controller.getHackathonGiudice((Giudice) user);
             default:
                 break;
 

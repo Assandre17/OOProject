@@ -22,6 +22,7 @@ public class Controller {
     private Utente utente;
     private Long idHackathon;
     private Long idTeam;
+    private Long idDocumento;
     private ActionButton actionButton;
     private String nomeButton;
 
@@ -70,6 +71,12 @@ public class Controller {
         System.out.println("visualizzazione Hackathon del partecipante");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
         return partecipanteDAO.getListHackathon(user);
+    }
+
+    public List<Hackathon> getHackathonGiudice(Giudice user) throws SQLException {
+        System.out.println("visualizzazione Hackathon del giudice");
+        GiudiceImplementazionePostgresDAO giudiceDAO = new GiudiceImplementazionePostgresDAO();
+        return giudiceDAO.getListHackathon(user);
     }
 
     public List<Hackathon> getHackathonLiberi(Partecipante user) throws SQLException {
@@ -165,6 +172,18 @@ public class Controller {
         return invitoDAO.getInvitiPartecipante(partecipante);
     }
 
+
+    public List<Documento> getDocumentiByIdHackathon(Long idHackathon) {
+        System.out.println("visualizzazione documenti dell'hackathon con id: " + idHackathon);
+        DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
+        return documentoDAO.getDocumentiByIdHackathon(idHackathon);
+    }
+
+    public Documento getDocumentoById(Long idDocumento) {
+        DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
+        return documentoDAO.getDocumentoById(idDocumento);
+    }
+
     public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Long idTeam, Long idInvito){
         System.out.println("gestione invito in corso...");
 
@@ -200,6 +219,11 @@ public class Controller {
 
         DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
         documentoDAO.addDocumento(descrizione,versione,dataPubblicazione, idTeam);
+    }
+
+    public void pubblicaCommento(String commento, Long idDocumento) {
+        DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
+        documentoDAO.addCommentoToDocumento(commento, idDocumento);
     }
     public void stampaClassifica(HashMap<String,Integer> classifica){}
     /*classifica l'ho pensata come una Map cosi che si possa
@@ -292,4 +316,9 @@ public class Controller {
     public void setIdTeam(Long idTeam) {
         this.idTeam = idTeam;
     }
+
+    public Long getIdDocumento() {return idDocumento;}
+
+    public void setIdDocumento(Long idDocumento) {this.idDocumento = idDocumento;}
+
 }

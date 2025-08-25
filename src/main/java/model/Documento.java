@@ -2,17 +2,24 @@ package model;
 import java.time.LocalDate;
 
 public class Documento {
+    private Long id;
     private String descrizione;
     private String versione; //2.0 ecc
     private LocalDate dataInvio;
+    private Team team;
+
+
 
     public Documento() {}
 
-    public Documento(String descrizione, String versione, LocalDate dataInvio) {
+    public Documento(Long id, String descrizione, String versione, LocalDate dataInvio) {
+        this.id = id;
         this.descrizione = descrizione;
         this.versione = versione;
         this.dataInvio = dataInvio;
     }
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
@@ -31,4 +38,6 @@ public class Documento {
     public LocalDate getDataInvio() {
         return dataInvio;
     }
+    public Team getTeam() {return team;}
+    public void setTeam(Team team) {this.team = team;}
 }
