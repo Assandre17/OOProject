@@ -6,6 +6,7 @@ public class Documento {
     private String descrizione;
     private String versione; //2.0 ecc
     private LocalDate dataInvio;
+    private String commGiudice;
     private Team team;
 
 
@@ -40,4 +41,6 @@ public class Documento {
     }
     public Team getTeam() {return team;}
     public void setTeam(Team team) {this.team = team;}
+    public String getCommGiudice() {return commGiudice;}
+    public void setCommGiudice(String commGiudice) {this.commGiudice = commGiudice;}
 }

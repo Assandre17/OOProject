@@ -60,6 +60,17 @@ public class EffettuaCommentoGiudice {
 
             }
         });
+
+        tornaIndietroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mittenteFrame.setVisible(true);
+                effettuaCommentoGiudiceFrame.setVisible(false);
+                effettuaCommentoGiudiceFrame.dispose();
+            }
+        });
+
+
     }
 
     {

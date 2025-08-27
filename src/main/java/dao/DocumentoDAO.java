@@ -13,4 +13,6 @@ public interface DocumentoDAO {
     Documento getDocumentoById(Long id);
 
     void addCommentoToDocumento(String commento, Long idDocumento);
+
+    List<Documento> getDocumentiByIdTeam(Long idTeam);
 }

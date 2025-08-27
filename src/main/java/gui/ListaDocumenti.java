@@ -4,6 +4,9 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Documento;
+import model.Partecipante;
+import model.Team;
+import model.Utente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import static utils.Utils.COLONNE_LISTA_DOCUMENTI;
+import static utils.Utils.*;
 
 public class ListaDocumenti {
 
@@ -20,24 +23,27 @@ public class ListaDocumenti {
     private JTable table1;
     private JButton avantiButton;
     private JButton tornaIndietroButton;
-    public JFrame dettagliHackathonFrame;
+    private JButton pubblicaProgressoButton;
     public JFrame listaDocumentiFrame;
     public JFrame frameChiamante;
     public DefaultTableModel listaDocumentiModel;
     private Controller controller;
+    public ActionButton actionButton;
 
 
     public ListaDocumenti(JFrame frameChiamante, Controller controller) {
 
-        this.dettagliHackathonFrame = frameChiamante;
         this.listaDocumentiFrame = new JFrame("ListaDocumenti");
         this.controller = controller;
+        this.frameChiamante = frameChiamante;
+        pubblicaProgressoButton.setVisible(false);
 
         listaDocumentiFrame.setContentPane(panel1);
         listaDocumentiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         listaDocumentiFrame.pack();
 
-        List<Documento> listaDocumenti = controller.getDocumentiByIdHackathon(controller.getIdHackathon());
+
+        List<Documento> listaDocumenti = getDocumenti(controller.getUtente());
 
         Object[][] datiTable = new Object[listaDocumenti.size()][4];
 
@@ -76,23 +82,80 @@ public class ListaDocumenti {
                 Long id = Long.parseLong(table1.getValueAt(riga, 0).toString());
 
                 controller.setIdDocumento(id);
-                EffettuaCommentoGiudice effettuaCommentoGiudice = new EffettuaCommentoGiudice(controller,listaDocumentiFrame);
-                effettuaCommentoGiudice.effettuaCommentoGiudiceFrame.setVisible(true);
-                listaDocumentiFrame.setVisible(false);
-                listaDocumentiFrame.dispose();
+                controller.getActionButton().doAction();
             }
         });
 
         tornaIndietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dettagliHackathonFrame.setVisible(true);
+                frameChiamante.setVisible(true);
                 listaDocumentiFrame.setVisible(false);
                 listaDocumentiFrame.dispose();
 
 
             }
         });
+
+        pubblicaProgressoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pubblicazione pubblicazione = new Pubblicazione(controller, listaDocumentiFrame);
+                pubblicazione.pubblicazioneFrame.setVisible(true);
+                listaDocumentiFrame.setVisible(false);
+                listaDocumentiFrame.dispose();
+            }
+        });
+    }
+
+
+    private List<Documento> getDocumenti(Utente user){
+        String userType = getTipo(user);
+        switch (userType) {
+            case TIPO_GIUDICE:
+                setActionButtonGiudice();
+                return controller.getDocumentiByIdHackathon(controller.getIdHackathon());
+            case TIPO_PARTECIPANTE:
+                pubblicaProgressoButton.setVisible(true);
+                setActionButtonPartecipante();
+                Partecipante partecipante = (Partecipante) user;
+                Long idTeam = partecipante.getTeam().stream()
+                        .filter(team -> team.getHackathon().getId().equals(controller.getIdHackathon()))
+                        .map(Team::getId)
+                        .findFirst()
+                        .orElse(null);
+                return controller.getDocumentiByIdTeam(idTeam);
+            default:
+                return null;
+        }
+    }
+
+    private void setActionButtonPartecipante(){
+        final ActionButton actionButton = new ActionButton() {
+            @Override
+            public void doAction() {
+                DettaglioDocumento dettaglioDocumento = new DettaglioDocumento(controller,listaDocumentiFrame);
+                dettaglioDocumento.dettaglioDocumentoFrame.setVisible(true);
+                listaDocumentiFrame.setVisible(false);
+                listaDocumentiFrame.dispose();
+            }
+            };
+
+        controller.setActionButton(actionButton);
+    }
+
+    private void setActionButtonGiudice(){
+        final ActionButton actionButton = new ActionButton() {
+            @Override
+            public void doAction() {
+                EffettuaCommentoGiudice effettuaCommentoGiudice = new EffettuaCommentoGiudice(controller,listaDocumentiFrame);
+                effettuaCommentoGiudice.effettuaCommentoGiudiceFrame.setVisible(true);
+                listaDocumentiFrame.setVisible(false);
+                listaDocumentiFrame.dispose();
+            }
+        };
+
+        controller.setActionButton(actionButton);
     }
 
 
@@ -117,7 +180,7 @@ public class ListaDocumenti {
         label1.setText("LISTA DOCUMENTI");
         panel1.add(label1, new GridConstraints(0, 0, 2, 3, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         table1 = new JTable();
         JScrollPane scrollPane = new JScrollPane(table1);
@@ -125,9 +188,12 @@ public class ListaDocumenti {
         avantiButton = new JButton();
         avantiButton.setText("Avanti");
         panel1.add(avantiButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pubblicaProgressoButton = new JButton();
+        pubblicaProgressoButton.setText("Pubblica Progresso");
+        panel2.add(pubblicaProgressoButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tornaIndietroButton = new JButton();
         tornaIndietroButton.setText("Torna indietro");
-        panel2.add(tornaIndietroButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(tornaIndietroButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
     }
 

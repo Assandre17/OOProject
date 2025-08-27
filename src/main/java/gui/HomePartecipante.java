@@ -145,9 +145,8 @@ public class HomePartecipante {
                         throw new RuntimeException(e);
                     }
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                    controller.setNomeButton("Pubblica Progresso");
-                    Pubblicazione pubblicazione = new Pubblicazione(controller, hackathonCreatiOrganizzatore.hcoFrame);
-                    pubblicazione.pubblicazioneFrame.setVisible(true);
+                    ListaDocumenti listaDocumenti = new ListaDocumenti(hackathonCreatiOrganizzatore.hcoFrame, controller);
+                    listaDocumenti.listaDocumentiFrame.setVisible(true);
                 }
             };
 
@@ -207,7 +206,7 @@ public class HomePartecipante {
         iscrivitiAdHackathonButton.setText("Iscriviti ad Hackathon");
         panel4.add(iscrivitiAdHackathonButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pubblicaProgressoButton = new JButton();
-        pubblicaProgressoButton.setText("Pubblica progresso");
+        pubblicaProgressoButton.setText("Progressi");
         panel4.add(pubblicaProgressoButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 

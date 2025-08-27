@@ -70,7 +70,7 @@ public class DocumentoImplementazionePostgresDAO implements DocumentoDAO {
     @Override
     public Documento getDocumentoById(Long id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT d.descrizione,d.versione, d.id AS id_documento, t.nome AS nome_team FROM documenti d " +
+            PreparedStatement ps = connection.prepareStatement("SELECT d.descrizione,d.versione,d.data_invio,d.commento_giudice, d.id AS id_documento, t.nome AS nome_team FROM documenti d " +
                     "JOIN teams t ON d.id_team = t.id " +
                     "WHERE d.id = ?");
             ps.setLong(1, id);
@@ -81,6 +81,8 @@ public class DocumentoImplementazionePostgresDAO implements DocumentoDAO {
                 documento.setId(rs.getLong("id_documento"));
                 documento.setVersione(rs.getString("versione"));
                 documento.setDescrizione(rs.getString("descrizione"));
+                documento.setDataInvio(rs.getDate("data_invio").toLocalDate());
+                documento.setCommGiudice(rs.getString("commento_giudice"));
 
                 String nomeTeam = rs.getString("nome_team");
                 Team team = new Team();
@@ -93,6 +95,34 @@ public class DocumentoImplementazionePostgresDAO implements DocumentoDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Documento> getDocumentiByIdTeam(Long idTeam) {
+        List<Documento> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT d.*, t.nome AS nome_team FROM documenti d " +
+                    "JOIN teams t ON d.id_team = t.id " +
+                    "WHERE id_team = ?");
+            ps.setLong(1, idTeam);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Documento documento = new Documento();
+                documento.setId(rs.getLong("id"));
+                documento.setVersione(rs.getString("versione"));
+                documento.setDescrizione(rs.getString("descrizione"));
+                String nomeTeam = rs.getString("nome_team");
+                Team team = new Team();
+                team.setNome(nomeTeam);
+                documento.setTeam(team);
+
+                list.add(documento);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override

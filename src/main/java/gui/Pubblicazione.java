@@ -34,7 +34,6 @@ public class Pubblicazione {
         pubblicazioneFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pubblicazioneFrame.pack();
         this.actionButton = controller.getActionButton();
-        this.pubblicaButton.setText(controller.getNomeButton());
         versioneField.setVisible(false);
         versioneLabel.setVisible(false);
 
@@ -59,9 +58,11 @@ public class Pubblicazione {
 
                 switch (userType) {
                     case TIPO_ORGANIZZATORE:
+                        pubblicaButton.setText("Pubblica Problema");
                         pubblicaProblema(descrizione);
                         break;
                     case TIPO_PARTECIPANTE:
+                        pubblicaButton.setText("Pubblica Progresso");
                         pubblicaProgresso(descrizione, versione);
                         break;
                     default:

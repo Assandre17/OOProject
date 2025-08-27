@@ -179,6 +179,12 @@ public class Controller {
         return documentoDAO.getDocumentiByIdHackathon(idHackathon);
     }
 
+    public List<Documento> getDocumentiByIdTeam(Long idTeam) {
+        System.out.println("visualizzazione documenti del team con id: " + idTeam);
+        DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
+        return documentoDAO.getDocumentiByIdTeam(idTeam);
+    }
+
     public Documento getDocumentoById(Long idDocumento) {
         DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
         return documentoDAO.getDocumentoById(idDocumento);

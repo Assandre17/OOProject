@@ -53,7 +53,6 @@ public class DettagliHackathon {
             pubblicaProblemaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    controller.setNomeButton("Pubblica Problema");
                     Pubblicazione pubblicazione = new Pubblicazione(controller, dettaglioFrame);
                     pubblicazione.pubblicazioneFrame.setVisible(true);
                     dettaglioFrame.setVisible(false);
