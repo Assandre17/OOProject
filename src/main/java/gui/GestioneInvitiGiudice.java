@@ -1,9 +1,8 @@
 package gui;
 
-
 import controller.Controller;
+import model.Giudice;
 import model.Invito;
-import model.Partecipante;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,41 +12,36 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Optional;
 
-import static utils.Utils.COLONNE_LISTA_INVITI;
+import static utils.Utils.COLONNE_LISTA_INVITI_GIUDICE;
 
-
-public class GestioneInvitiPartecipante {
+public class GestioneInvitiGiudice {
     private JPanel panel1;
     private JTable table1;
-    public JFrame gestioneInvitiPartecipanteFrame;
-    public JFrame homePartecipanteFrame;
+    public JFrame gestioneInvitiGiudiceFrame;
     private Controller controller;
     private JButton accettaButton;
     private JButton rifiutaButton;
     private JButton tornaAllaHomeButton;
 
 
-    public GestioneInvitiPartecipante(JFrame homePartecipanteFrame, Controller controller) {
-        this.homePartecipanteFrame = homePartecipanteFrame;
-        this.gestioneInvitiPartecipanteFrame = new JFrame("GestioneInvitiPartecipante");
+    public GestioneInvitiGiudice(JFrame homeGiudiceFrame, Controller controller) {
+        this.gestioneInvitiGiudiceFrame = new JFrame("GestioneInvitiGiudice");
         this.controller = controller;
-        gestioneInvitiPartecipanteFrame.setContentPane(panel1);
-        gestioneInvitiPartecipanteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gestioneInvitiPartecipanteFrame.pack();
+        gestioneInvitiGiudiceFrame.setContentPane(panel1);
+        gestioneInvitiGiudiceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gestioneInvitiGiudiceFrame.pack();
 
-        List<Invito> listaInviti = controller.getInvitiPartecipante((Partecipante) controller.getUtente());
+        List<Invito> listaInviti = controller.getInvitiGiudice((Giudice) controller.getUtente());
 
         Object[][] datiTable = new Object[listaInviti.size()][4];
 
         for (int i = 0; i < listaInviti.size(); i++) {
             datiTable[i][0] = listaInviti.get(i).getId();
-            datiTable[i][1] = listaInviti.get(i).getTeam().getNome();
-            datiTable[i][2] = controller.checkInvitatoIsUtenteLoggato(listaInviti.get(i).getUtenteInvitato().getEmail());
-            datiTable[i][3] = listaInviti.get(i).getTeam().getHackathon().getNome();
+            datiTable[i][1] = listaInviti.get(i).getHackathon().getNome();
         }
 
 
-        DefaultTableModel tabellaInviti = new DefaultTableModel(datiTable, COLONNE_LISTA_INVITI) {
+        DefaultTableModel tabellaInviti = new DefaultTableModel(datiTable, COLONNE_LISTA_INVITI_GIUDICE) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
@@ -65,17 +59,13 @@ public class GestioneInvitiPartecipante {
         accettaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Invito invitoDaAccettare = getInvito(listaInviti);
-                if (invitoDaAccettare != null) {
-                    if (invitoDaAccettare.getUtenteInvitato().getId().equals(controller.getUtente().getId()) && controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), invitoDaAccettare.getTeam().getHackathon().getId())) {
-                        JOptionPane.showMessageDialog(panel1, "Non puoi accettare l'invito di un team in quanto già sei presente in un altro team!");
-                        return;
-                    }
-                    controller.accettaORifiutaInvitoTeam(true, (Partecipante) invitoDaAccettare.getUtenteInvitato(), invitoDaAccettare.getTeam().getId(), invitoDaAccettare.getId());
+                Invito invitoDaRifiutare = getInvito(listaInviti);
+                if (invitoDaRifiutare != null) {
+                    controller.accettaORifiutaInvitoOrganizzatore(true, (Giudice) invitoDaRifiutare.getUtenteInvitato(), invitoDaRifiutare.getHackathon().getId(), invitoDaRifiutare.getId());
                     JOptionPane.showMessageDialog(panel1, "Invito Accettato");
-                    homePartecipanteFrame.setVisible(true);
-                    gestioneInvitiPartecipanteFrame.setVisible(false);
-                    gestioneInvitiPartecipanteFrame.dispose();
+                    homeGiudiceFrame.setVisible(true);
+                    gestioneInvitiGiudiceFrame.setVisible(false);
+                    gestioneInvitiGiudiceFrame.dispose();
                 }
             }
         });
@@ -83,28 +73,33 @@ public class GestioneInvitiPartecipante {
         rifiutaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Invito invitoDaRifiutare = getInvito(listaInviti);
-                if (invitoDaRifiutare != null) {
-                    controller.accettaORifiutaInvitoTeam(false, (Partecipante) invitoDaRifiutare.getUtenteInvitato(), invitoDaRifiutare.getTeam().getId(), invitoDaRifiutare.getId());
-                    JOptionPane.showMessageDialog(panel1, "Invito rifiutato");
-                    homePartecipanteFrame.setVisible(true);
-                    gestioneInvitiPartecipanteFrame.setVisible(false);
-                    gestioneInvitiPartecipanteFrame.dispose();
-                }
+                 Invito invitoDaRifiutare = getInvito(listaInviti);
+
+                    if (invitoDaRifiutare != null) {
+                        controller.accettaORifiutaInvitoOrganizzatore(false, (Giudice) invitoDaRifiutare.getUtenteInvitato(), invitoDaRifiutare.getHackathon().getId(), invitoDaRifiutare.getId());
+                        JOptionPane.showMessageDialog(panel1, "Invito rifiutato");
+                        homeGiudiceFrame.setVisible(true);
+                        gestioneInvitiGiudiceFrame.setVisible(false);
+                        gestioneInvitiGiudiceFrame.dispose();
+                    }
+
+
+
             }
         });
 
         tornaAllaHomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePartecipanteFrame.setVisible(true);
-                gestioneInvitiPartecipanteFrame.setVisible(false);
-                gestioneInvitiPartecipanteFrame.dispose();
+                homeGiudiceFrame.setVisible(true);
+                gestioneInvitiGiudiceFrame.setVisible(false);
+                gestioneInvitiGiudiceFrame.dispose();
             }
         });
         table1.setModel(tabellaInviti);
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+
     private Invito getInvito(List<Invito> listaInviti) {
         int rigaSelezionata = table1.getSelectedRow();
         if (rigaSelezionata < 0) {
@@ -162,5 +157,5 @@ public class GestioneInvitiPartecipante {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
-
 }
+

@@ -67,7 +67,7 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String tipo = rs.getString("tipo");
-                partecipantiList.add((Partecipante) Utils.getUtenteModel(id,nome,cognome,email,password,tipo,null));
+                partecipantiList.add((Partecipante) Utils.getUtenteModel(id,nome,cognome,email,password,tipo,null,null));
             }
             rs.close();
             return partecipantiList;

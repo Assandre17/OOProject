@@ -2,16 +2,18 @@ package model;
 
 public class Invito {
     private Long id;
-    private Partecipante partecipanteInvitato;
+    private Utente utenteInvitato;
     private Team team;
+    private Hackathon hackathon;
     private String stato;
 
     public Invito() {}
 
-    public Invito(Long id, Partecipante partecipanteInvitato, Team team, String stato) {
+    public Invito(Long id, Utente utenteInvitato, Team team, Hackathon hackathon, String stato) {
         this.id = id;
-        this.partecipanteInvitato = partecipanteInvitato;
+        this.utenteInvitato = utenteInvitato;
         this.team = team;
+        this.hackathon = hackathon;
         this.stato = stato;
     }
 
@@ -23,12 +25,12 @@ public class Invito {
         this.id = id;
     }
 
-    public Partecipante getPartecipanteInvitato() {
-        return partecipanteInvitato;
+    public Utente getUtenteInvitato() {
+        return utenteInvitato;
     }
 
-    public void setPartecipanteInvitato(Partecipante partecipante) {
-        this.partecipanteInvitato = partecipante;
+    public void setUtenteInvitato(Utente utente) {
+        this.utenteInvitato = utente;
     }
 
     public Team getTeam() {
@@ -46,4 +48,8 @@ public class Invito {
     public void setStato(String stato) {
         this.stato = stato;
     }
+
+    public Hackathon getHackathon() {return hackathon;}
+
+    public void setHackathon(Hackathon hackathon) {this.hackathon = hackathon;}
 }

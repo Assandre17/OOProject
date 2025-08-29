@@ -115,9 +115,9 @@ public class ListaGiudici {
 
     //metodo temporaneo che restituisce una lista di Giudici mockata
     private List<Giudice> getMockGiudici() {
-        Giudice Giudice1 = new Giudice(null, "Marco", "Rossi", "prova", "prova");
+        Giudice Giudice1 = new Giudice(null, "Marco", "Rossi", "prova", "prova",null);
         Giudice1.setId(1L);
-        Giudice Giudice2 = new Giudice(null, "Pippo", "Pluto", "prova", "prova");
+        Giudice Giudice2 = new Giudice(null, "Pippo", "Pluto", "prova", "prova",null);
         Giudice2.setId(2L);
         List<Giudice> listaGiudici = new ArrayList<>();
         listaGiudici.add(Giudice1);

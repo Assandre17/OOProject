@@ -70,7 +70,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
                 Long idHackathon = rs.getLong("id_hackathon");
 
                 if (idTeam.equals(0L)) {
-                    utente = Utils.getUtenteModel(id, nome, cognome, email, password, tipo, null);
+                    utente = Utils.getUtenteModel(id, nome, cognome, email, password, tipo, null, null);
                 } else {
                     Hackathon hackathon = new Hackathon();
                     hackathon.setId(idHackathon);
@@ -80,7 +80,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
                     team.setNome(nomeTeam);
                     team.setHackathon(hackathon);
                     teams.add(team);
-                    utente = Utils.getUtenteModel(id, nome, cognome, email, password, tipo, teams);// Assumendo che Utente ora abbia una lista di Team
+                    utente = Utils.getUtenteModel(id, nome, cognome, email, password, tipo, teams, null);// Assumendo che Utente ora abbia una lista di Team
                 }
 
 
@@ -107,7 +107,7 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
                 String cognome = rs.getString("cognome");
                 String tipo = rs.getString("tipo");
 
-                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo, null);
+                return Utils.getUtenteModel(id, nome,cognome,email,password,tipo, null, null);
             }
             rs.close();
         } catch (SQLException e) {

@@ -47,18 +47,18 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
         List<Invito> invitiList = new ArrayList<>();
 
         String sql =
-                "SELECT i.id AS invito_id, i.id_partecipante, i.id_team, i.stato, " +
+                "SELECT i.id AS invito_id, i.id_invitato, i.id_team, i.stato, " +
                         "t.nome AS nome_team, t.id_hackathon AS id_hackathon, h.nome AS nome_hackathon, u.email " +
                         "FROM inviti i " +
                         "JOIN teams t ON i.id_team=t.id " +
                         "JOIN hackathon h ON t.id_hackathon=h.id " +
-                        "JOIN users u ON i.id_partecipante=u.id " +
-                        "WHERE (i.id_partecipante=? AND i.figura_inserimento='TEAM' AND i.stato = 'IN ATTESA') " +
-                        "OR (i.figura_inserimento='PARTECIPANTE' " +
+                        "JOIN users u ON i.id_invitato=u.id " +
+                        "WHERE (i.id_invitato=? AND i.figura_inserimento='TEAM' AND i.stato = 'IN ATTESA') " +  //PER I PARTECIPANTI
+                        "OR (i.figura_inserimento='PARTECIPANTE' " +  //PER I TEAM - prende gli inviti inviati da un partecipante, con stato in attesa, che sono rivolti al suo team ed esclude gli inviti di partecipanti che fanno già parte di un team
                         "AND i.stato = 'IN ATTESA' AND i.id_team IN(SELECT pt.id_team FROM partecipante_team pt WHERE pt.id_partecipante=?) " +
                         "AND NOT EXISTS(SELECT 1 FROM partecipante_team pt2 " +
                         "JOIN teams t2 ON t2.id=pt2.id_team " +
-                        "WHERE pt2.id_partecipante=i.id_partecipante AND t2.id_hackathon=t.id_hackathon))";
+                        "WHERE pt2.id_partecipante=i.id_invitato AND t2.id_hackathon=t.id_hackathon))";
 
 
 
@@ -69,7 +69,7 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Long invitoId = rs.getLong("invito_id");
-                    Long idPartecipante = rs.getLong("id_partecipante");
+                    Long idPartecipante = rs.getLong("id_invitato");
                     Long idTeam = rs.getLong("id_team");
                     Long idHackathon = rs.getLong(("id_hackathon"));
                     String stato = rs.getString("stato");
@@ -85,9 +85,53 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
 
                     // Utente contiene solo il team dell’invito
                     Utente utente = getUtenteModel(idPartecipante, null, null, emailPartecipante,
-                            null, TIPO_PARTECIPANTE, Collections.singletonList(team));
+                            null, TIPO_PARTECIPANTE, Collections.singletonList(team), null);
 
-                    invitiList.add(new Invito(invitoId, (Partecipante) utente, team, stato));
+                    invitiList.add(new Invito(invitoId, utente, team,null, stato));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return invitiList;
+    }
+
+    @Override
+    public List<Invito> getInvitiGiudice(Giudice giudice) {
+        List<Invito> invitiList = new ArrayList<>();
+
+        String sql =
+                "SELECT i.id AS invito_id, i.id_invitato, i.id_hackathon, i.stato, " +
+                        "h.nome AS nome_hackathon, u.email " +
+                        "FROM inviti i " +
+                        "JOIN users u ON i.id_invitato=u.id " +
+                        "JOIN giudice_hackathon gh ON u.id=gh.id_giudice " +
+                        "JOIN hackathon h ON gh.id_hackathon=h.id " +
+                        "WHERE i.id_invitato=? AND i.figura_inserimento='ORGANIZZATORE' AND i.stato = 'IN ATTESA'";
+
+
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, giudice.getId());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Long invitoId = rs.getLong("invito_id");
+                    Long idPartecipante = rs.getLong("id_invitato");
+                    Long idHackathon = rs.getLong(("id_hackathon"));
+                    String stato = rs.getString("stato");
+                    String nomeHackathon = rs.getString("nome_hackathon");
+                    String emailPartecipante = rs.getString("email");
+
+                    Hackathon hackathon = new Hackathon();
+                    hackathon.setNome(nomeHackathon);
+                    hackathon.setId(idHackathon);
+
+                    Utente utente = getUtenteModel(idPartecipante, null, null, emailPartecipante,
+                            null, TIPO_GIUDICE, null, Collections.singletonList(hackathon));
+
+                    invitiList.add(new Invito(invitoId, utente, null, hackathon, stato));
                 }
             }
         } catch (SQLException e) {

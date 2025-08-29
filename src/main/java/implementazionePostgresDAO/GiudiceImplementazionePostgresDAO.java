@@ -52,4 +52,19 @@ public class GiudiceImplementazionePostgresDAO implements GiudiceDAO {
         return list;
     }
 
+    @Override
+    public void addHackathonToGiudice(Long idGiudice, Long idHackathon) {
+            try (PreparedStatement ps = connection.prepareStatement("INSERT INTO giudice_hackathon (id_giudice, id_hackathon) VALUES(?,?)")) {
+                ps.setLong(2, idHackathon);
+                ps.setLong(1, idGiudice);
+                ps.executeUpdate();
+
+                connection.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+    }
+
 }

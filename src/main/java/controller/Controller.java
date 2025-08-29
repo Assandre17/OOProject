@@ -114,7 +114,7 @@ public class Controller {
             throw new InstanceAlreadyExistsException("Utente già esistente nel sistema");
         }
 
-        Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo,null);
+        Utente utenteRegistrato = Utils.getUtenteModel(null, nome,cognome,email,password,tipo,null, null);
 
         utenteDAO.insertUtente(utenteRegistrato);
     }
@@ -172,6 +172,12 @@ public class Controller {
         return invitoDAO.getInvitiPartecipante(partecipante);
     }
 
+    public List<Invito> getInvitiGiudice(Giudice giudice) {
+        System.out.println("visualizzazione inviti del partecipante");
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        return invitoDAO.getInvitiGiudice(giudice);
+    }
+
 
     public List<Documento> getDocumentiByIdHackathon(Long idHackathon) {
         System.out.println("visualizzazione documenti dell'hackathon con id: " + idHackathon);
@@ -195,7 +201,7 @@ public class Controller {
 
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
 
-        String statoInvito = null;
+        String statoInvito;
 
         if(decisione){
             statoInvito = Utils.STATO_ACCETTATO;
@@ -207,6 +213,25 @@ public class Controller {
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
         invitoDAO.updateStatoInvito(idInvito,statoInvito);
 
+
+    }
+
+    public void accettaORifiutaInvitoOrganizzatore(boolean decisione, Giudice giudice, Long idHackathon, Long idInvito) {
+        System.out.println("gestione invito in corso...");
+
+        GiudiceImplementazionePostgresDAO giudiceDAO = new GiudiceImplementazionePostgresDAO();
+
+        String statoInvito;
+
+        if(decisione){
+            statoInvito = Utils.STATO_ACCETTATO;
+            giudiceDAO.addHackathonToGiudice(giudice.getId(), idHackathon);
+        }else{
+            statoInvito = Utils.STATO_RIFIUTATO;
+        }
+
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        invitoDAO.updateStatoInvito(idInvito,statoInvito);
 
     }
     public String pubblicaProblema(String problema, Long idHackathon){
@@ -272,7 +297,7 @@ public class Controller {
     }
 
 
-    public String checkPartecipanteInvitatoIsUtenteLoggato(String email){
+    public String checkInvitatoIsUtenteLoggato(String email){
         if(email.equals(utente.getEmail())){
             return "TU";
         }else {

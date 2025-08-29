@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface GiudiceDAO {
     List<Hackathon> getListHackathon(Giudice giudice) throws SQLException;
+
+    void addHackathonToGiudice(Long id, Long idHackathon);
 }

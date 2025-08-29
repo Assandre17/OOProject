@@ -9,6 +9,8 @@ public class Utils {
 
     public static final String[] COLONNE_LISTA_PARTECIPANTI = {"","ID", "Nome", "Cognome"};
     public static final String[] COLONNE_LISTA_INVITI = {"ID", "Nome Team", "Partecipante Invitato", "Nome Hackathon"};
+    public static final String[] COLONNE_LISTA_INVITI_GIUDICE = {"ID Invito", "Nome Hackathon"};
+
     public static final String[] COLONNE_LISTA_TEAM = {"ID", "Nome Team"};
     public static final String[] COLONNE_LISTA_HACKATHON = {"ID", "Nome Hackathon", "Descrizione"};
     public static final String[] COLONNE_LISTA_DOCUMENTI = {"ID", "Nome Team", "Versione Documento"};
@@ -44,10 +46,10 @@ public class Utils {
 
     }
 
-    public static Utente getUtenteModel(Long id, String nome, String cognome, String email, String password, String tipo, List<Team> team) {
+    public static Utente getUtenteModel(Long id, String nome, String cognome, String email, String password, String tipo, List<Team> team, List<Hackathon> hackathon) {
         return switch (tipo.toUpperCase()) {
             case TIPO_ORGANIZZATORE -> new Organizzatore(id, nome, cognome, email, password);
-            case TIPO_GIUDICE -> new Giudice(id, nome, cognome, email, password);
+            case TIPO_GIUDICE -> new Giudice(id, nome, cognome, email, password, hackathon);
             case TIPO_PARTECIPANTE-> new Partecipante(id, nome, cognome, email, password,team);
             default -> null;
         };
