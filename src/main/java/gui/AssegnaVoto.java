@@ -5,7 +5,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import controller.Controller;
-import model.Voto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +36,11 @@ public class AssegnaVoto {
             public void actionPerformed(ActionEvent e) {
                 int valutazione = Integer.parseInt(Objects.requireNonNull(comboBox1.getSelectedItem()).toString());
                 String commento = textArea1.getText();
-                Voto voto = new Voto(valutazione, commento);
-                controller.assegnaVoto(voto, controller.getIdTeam());
+                if (commento.isBlank()) {
+                    JOptionPane.showMessageDialog(panel1, "il campo commento non può essere vuoto!");
+                    throw new IllegalArgumentException("il campo commento non può essere vuoto!");
+                }
+                controller.assegnaVoto(valutazione, commento, controller.getIdTeam());
 
                 JOptionPane.showMessageDialog(panel1, "Voto pubblicato!");
                 HomeGiudice homeGiudice = new HomeGiudice(controller);
@@ -110,6 +112,8 @@ public class AssegnaVoto {
         label2.setText("Commento");
         panel2.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textArea1 = new JTextArea();
+        textArea1.setLineWrap(true);
+        textArea1.setWrapStyleWord(true);
         panel2.add(textArea1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         pubblicaVotoButton = new JButton();
         pubblicaVotoButton.setText("Pubblica voto");

@@ -81,6 +81,21 @@ public class InviaRichiestaPartecipante {
                     }
                     inviaRichiestaIngressoTeam(idTeam, listaTeam);
                     mittenteFrame.setVisible(true);
+                } else if(inviaRichiestaButton.getText().equals("Assegna Voto")) {
+                    try {
+                        Team team = controller.getTeamById(idTeam);
+
+                        if(team.getVoto() != null){
+                            throw new IllegalAccessException("Non puoi assegnare un voto a questo Team in quanto già ha ricevuto una valutazione");
+                        }
+
+
+                    }catch (IllegalAccessException ex) {
+                        JOptionPane.showMessageDialog(panel1,ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+
+
                 }
 
                 actionButton.doAction();

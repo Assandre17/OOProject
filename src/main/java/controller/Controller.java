@@ -92,6 +92,12 @@ public class Controller {
         return teamDAO.getTeamByIdHackathon(idHackathon);
     }
 
+    public Team getTeamById(Long id) {
+        TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
+        return teamDAO.getTeamById(id);
+    }
+
+
 
 
     public List<Partecipante> getPartecipantiWithoutTeam(){
@@ -185,6 +191,21 @@ public class Controller {
         return documentoDAO.getDocumentiByIdHackathon(idHackathon);
     }
 
+    public Hackathon getHackathonById(Long idHackathon) {
+        try {
+            HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
+            Hackathon hackathon = hackathonDAO.getHackathonById(idHackathon);
+
+            if (hackathon == null) {
+                throw new InstanceNotFoundException("Hackathon non trovato con id: " + idHackathon);
+            }
+
+            return hackathon;
+        } catch (InstanceNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Documento> getDocumentiByIdTeam(Long idTeam) {
         System.out.println("visualizzazione documenti del team con id: " + idTeam);
         DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
@@ -234,15 +255,20 @@ public class Controller {
         invitoDAO.updateStatoInvito(idInvito,statoInvito);
 
     }
-    public String pubblicaProblema(String problema, Long idHackathon){
+    public void pubblicaProblema(String problema, Long idHackathon){
         System.out.println("pubblica problema in corso...");
-
-        return "";
+        HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
+        hackathonDAO.addProblemaToHackathon(problema, idHackathon);
 
     }
-    public int assegnaVoto(Voto voto, Long idTeam){
+    public void assegnaVoto(Integer valutazione, String commento, Long idTeam){
         System.out.println("pubblica voto in corso...");
-        return 0;
+        VotoImplementazionePostgresDAO votoDAO = new VotoImplementazionePostgresDAO();
+        Long idVoto = votoDAO.insertVoto(valutazione,commento);
+
+        TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
+        teamDAO.addVotoToTeam(idTeam, idVoto);
+
     }
 
 

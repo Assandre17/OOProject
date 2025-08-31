@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Giudice;
+import model.Hackathon;
 import model.Organizzatore;
 import model.Utente;
 
@@ -12,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class DettagliHackathon {
     public JFrame dettaglioFrame;
@@ -71,6 +73,15 @@ public class DettagliHackathon {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    try {
+                        Hackathon hackathon = controller.getHackathonById(controller.getIdHackathon());
+                        if (hackathon.getDataFine().isAfter(LocalDate.now())) {
+                            throw new IllegalAccessException("Non puoi assegnare un voto se l'hackathon non è ancora terminato!");
+                        }
+                    } catch (IllegalAccessException ex) {
+                        JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
                     controller.setActionButton(actionButton);
                     controller.setNomeButton("Assegna Voto");
                     InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(dettaglioFrame, controller);
