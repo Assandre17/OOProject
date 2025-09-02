@@ -21,13 +21,14 @@ public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO
     public void insertHackathon(Hackathon hackathon) {
         try{
             PreparedStatement ps = connection.prepareStatement
-                    ("INSERT INTO hackathon (nome,sede,data_inizio,data_fine,num_partecipanti,num_max_partecipanti) VALUES(?,?,?,?,?,?)");
+                    ("INSERT INTO hackathon (nome,sede,data_inizio,data_fine,num_partecipanti,num_max_partecipanti,id_organizzatore) VALUES(?,?,?,?,?,?,?)");
             ps.setString(1, hackathon.getNome());
             ps.setString(2, hackathon.getSede());
             ps.setDate(3, Date.valueOf(hackathon.getDataInizio()));
             ps.setDate(4, Date.valueOf(hackathon.getDataFine()));
             ps.setInt(5, hackathon.getNumpartecipanti());
             ps.setInt(6, hackathon.getNummaxpartecipanti());
+            ps.setLong(7, hackathon.getOrganizzatore().getId());
             ps.executeUpdate();
             connection.close();
         }

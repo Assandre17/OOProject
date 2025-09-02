@@ -49,9 +49,15 @@ public class Controller {
             throw new IllegalArgumentException("formato data fine iscrizioni non valido! il formato deve essere AAAA-MM-GG");
         } //check data fatto
 
+        long idor = utente.getId();
+
+        Organizzatore organizzatore = new Organizzatore();
+        organizzatore.setId(idor);
+
         Hackathon hackathon = new Hackathon();
         hackathon.setSede(sede);
         hackathon.setNome(nome);
+        hackathon.setOrganizzatore(organizzatore);
         hackathon.setNummaxpartecipanti(Integer.parseInt(numMaxPartecipanti));
         hackathon.setDataInizio(LocalDate.parse(inizioIscrizioni));
         hackathon.setDataFine(LocalDate.parse(fineIscrizioni));
