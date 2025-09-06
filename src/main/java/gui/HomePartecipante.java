@@ -19,7 +19,7 @@ public class HomePartecipante {
     private JButton gestioneInvitiButton;
     private JButton inviaRichiestaButton;
     private JButton iscrivitiAdHackathonButton;
-    private JButton pubblicaProgressoButton;
+    private JButton progressoButton;
     public JFrame homePartecipanteFrame;
     private Controller controller;
 
@@ -121,7 +121,7 @@ public class HomePartecipante {
             }
         });
 
-        pubblicaProgressoButton.addActionListener(new ActionListener() {
+        progressoButton.addActionListener(new ActionListener() {
 
             final ActionButton actionButton = new ActionButton() {
                 @Override
@@ -145,8 +145,8 @@ public class HomePartecipante {
                         throw new RuntimeException(e);
                     }
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                    ListaDocumenti listaDocumenti = new ListaDocumenti(hackathonCreatiOrganizzatore.hcoFrame, controller);
-                    listaDocumenti.listaDocumentiFrame.setVisible(true);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller,hackathonCreatiOrganizzatore.hcoFrame);
+                    dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
 
@@ -205,9 +205,9 @@ public class HomePartecipante {
         iscrivitiAdHackathonButton = new JButton();
         iscrivitiAdHackathonButton.setText("Iscriviti ad Hackathon");
         panel4.add(iscrivitiAdHackathonButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        pubblicaProgressoButton = new JButton();
-        pubblicaProgressoButton.setText("Progressi");
-        panel4.add(pubblicaProgressoButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        progressoButton = new JButton();
+        progressoButton.setText("Progressi");
+        panel4.add(progressoButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

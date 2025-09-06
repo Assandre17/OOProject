@@ -4,7 +4,6 @@ package gui;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
-import model.Giudice;
 import model.Hackathon;
 import model.Organizzatore;
 import model.Utente;
@@ -15,12 +14,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import static utils.Utils.*;
+
 public class DettagliHackathon {
     public JFrame dettaglioFrame;
     public JFrame hcoFrame;
     private JButton tornaIndietroButton;
     private JPanel panel1;
-    private JButton pubblicaProblemaButton;
+    private JButton pubblicaButton;
     private JButton invitaGiudiciButton;
     private JButton apriRegistrazioniButton;
     private JButton assegnaVotoButton;
@@ -36,7 +37,7 @@ public class DettagliHackathon {
         dettaglioFrame.pack();
         assegnaVotoButton.setVisible(false);
         visualizzaDocumentiButton.setVisible(false);
-        pubblicaProblemaButton.setVisible(false);
+        pubblicaButton.setVisible(false);
         apriRegistrazioniButton.setVisible(false);
         invitaGiudiciButton.setVisible(false);
         System.out.println("DettagliHackathon id: " + controller.getIdHackathon());
@@ -51,96 +52,106 @@ public class DettagliHackathon {
             }
         });
 
-        if (seeGiudiceButtons(controller.getUtente())) {
-            pubblicaProblemaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Pubblicazione pubblicazione = new Pubblicazione(controller, dettaglioFrame);
-                    pubblicazione.pubblicazioneFrame.setVisible(true);
-                    dettaglioFrame.setVisible(false);
-                    dettaglioFrame.dispose();
-                }
-            });
+        seeUserButtons(controller.getUtente());
 
-            assegnaVotoButton.addActionListener(new ActionListener() {
-                final ActionButton actionButton = new ActionButton() {
-                    @Override
-                    public void doAction() {
-                        AssegnaVoto assegnaVoto = new AssegnaVoto(controller);
-                        assegnaVoto.assegnaVotoFrame.setVisible(true);
+        pubblicaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pubblicazione pubblicazione = new Pubblicazione(controller, dettaglioFrame);
+                pubblicazione.pubblicazioneFrame.setVisible(true);
+                dettaglioFrame.setVisible(false);
+                dettaglioFrame.dispose();
+            }
+        });
+
+        assegnaVotoButton.addActionListener(new ActionListener() {
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    AssegnaVoto assegnaVoto = new AssegnaVoto(controller);
+                    assegnaVoto.assegnaVotoFrame.setVisible(true);
+                }
+            };
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Hackathon hackathon = controller.getHackathonById(controller.getIdHackathon());
+                    if (hackathon.getDataFine().isAfter(LocalDate.now())) {
+                        throw new IllegalAccessException("Non puoi assegnare un voto se l'hackathon non è ancora terminato!");
                     }
-                };
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        Hackathon hackathon = controller.getHackathonById(controller.getIdHackathon());
-                        if (hackathon.getDataFine().isAfter(LocalDate.now())) {
-                            throw new IllegalAccessException("Non puoi assegnare un voto se l'hackathon non è ancora terminato!");
-                        }
-                    } catch (IllegalAccessException ex) {
-                        JOptionPane.showMessageDialog(panel1, ex.getMessage());
-                        throw new RuntimeException(ex);
-                    }
-                    controller.setActionButton(actionButton);
-                    controller.setNomeButton("Assegna Voto");
-                    InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(dettaglioFrame, controller);
-                    inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
-                    dettaglioFrame.setVisible(false);
-                    dettaglioFrame.dispose();
+                } catch (IllegalAccessException ex) {
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                    throw new RuntimeException(ex);
                 }
-            });
+                controller.setActionButton(actionButton);
+                controller.setNomeButton("Assegna Voto");
+                InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(dettaglioFrame, controller);
+                inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                dettaglioFrame.setVisible(false);
+                dettaglioFrame.dispose();
+            }
+        });
 
-            visualizzaDocumentiButton.addActionListener(new ActionListener() {
+        visualizzaDocumentiButton.addActionListener(new ActionListener() {
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ListaDocumenti listaDocumenti = new ListaDocumenti(dettaglioFrame, controller);
-                    listaDocumenti.listaDocumentiFrame.setVisible(true);
-                    dettaglioFrame.setVisible(false);
-                    dettaglioFrame.dispose();
-                }
-            });
-        }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListaDocumenti listaDocumenti = new ListaDocumenti(dettaglioFrame, controller);
+                listaDocumenti.listaDocumentiFrame.setVisible(true);
+                dettaglioFrame.setVisible(false);
+                dettaglioFrame.dispose();
+            }
+        });
 
-        if (seeOrganizzatoreButtons(controller.getUtente())) {
-            apriRegistrazioniButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.apriRegistrazioni();
-                    JOptionPane.showMessageDialog(panel1, "Registrazioni aperte con successo.");
-                    hcoFrame.setVisible(true);
-                    dettaglioFrame.setVisible(false);
-                    dettaglioFrame.dispose();
-                }
-            });
 
-            invitaGiudiciButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ListaGiudici listaGiudici = new ListaGiudici(dettaglioFrame, controller);
-                    listaGiudici.listaGiudiciFrame.setVisible(true);
-                    dettaglioFrame.setVisible(false);
-                    dettaglioFrame.dispose();
-                }
-            });
-        }
+        apriRegistrazioniButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.apriRegistrazioni();
+                JOptionPane.showMessageDialog(panel1, "Registrazioni aperte con successo.");
+                hcoFrame.setVisible(true);
+                dettaglioFrame.setVisible(false);
+                dettaglioFrame.dispose();
+            }
+        });
+
+        invitaGiudiciButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListaGiudici listaGiudici = new ListaGiudici(dettaglioFrame, controller);
+                listaGiudici.listaGiudiciFrame.setVisible(true);
+                dettaglioFrame.setVisible(false);
+                dettaglioFrame.dispose();
+            }
+        });
+
     }
 
-    private boolean seeGiudiceButtons(Utente utente) {
-        if (utente instanceof Giudice) {
-            assegnaVotoButton.setVisible(true);
-            pubblicaProblemaButton.setVisible(true);
-            visualizzaDocumentiButton.setVisible(true);
-            return true;
+    private void seeUserButtons(Utente user){
+        String userType = getTipo(user);
+        switch (userType){
+            case TIPO_GIUDICE:
+                assegnaVotoButton.setVisible(true);
+                pubblicaButton.setVisible(true);
+                visualizzaDocumentiButton.setVisible(true);
+                break;
+            case TIPO_ORGANIZZATORE:
+                apriRegistrazioniButton.setVisible(true);
+                invitaGiudiciButton.setVisible(true);
+                break;
+            case TIPO_PARTECIPANTE:
+                pubblicaButton.setVisible(true);
+                visualizzaDocumentiButton.setVisible(true);
+                break;
+            default:
+                break;
         }
-        return false;
     }
 
     private boolean seeOrganizzatoreButtons(Utente utente) {
         if (utente instanceof Organizzatore) {
-            apriRegistrazioniButton.setVisible(true);
-            invitaGiudiciButton.setVisible(true);
+
             return true;
         }
         return false;
@@ -169,9 +180,9 @@ public class DettagliHackathon {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel3, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        pubblicaProblemaButton = new JButton();
-        pubblicaProblemaButton.setText("Pubblica problema");
-        panel3.add(pubblicaProblemaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pubblicaButton = new JButton();
+        pubblicaButton.setText("Pubblica");
+        panel3.add(pubblicaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         assegnaVotoButton = new JButton();
         assegnaVotoButton.setText("Assegna voto");
         panel3.add(assegnaVotoButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

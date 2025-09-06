@@ -119,13 +119,11 @@ public class Pubblicazione {
         }
     }
 
-    private boolean seePartecipanteField(Utente utente) {
+    private void seePartecipanteField(Utente utente) {
         if (utente instanceof Partecipante) {
             versioneField.setVisible(true);
             versioneLabel.setVisible(true);
-            return true;
         }
-        return false;
     }
 
     {
