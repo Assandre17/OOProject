@@ -8,10 +8,10 @@ public class Hackathon {
     private String sede;
     private LocalDate dataInizio;
     private LocalDate dataFine;
-    private int numpartecipanti;
-    private int nummaxpartecipanti;
-    private LocalDate inizioiscrizioni;
-    private LocalDate fineiscrizioni;
+    private Integer numPartecipanti;
+    private Integer numMaxPartecipanti;
+    private LocalDate inizioIscrizioni;
+    private LocalDate fineIscrizioni;
     private String descrizione;
     private Organizzatore organizzatore;
 
@@ -25,14 +25,14 @@ public class Hackathon {
     public LocalDate getDataInizio() {return dataInizio;}
     public void setDataFine(LocalDate dataFine) {this.dataFine = dataFine;}
     public LocalDate getDataFine() {return dataFine;}
-    public void setNumpartecipanti(int numpartecipanti) {this.numpartecipanti = numpartecipanti;}
-    public int getNumpartecipanti() {return numpartecipanti;}
-    public void setNummaxpartecipanti(int nummaxpartecipanti) {this.nummaxpartecipanti = nummaxpartecipanti;}
-    public int getNummaxpartecipanti() {return nummaxpartecipanti;}
-    public void setInizioiscrizioni(LocalDate inizioIscrizioni) {this.inizioiscrizioni = inizioIscrizioni;}
-    public LocalDate getInizioiscrizioni() {return inizioiscrizioni;}
-    public void setFineiscrizioni(LocalDate fineIscrizioni) {this.fineiscrizioni = fineIscrizioni;}
-    public LocalDate getFineiscrizioni() {return fineiscrizioni;}
+    public void setNumPartecipanti(Integer numPartecipanti) {this.numPartecipanti = numPartecipanti;}
+    public Integer getNumPartecipanti() {return numPartecipanti;}
+    public void setNumMaxPartecipanti(Integer numMaxPartecipanti) {this.numMaxPartecipanti = numMaxPartecipanti;}
+    public Integer getNumMaxPartecipanti() {return numMaxPartecipanti;}
+    public void setInizioIscrizioni(LocalDate inizioIscrizioni) {this.inizioIscrizioni = inizioIscrizioni;}
+    public LocalDate getInizioIscrizioni() {return inizioIscrizioni;}
+    public void setFineIscrizioni(LocalDate fineIscrizioni) {this.fineIscrizioni = fineIscrizioni;}
+    public LocalDate getFineIscrizioni() {return fineIscrizioni;}
     public void setDescrizione(String descrizione) {this.descrizione = descrizione;}
     public String getDescrizione() {return descrizione;}
     public void setOrganizzatore(Organizzatore organizzatore){this.organizzatore = organizzatore;}

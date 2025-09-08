@@ -102,7 +102,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="bff0" class="javax.swing.JLabel">
+          <component id="bff0" class="javax.swing.JLabel" binding="numMaxPartecipantiLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -110,7 +110,7 @@
               <text value="numero massimo partecipanti:"/>
             </properties>
           </component>
-          <component id="ea962" class="javax.swing.JLabel">
+          <component id="ea962" class="javax.swing.JLabel" binding="inizioIscrizioniLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -118,7 +118,7 @@
               <text value="inizio iscrizioni:"/>
             </properties>
           </component>
-          <component id="6511a" class="javax.swing.JLabel">
+          <component id="6511a" class="javax.swing.JLabel" binding="fineIscrizioniLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -126,7 +126,7 @@
               <text value="fine iscrizioni:"/>
             </properties>
           </component>
-          <component id="7ed5a" class="javax.swing.JLabel">
+          <component id="7ed5a" class="javax.swing.JLabel" binding="descrizioneLabel">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -134,31 +134,31 @@
               <text value="descrizione:"/>
             </properties>
           </component>
-          <component id="599c1" class="javax.swing.JLabel">
+          <component id="599c1" class="javax.swing.JLabel" binding="inizioIscrizioniField">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="95a82" class="javax.swing.JLabel">
+          <component id="95a82" class="javax.swing.JLabel" binding="fineIscrizioniField">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="d938e" class="javax.swing.JLabel">
+          <component id="d938e" class="javax.swing.JLabel" binding="descrizioneField">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="c1670" class="javax.swing.JLabel">
+          <component id="c1670" class="javax.swing.JLabel" binding="sedeLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="34" height="55"/>
@@ -168,23 +168,23 @@
               <text value="sede:"/>
             </properties>
           </component>
-          <component id="a0efa" class="javax.swing.JLabel">
+          <component id="a0efa" class="javax.swing.JLabel" binding="sedeField">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="83bca" class="javax.swing.JLabel">
+          <component id="83bca" class="javax.swing.JLabel" binding="numMaxPartField">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="341d0" class="javax.swing.JLabel">
+          <component id="341d0" class="javax.swing.JLabel" binding="numPartecipantiLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -192,12 +192,12 @@
               <text value="numero partecipanti:"/>
             </properties>
           </component>
-          <component id="7a36d" class="javax.swing.JLabel">
+          <component id="7a36d" class="javax.swing.JLabel" binding="numPartecipantiField">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
         </children>

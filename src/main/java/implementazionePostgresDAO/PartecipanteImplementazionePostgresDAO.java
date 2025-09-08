@@ -43,11 +43,11 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             hackathon.setSede(rs.getString("sede"));
             hackathon.setDataInizio(LocalDate.parse(rs.getString("data_inizio")));
             hackathon.setDataFine(LocalDate.parse(rs.getString("data_fine")));
-            hackathon.setNumpartecipanti(rs.getInt("num_partecipanti"));
-            hackathon.setNummaxpartecipanti(rs.getInt("num_max_partecipanti"));
+            hackathon.setNumPartecipanti(rs.getInt("num_partecipanti"));
+            hackathon.setNumMaxPartecipanti(rs.getInt("num_max_partecipanti"));
             hackathon.setDescrizione(rs.getString("descrizione"));
-            hackathon.setInizioiscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
-            hackathon.setFineiscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
+            hackathon.setInizioIscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
+            hackathon.setFineIscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
             list.add(hackathon);
         }
         return list;
@@ -113,11 +113,11 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
             hackathon.setSede(rs.getString("sede"));
             hackathon.setDataInizio(LocalDate.parse(rs.getString("data_inizio")));
             hackathon.setDataFine(LocalDate.parse(rs.getString("data_fine")));
-            hackathon.setNumpartecipanti(rs.getInt("num_partecipanti"));
-            hackathon.setNummaxpartecipanti(rs.getInt("num_max_partecipanti"));
+            hackathon.setNumPartecipanti(rs.getInt("num_partecipanti"));
+            hackathon.setNumMaxPartecipanti(rs.getInt("num_max_partecipanti"));
             hackathon.setDescrizione(rs.getString("descrizione"));
-            hackathon.setInizioiscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
-            hackathon.setFineiscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
+            hackathon.setInizioIscrizioni( rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
+            hackathon.setFineIscrizioni( rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
             list.add(hackathon);
         }
         return list;

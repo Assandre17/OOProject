@@ -26,6 +26,18 @@ public class DettagliHackathon {
     private JButton apriRegistrazioniButton;
     private JButton assegnaVotoButton;
     private JButton visualizzaDocumentiButton;
+    private JLabel sedeField;
+    private JLabel numPartecipantiField;
+    private JLabel numMaxPartField;
+    private JLabel inizioIscrizioniField;
+    private JLabel fineIscrizioniField;
+    private JLabel descrizioneField;
+    private JLabel sedeLabel;
+    private JLabel numPartecipantiLabel;
+    private JLabel numMaxPartecipantiLabel;
+    private JLabel inizioIscrizioniLabel;
+    private JLabel fineIscrizioniLabel;
+    private JLabel descrizioneLabel;
     private Controller controller;
     private Utente utente;
 
@@ -42,6 +54,14 @@ public class DettagliHackathon {
         invitaGiudiciButton.setVisible(false);
         System.out.println("DettagliHackathon id: " + controller.getIdHackathon());
         System.out.println("debug: utente è un " + controller.getUtente().getClass());
+
+        Hackathon hackathon = controller.getHackathonById(controller.getIdHackathon());
+        sedeField.setText(hackathon.getSede());
+        numPartecipantiField.setText(hackathon.getNumPartecipanti().toString());
+        numMaxPartField.setText(hackathon.getNumMaxPartecipanti().toString());
+        inizioIscrizioniField.setText(hackathon.getInizioIscrizioni() != null ? hackathon.getInizioIscrizioni().toString() : null);
+        fineIscrizioniField.setText(hackathon.getFineIscrizioni() != null ? hackathon.getFineIscrizioni().toString() : null);
+        descrizioneField.setText(hackathon.getDescrizione());
 
         tornaIndietroButton.addActionListener(new ActionListener() {
             @Override
@@ -76,7 +96,7 @@ public class DettagliHackathon {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Hackathon hackathon = controller.getHackathonById(controller.getIdHackathon());
+
                     if (hackathon.getDataFine().isAfter(LocalDate.now())) {
                         throw new IllegalAccessException("Non puoi assegnare un voto se l'hackathon non è ancora terminato!");
                     }
@@ -207,42 +227,36 @@ public class DettagliHackathon {
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel5, new GridConstraints(1, 0, 1, 9, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("numero massimo partecipanti:");
-        panel5.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("inizio iscrizioni:");
-        panel5.add(label3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label4 = new JLabel();
-        label4.setText("fine iscrizioni:");
-        panel5.add(label4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("descrizione:");
-        panel5.add(label5, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("Label");
-        panel5.add(label6, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("Label");
-        panel5.add(label7, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("Label");
-        panel5.add(label8, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("sede:");
-        panel5.add(label9, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(34, 55), null, 0, false));
-        final JLabel label10 = new JLabel();
-        label10.setText("Label");
-        panel5.add(label10, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label11 = new JLabel();
-        label11.setText("Label");
-        panel5.add(label11, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label12 = new JLabel();
-        label12.setText("numero partecipanti:");
-        panel5.add(label12, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label13 = new JLabel();
-        label13.setText("Label");
-        panel5.add(label13, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        numMaxPartecipantiLabel = new JLabel();
+        numMaxPartecipantiLabel.setText("numero massimo partecipanti:");
+        panel5.add(numMaxPartecipantiLabel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        inizioIscrizioniLabel  = new JLabel();
+        inizioIscrizioniLabel.setText("inizio iscrizioni:");
+        panel5.add(inizioIscrizioniLabel, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        fineIscrizioniLabel = new JLabel();
+        fineIscrizioniLabel.setText("fine iscrizioni:");
+        panel5.add(fineIscrizioniLabel, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        descrizioneLabel = new JLabel();
+        descrizioneLabel.setText("descrizione:");
+        panel5.add(descrizioneLabel, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        inizioIscrizioniField = new JLabel();
+        panel5.add(inizioIscrizioniField, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        fineIscrizioniField = new JLabel();
+        panel5.add(fineIscrizioniField, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        descrizioneField = new JLabel();
+        panel5.add(descrizioneField, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        sedeLabel = new JLabel();
+        sedeLabel.setText("sede:");
+        panel5.add(sedeLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(34, 55), null, 0, false));
+        sedeField = new JLabel();
+        panel5.add(sedeField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        numMaxPartField = new JLabel();
+        panel5.add(numMaxPartField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        numPartecipantiLabel = new JLabel();
+        numPartecipantiLabel.setText("numero partecipanti:");
+        panel5.add(numPartecipantiLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        numPartecipantiField = new JLabel();
+        panel5.add(numPartecipantiField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

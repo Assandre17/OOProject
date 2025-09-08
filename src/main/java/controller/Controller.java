@@ -58,7 +58,7 @@ public class Controller {
         hackathon.setSede(sede);
         hackathon.setNome(nome);
         hackathon.setOrganizzatore(organizzatore);
-        hackathon.setNummaxpartecipanti(Integer.parseInt(numMaxPartecipanti));
+        hackathon.setNumMaxPartecipanti(Integer.parseInt(numMaxPartecipanti));
         hackathon.setDataInizio(LocalDate.parse(inizioIscrizioni));
         hackathon.setDataFine(LocalDate.parse(fineIscrizioni));
         hackathon.setDescrizione(descrizione);
