@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static utils.Utils.*;
@@ -128,7 +129,14 @@ public class DettagliHackathon {
         apriRegistrazioniButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.apriRegistrazioni();
+                LocalDate fineIscrizioni = hackathon.getDataInizio().minusDays(2);
+                try {
+                    controller.checkApriRegistrazioni(fineIscrizioni);
+                    controller.apriRegistrazioni(hackathon.getId(), LocalDate.now(), fineIscrizioni);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(panel1, ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(panel1, "Registrazioni aperte con successo.");
                 hcoFrame.setVisible(true);
                 dettaglioFrame.setVisible(false);

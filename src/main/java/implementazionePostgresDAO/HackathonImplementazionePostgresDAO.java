@@ -3,11 +3,9 @@ package implementazionePostgresDAO;
 import dao.HackathonDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
+import org.apache.commons.digester.plugins.strategies.LoaderFromClass;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class HackathonImplementazionePostgresDAO implements HackathonDAO {
@@ -72,6 +70,19 @@ public class HackathonImplementazionePostgresDAO implements HackathonDAO {
         }
         return null;
     }
+     @Override
+    public void apriRegistrazioni(Long idHackathon, LocalDate inizioIscrizioni, LocalDate fineIscrizioni) throws SQLException {
+     try (PreparedStatement ps = connection.prepareStatement("UPDATE hackathon SET inizio_iscrizioni = ?, fine_iscrizioni = ? WHERE id = ?")) {
+            ps.setDate(1, Date.valueOf(inizioIscrizioni));
+            ps.setDate(2, Date.valueOf(fineIscrizioni));
+            ps.setLong(3, idHackathon);
+            ps.executeUpdate();
 
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -103,9 +103,6 @@ public class Controller {
         return teamDAO.getTeamById(id);
     }
 
-
-
-
     public List<Partecipante> getPartecipantiWithoutTeam(){
         System.out.println("visualizzazione partecipanti senza team");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
@@ -116,7 +113,12 @@ public class Controller {
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         organizzatoreDAO.getListGiudice();
     }
-    public void apriRegistrazioni(){}
+
+    public void apriRegistrazioni(Long idHackathon, LocalDate inizioIscrizioni, LocalDate fineIscrizioni) throws SQLException {
+        HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
+        hackathonDAO.apriRegistrazioni(idHackathon, inizioIscrizioni, fineIscrizioni);
+    }
+
     public void registrati(String nome,String cognome, String email, String password, String tipo) throws InstanceAlreadyExistsException {
         checkField(nome, cognome, email, password);
 
@@ -328,6 +330,12 @@ public class Controller {
         }
     }
 
+    public void checkApriRegistrazioni(LocalDate fineIscrizioni){
+        LocalDate today = LocalDate.now();
+        if (today.isAfter(fineIscrizioni)) {
+            throw new IllegalArgumentException("Errore, impossibile aprire le registrazioni meno di due giorni prima dell'inizio dell'Hackathon!");
+        }
+    }
 
     public String checkInvitatoIsUtenteLoggato(String email){
         if(email.equals(utente.getEmail())){
