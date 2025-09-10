@@ -26,13 +26,14 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
     }
 
     @Override
-    public void insertInvito(Long idPartecipante, Long idTeam, String figuraInserimento){
+    public void insertInvito(Long idInvitato, Long idTeam, Long idHackathon, String figuraInserimento){
         try{
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO inviti (id_partecipante,id_team,stato,figura_inserimento) VALUES(?,?,?,?)");
-            ps.setLong(1, idPartecipante);
-            ps.setLong(2,idTeam);
-            ps.setString(3,STATO_IN_ATTESA);
-            ps.setString(4,figuraInserimento);
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO inviti (id_invitato,id_team,id_hackathon,stato,figura_inserimento) VALUES(?,?,?,?,?)");
+            ps.setLong(1, idInvitato);
+            ps.setLong(2,idTeam != null ? idTeam : 0L);
+            ps.setLong(3,idHackathon !=null ? idHackathon : 0L);
+            ps.setString(4,STATO_IN_ATTESA);
+            ps.setString(5,figuraInserimento);
 
             ps.executeUpdate();
 

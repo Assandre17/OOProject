@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.*;
 
-import static utils.Utils.TIPO_PARTECIPANTE;
-import static utils.Utils.TIPO_TEAM;
+import static utils.Utils.*;
 
 public class Controller {
     private String nomeTeam;
@@ -109,9 +108,9 @@ public class Controller {
         return partecipanteDAO.getPartecipantiWithoutTeam(getUtente().getId(), getIdHackathon());
     }
 
-    public void invitaGiudice(Long idHackathon) throws SQLException {
+    public List<Giudice> getListGiudici(){
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
-        organizzatoreDAO.getListGiudice();
+        return organizzatoreDAO.getListGiudice(getIdHackathon());
     }
 
     public void apriRegistrazioni(Long idHackathon, LocalDate inizioIscrizioni, LocalDate fineIscrizioni) throws SQLException {
@@ -172,12 +171,12 @@ public class Controller {
     }
     private void invitaPartecipanti(List<Partecipante> partecipanti, Long idTeam){
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
-        partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam, TIPO_TEAM));
+        partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam, null, TIPO_TEAM));
 
     }
     public void richiestaIngressoTeam(Partecipante partecipante, Team team){
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
-        invitoDAO.insertInvito(partecipante.getId(), team.getId(), TIPO_PARTECIPANTE);
+        invitoDAO.insertInvito(partecipante.getId(), team.getId(), null, TIPO_PARTECIPANTE);
     }
 
     public List<Invito> getInvitiPartecipante(Partecipante partecipante){
@@ -392,4 +391,8 @@ public class Controller {
 
     public void setIdDocumento(Long idDocumento) {this.idDocumento = idDocumento;}
 
+    public void invitaGiudice(Long idHackathon, List<Giudice> giudiciChecked) {
+        InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
+        giudiciChecked.forEach(giudice -> invitoDAO.insertInvito(giudice.getId(), null, idHackathon, TIPO_ORGANIZZATORE));
+    }
 }

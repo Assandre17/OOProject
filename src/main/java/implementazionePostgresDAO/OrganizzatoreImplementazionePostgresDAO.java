@@ -14,8 +14,12 @@ import java.util.List;
 public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO {
     private Connection connection;
 
-    public OrganizzatoreImplementazionePostgresDAO() throws SQLException {
-        this.connection = ConnessioneDatabase.getInstance().connection;
+    public OrganizzatoreImplementazionePostgresDAO(){
+        try {
+            connection = ConnessioneDatabase.getInstance().connection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertHackathon(Hackathon hackathon) {
@@ -38,10 +42,13 @@ public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO
         }
     }
 
-    public List<Giudice> getListGiudice() throws SQLException {
-        //preparo la query
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE tipo = GIUDICE");
-        //eseguire la query
+    public List<Giudice> getListGiudice(Long idHackathon) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users u " +
+                "LEFT JOIN inviti i ON u.id = i.id_invitato " +
+                "AND (i.id_hackathon = ? OR ? IS NULL) " +
+                "WHERE u.tipo = 'GIUDICE' ")){
+            ps.setLong(1, idHackathon);
+            ps.setLong(2, idHackathon);
         ResultSet rs = ps.executeQuery();
 
         List<Giudice> list = new ArrayList();
@@ -54,6 +61,9 @@ public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO
             list.add(giudice);
         }
         return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Hackathon> getListHackathon(Utente user) throws SQLException {
