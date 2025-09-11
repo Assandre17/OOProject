@@ -25,7 +25,6 @@ public class HackathonCreatiOrganizzatore {
     private JTable table1;
     private JButton dettaglioButton;
     private JButton tornaAllaHomeButton;
-    public JFrame listaHackathonCFrame;
     public JFrame homeUtenteFrame;
     public DefaultTableModel listaHackathonCModel;
     private Controller controller;
@@ -45,7 +44,7 @@ public class HackathonCreatiOrganizzatore {
 
         List<Hackathon> listaHackathon = null;
         try {
-            listaHackathon = getMockHackathon(controller.getUtente());
+            listaHackathon = getHackathon(controller.getUtente());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +106,10 @@ public class HackathonCreatiOrganizzatore {
     }
 
 
-    private List<Hackathon> getMockHackathon(Utente user) throws SQLException {
+    private List<Hackathon> getHackathon(Utente user) throws SQLException {
+        if(dettaglioButton.getText().equals("Vedi Classifica")){
+            return controller.getAllHackathon();
+        }
         String userType = getTipo(user);
         switch (userType) {
             case TIPO_ORGANIZZATORE:

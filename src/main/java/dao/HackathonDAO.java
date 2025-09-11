@@ -4,6 +4,7 @@ import model.Hackathon;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface HackathonDAO {
     void addNumPartecipante(Long idHackathon);
@@ -13,4 +14,6 @@ public interface HackathonDAO {
     Hackathon getHackathonById(Long id) throws SQLException;
 
     void apriRegistrazioni(Long idHackathon, LocalDate inizioIscrizioni, LocalDate fineIscrizioni) throws SQLException;
+
+    List<Hackathon> getAllHackathon();
 }

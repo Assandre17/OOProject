@@ -13,6 +13,7 @@ public class HomeOrganizzatore {
     private JPanel panel1;
     private JButton creaButton;
     private JButton vediButton;
+    private JButton classificaButton;
     public JFrame homeOrganizzatoreFrame;
     private Controller controller;
 
@@ -50,6 +51,28 @@ public class HomeOrganizzatore {
                 homeOrganizzatoreFrame.setVisible(false);
             }
         });
+
+        classificaButton.addActionListener(new ActionListener() {
+
+
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    Classifica classifica = new Classifica(homeOrganizzatoreFrame, controller);
+                    classifica.classificaFrame.setVisible(true);
+                    homeOrganizzatoreFrame.setVisible(false);
+                }
+            };
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setNomeButton("Vedi classifica");
+                controller.setActionButton(actionButton);
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                homeOrganizzatoreFrame.setVisible(false);
+            }
+        });
     }
 
     {
@@ -68,7 +91,7 @@ public class HomeOrganizzatore {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("ORGANIZZATORE");
         panel1.add(label1, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -84,6 +107,12 @@ public class HomeOrganizzatore {
         vediButton = new JButton();
         vediButton.setText("vedi");
         panel1.add(vediButton, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        classificaButton = new JButton();
+        classificaButton.setText("Classifica");
+        panel2.add(classificaButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

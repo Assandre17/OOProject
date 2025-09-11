@@ -5,16 +5,14 @@ import java.util.List;
 public class Team {
     private Long id;
     private String nome;
-    private Voto voto;
     private List<Partecipante> partecipanti;
     private Hackathon hackathon;
 
     public Team() {}
 
-    public Team(Long id, String nome, Voto voto, List<Partecipante> partecipanti, Hackathon hackathon) {
+    public Team(Long id, String nome, List<Partecipante> partecipanti, Hackathon hackathon) {
         this.id = id;
         this.nome = nome;
-        this.voto = voto;
         this.partecipanti = partecipanti;
         this.hackathon = hackathon;
     }
@@ -41,14 +39,6 @@ public class Team {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Voto getVoto() {
-        return voto;
-    }
-
-    public void setVoto(Voto voto) {
-        this.voto = voto;
     }
 
     public Hackathon getHackathon() {

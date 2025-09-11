@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 import static utils.Utils.*;
 
@@ -69,6 +69,11 @@ public class Controller {
         System.out.println("visualizzazione Hackathon creati");
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         return organizzatoreDAO.getListHackathon(user); //visualizzazione hackathon creati fatta
+    }
+
+    public List<Hackathon> getAllHackathon() {
+        HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
+        return hackathonDAO.getAllHackathon();
     }
 
 
@@ -271,10 +276,7 @@ public class Controller {
     public void assegnaVoto(Integer valutazione, String commento, Long idTeam){
         System.out.println("pubblica voto in corso...");
         VotoImplementazionePostgresDAO votoDAO = new VotoImplementazionePostgresDAO();
-        Long idVoto = votoDAO.insertVoto(valutazione,commento);
-
-        TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
-        teamDAO.addVotoToTeam(idTeam, idVoto);
+        votoDAO.insertVoto(valutazione,commento, idTeam);
 
     }
 
@@ -344,6 +346,15 @@ public class Controller {
         }
     }
 
+    public Double calculateMediaVoto(List<Voto> voti){
+        return voti.stream()
+                .map(Voto::getValutazione)
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0.0);
+
+    }
+
 
 
     public String getNomeTeam() {
@@ -394,5 +405,10 @@ public class Controller {
     public void invitaGiudice(Long idHackathon, List<Giudice> giudiciChecked) {
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
         giudiciChecked.forEach(giudice -> invitoDAO.insertInvito(giudice.getId(), null, idHackathon, TIPO_ORGANIZZATORE));
+    }
+
+    public List<Voto> getVotiByIdTeam(Long id) {
+        VotoImplementazionePostgresDAO votoDao = new VotoImplementazionePostgresDAO();
+        return votoDao.getVotiByIdTeam(id);
     }
 }

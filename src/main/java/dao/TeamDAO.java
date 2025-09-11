@@ -10,6 +10,4 @@ public interface TeamDAO {
     List<Team> getTeamByIdHackathon(Long idHackathon) throws SQLException;
 
     Team getTeamById(Long id);
-
-    void addVotoToTeam(Long idTeam, Long idVoto);
 }

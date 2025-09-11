@@ -14,6 +14,7 @@ public class HomeGiudice {
     private JPanel panel1;
     private JButton listaHackathonButton;
     private JButton invitiButton;
+    private JButton classificaButton;
     public JFrame homeGiudiceFrame;
     private Controller controller;
 
@@ -58,6 +59,28 @@ public class HomeGiudice {
             }
         });
 
+        classificaButton.addActionListener(new ActionListener() {
+
+
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    Classifica classifica = new Classifica(homeGiudiceFrame, controller);
+                    classifica.classificaFrame.setVisible(true);
+                    homeGiudiceFrame.setVisible(false);
+                }
+            };
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setNomeButton("Vedi classifica");
+                controller.setActionButton(actionButton);
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeGiudiceFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                homeGiudiceFrame.setVisible(false);
+            }
+        });
+
     }
 
     {
@@ -81,7 +104,7 @@ public class HomeGiudice {
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -98,6 +121,9 @@ public class HomeGiudice {
         invitiButton = new JButton();
         invitiButton.setText("Inviti");
         panel5.add(invitiButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        classificaButton = new JButton();
+        classificaButton.setText("Classifica");
+        panel3.add(classificaButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

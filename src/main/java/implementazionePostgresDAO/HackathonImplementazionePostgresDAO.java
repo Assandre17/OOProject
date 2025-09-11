@@ -3,10 +3,11 @@ package implementazionePostgresDAO;
 import dao.HackathonDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
-import org.apache.commons.digester.plugins.strategies.LoaderFromClass;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HackathonImplementazionePostgresDAO implements HackathonDAO {
 
@@ -85,4 +86,30 @@ public class HackathonImplementazionePostgresDAO implements HackathonDAO {
         }
     }
 
+    @Override
+    public List<Hackathon> getAllHackathon() {
+        try (PreparedStatement ps = connection.prepareStatement
+                ("SELECT * FROM hackathon ")) {
+
+            ResultSet rs = ps.executeQuery();
+            List<Hackathon> list = new ArrayList<>();
+            while (rs.next()) {
+                Hackathon hackathon = new Hackathon();
+                hackathon.setId(rs.getLong("id"));
+                hackathon.setNome(rs.getString("nome"));
+                hackathon.setSede(rs.getString("sede"));
+                hackathon.setDataInizio(LocalDate.parse(rs.getString("data_inizio")));
+                hackathon.setDataFine(LocalDate.parse(rs.getString("data_fine")));
+                hackathon.setNumPartecipanti(rs.getInt("num_partecipanti"));
+                hackathon.setNumMaxPartecipanti(rs.getInt("num_max_partecipanti"));
+                hackathon.setDescrizione(rs.getString("descrizione"));
+                hackathon.setInizioIscrizioni(rs.getDate("inizio_iscrizioni") != null ? rs.getDate("inizio_iscrizioni").toLocalDate() : null);
+                hackathon.setFineIscrizioni(rs.getDate("fine_iscrizioni") != null ? rs.getDate("fine_iscrizioni").toLocalDate() : null);
+                list.add(hackathon);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

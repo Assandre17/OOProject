@@ -44,7 +44,7 @@ public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO
 
     public List<Giudice> getListGiudice(Long idHackathon) {
         try(PreparedStatement ps = connection.prepareStatement("SELECT u.* FROM users u " +
-                "WHERE u.tipo = 'GIUDICE' AND u.id NOT IN (SELECT i.id_invitato FROM inviti i WHERE i.id_hackathon = ?) ")){
+                "WHERE u.tipo = 'GIUDICE' AND u.id NOT IN (SELECT i.id_invitato FROM inviti i WHERE i.id_hackathon = ?) ")){ // vede anche gli giudici che non sono stati invitati per quell hackathon
             ps.setLong(1, idHackathon);
         ResultSet rs = ps.executeQuery();
 

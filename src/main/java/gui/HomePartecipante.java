@@ -19,6 +19,7 @@ public class HomePartecipante {
     private JButton gestioneInvitiButton;
     private JButton inviaRichiestaButton;
     private JButton iscrivitiAdHackathonButton;
+    private JButton classificaButton;
     private JButton progressoButton;
     public JFrame homePartecipanteFrame;
     private Controller controller;
@@ -34,7 +35,7 @@ public class HomePartecipante {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    try{
+                    try {
                         if (controller.checkPartecipanteHaveTeam((Partecipante) controller.getUtente(), controller.getIdHackathon())) {
                             JOptionPane.showMessageDialog(panel1, "Non puoi creare un team in quanto già sei presente in un altro team!");
                             throw new IllegalArgumentException("Non puoi creare un team in quanto già sei presente in un altro team!");
@@ -141,11 +142,11 @@ public class HomePartecipante {
 
                         }
                         controller.setIdTeam(idTeam);
-                    }catch (InstanceNotFoundException e) {
+                    } catch (InstanceNotFoundException e) {
                         throw new RuntimeException(e);
                     }
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller,hackathonCreatiOrganizzatore.hcoFrame);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hackathonCreatiOrganizzatore.hcoFrame);
                     dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
@@ -160,6 +161,28 @@ public class HomePartecipante {
 
             }
 
+        });
+
+        classificaButton.addActionListener(new ActionListener() {
+
+
+            final ActionButton actionButton = new ActionButton() {
+                @Override
+                public void doAction() {
+                    Classifica classifica = new Classifica(homePartecipanteFrame, controller);
+                    classifica.classificaFrame.setVisible(true);
+                    homePartecipanteFrame.setVisible(false);
+                }
+            };
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setNomeButton("Vedi classifica");
+                controller.setActionButton(actionButton);
+                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
+                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                homePartecipanteFrame.setVisible(false);
+            }
         });
     }
 
@@ -182,7 +205,7 @@ public class HomePartecipante {
         panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -206,8 +229,11 @@ public class HomePartecipante {
         iscrivitiAdHackathonButton.setText("Iscriviti ad Hackathon");
         panel4.add(iscrivitiAdHackathonButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         progressoButton = new JButton();
-        progressoButton.setText("Progressi");
+        progressoButton.setText("Pubblica progresso");
         panel4.add(progressoButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        classificaButton = new JButton();
+        classificaButton.setText("Classifica");
+        panel2.add(classificaButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

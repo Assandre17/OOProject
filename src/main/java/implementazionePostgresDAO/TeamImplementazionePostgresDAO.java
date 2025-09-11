@@ -4,7 +4,6 @@ import dao.TeamDAO;
 import database.ConnessioneDatabase;
 import model.Hackathon;
 import model.Team;
-import model.Voto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,14 +83,6 @@ public class TeamImplementazionePostgresDAO implements TeamDAO {
                 team.setId(rs.getLong("id"));
                 team.setNome(rs.getString("nome"));
 
-                long idVoto = rs.getLong("id_voto");
-
-                if(idVoto != 0){
-                    Voto voto = new Voto();
-                    voto.setId(idVoto);
-                    team.setVoto(voto);
-                }
-
                 return team;
             }
         } catch (SQLException e) {
@@ -99,20 +90,6 @@ public class TeamImplementazionePostgresDAO implements TeamDAO {
         }
 
         return null;
-    }
-
-    @Override
-    public void addVotoToTeam(Long idTeam, Long idVoto) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE teams SET id_voto = ? WHERE id = ?")) {
-            ps.setLong(1, idVoto);
-            ps.setLong(2, idTeam);
-            ps.executeUpdate();
-
-            connection.close();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
