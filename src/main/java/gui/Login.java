@@ -53,7 +53,7 @@ public class Login {
                 try{
                     Utente utente = controller.accedi(email, password);
                     utente.apriFinestra(loginFrame, controller);
-                } catch (InstanceNotFoundException ex) {
+                } catch (InstanceNotFoundException | IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(panel1, ex.getMessage());
                     throw new RuntimeException(ex);
                 }

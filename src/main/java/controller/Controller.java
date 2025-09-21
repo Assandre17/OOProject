@@ -36,6 +36,7 @@ public class Controller {
     public void creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
 
+        checkFieldHackathon(sede,nome,descrizione,numMaxPartecipanti);
         //regex per formato AAAA-MM-GG
         String dateRegex = "^\\d{4}-\\d{2}-\\d{2}$";
         Pattern pattern = Pattern.compile(dateRegex);
@@ -328,6 +329,22 @@ public class Controller {
         }
         if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("La password è obbligatoria.");
+        }
+    }
+
+    private void checkFieldHackathon(String sede, String nome, String descrizione, String numMaxPartecipanti) {
+        if (sede == null || sede.isBlank()) {
+            throw new IllegalArgumentException("La sede è obbligatoria.");
+        }
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Il nome è obbligatorio.");
+        }
+        if (descrizione == null || descrizione.isBlank()) {
+            throw new IllegalArgumentException("La descrizione è obbligatoria.");
+        }
+
+        if (numMaxPartecipanti == null || numMaxPartecipanti.isBlank()) {
+            throw new IllegalArgumentException("il numero massimo partecipanti è obbligatorio.");
         }
     }
 

@@ -82,7 +82,7 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
                     hackathon.setNome(nomeHackathon);
                     hackathon.setId(idHackathon);
 
-                    Team team = new Team(idTeam, nomeTeam, null, null, hackathon);
+                    Team team = new Team(idTeam, nomeTeam,null, hackathon);
 
                     // Utente contiene solo il team dell’invito
                     Utente utente = getUtenteModel(idPartecipante, null, null, emailPartecipante,
@@ -106,9 +106,8 @@ public class InvitoImplementazionePostgresDAO implements InvitoDAO {
                 "SELECT i.id AS invito_id, i.id_invitato, i.id_hackathon, i.stato, " +
                         "h.nome AS nome_hackathon, u.email " +
                         "FROM inviti i " +
-                        "JOIN users u ON i.id_invitato=u.id " +
-                        "JOIN giudice_hackathon gh ON u.id=gh.id_giudice " +
-                        "JOIN hackathon h ON gh.id_hackathon=h.id " +
+                        "LEFT JOIN users u ON i.id_invitato=u.id " +
+                        "LEFT JOIN hackathon h ON i.id_hackathon=h.id " +
                         "WHERE i.id_invitato=? AND i.figura_inserimento='ORGANIZZATORE' AND i.stato = 'IN ATTESA'";
 
 

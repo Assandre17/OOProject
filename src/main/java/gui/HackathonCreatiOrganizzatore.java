@@ -107,7 +107,7 @@ public class HackathonCreatiOrganizzatore {
 
 
     private List<Hackathon> getHackathon(Utente user) throws SQLException {
-        if(dettaglioButton.getText().equals("Vedi Classifica")){
+        if(dettaglioButton.getText().equals("Vedi classifica")){
             return controller.getAllHackathon();
         }
         String userType = getTipo(user);
