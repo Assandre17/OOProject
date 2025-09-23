@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -292,9 +293,23 @@ public class Controller {
         DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
         documentoDAO.addCommentoToDocumento(commento, idDocumento);
     }
-    public void stampaClassifica(HashMap<String,Integer> classifica){}
-    /*classifica l'ho pensata come una Map cosi che si possa
-    facilmente ordinare in base al voto assegnato dal giudice*/
+    public List<Team> stampaClassifica(Long idHackathon){
+       List<Team> listaTeam =  getTeamByIdHackathon(idHackathon);
+
+        //inserisce le medie in una map chiave valore (la chiave è l'id del team che ha quella media voto) e
+        // poi compara tutte le medie voto prendendosi la media voto con quell id team dalla map
+        Map<Long, Double> medie = new HashMap<>();
+        for (Team team : listaTeam) {
+            List<Voto> votiTeam = getVotiByIdTeam(team.getId());
+            medie.put(team.getId(), calculateMediaVoto(votiTeam));
+        }
+
+        listaTeam.sort((t1, t2) -> medie.get(t2.getId()).compareTo(medie.get(t1.getId())));
+
+        return listaTeam;
+
+
+    }
 
     public boolean checkPartecipanteHaveTeam(Partecipante partecipante, Long idHackathon){
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
@@ -370,6 +385,16 @@ public class Controller {
                 .average()
                 .orElse(0.0);
 
+    }
+
+
+    public Map<Long, Double> getMedie(List<Team> listaTeam) {
+        Map<Long, Double> medie = new HashMap<>();
+        for (Team team : listaTeam) {
+            List<Voto> votiTeam = getVotiByIdTeam(team.getId());
+            medie.put(team.getId(), calculateMediaVoto(votiTeam));
+        }
+        return medie;
     }
 
 

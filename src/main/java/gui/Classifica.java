@@ -4,14 +4,12 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Team;
-import model.Voto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,18 +35,8 @@ public class Classifica {
         classificaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         classificaFrame.pack();
 
-        List<Team> listaTeam = controller.getTeamByIdHackathon(controller.getIdHackathon());
-
-
-        //inserisce le medie in una map chiave valore (la chiave è l'id del team che ha quella media voto) e
-        // poi compara tutte le medie voto prendendosi la media voto con quell id team dalla map
-        Map<Long, Double> medie = new HashMap<>();
-        for (Team team : listaTeam) {
-            List<Voto> votiTeam = controller.getVotiByIdTeam(team.getId());
-            medie.put(team.getId(), controller.calculateMediaVoto(votiTeam));
-        }
-
-        listaTeam.sort((t1, t2) -> medie.get(t2.getId()).compareTo(medie.get(t1.getId())));
+        List<Team> listaTeam = controller.stampaClassifica(controller.getIdHackathon());
+        Map<Long, Double> medie = controller.getMedie(listaTeam);
 
         Object[][] datiTable = new Object[listaTeam.size()][3];
 

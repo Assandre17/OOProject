@@ -130,19 +130,20 @@ public class HomePartecipante {
                     //INVIA RICHIESTA DI ACCESSO A UN TEAM
                     try {
                         Partecipante utenteLoggato = (Partecipante) controller.getUtente();
+                        if (utenteLoggato.getTeam()==null) {
+                            throw new InstanceNotFoundException("Non puoi pubblicare un progresso in quanto non sei membro di un team in qeusto hackathon selezionato");
+                        }
+
                         Long idTeam = utenteLoggato.getTeam().stream()
                                 .filter(team -> team.getHackathon().getId().equals(controller.getIdHackathon()))
                                 .map(Team::getId)
                                 .findFirst()
                                 .orElse(null);
 
-                        if (idTeam == null) {
-                            JOptionPane.showMessageDialog(null, "Non puoi pubblicare un progresso in quanto non sei membro di un team in questo hackathon selezionato");
-                            throw new InstanceNotFoundException("Non puoi pubblicare un progresso in quanto non sei membro di un team in qeusto hackathon selezionato");
 
-                        }
                         controller.setIdTeam(idTeam);
                     } catch (InstanceNotFoundException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                         throw new RuntimeException(e);
                     }
                     HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
