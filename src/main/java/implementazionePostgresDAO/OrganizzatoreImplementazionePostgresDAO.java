@@ -11,9 +11,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Organizzatore implementazione postgres dao.
+ */
 public class OrganizzatoreImplementazionePostgresDAO implements OrganizzatoreDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Organizzatore implementazione postgres dao.
+     */
     public OrganizzatoreImplementazionePostgresDAO(){
         try {
             connection = ConnessioneDatabase.getInstance().connection;

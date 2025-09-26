@@ -15,6 +15,9 @@ import java.time.LocalDate;
 
 import static utils.Utils.*;
 
+/**
+ * The type Pubblicazione.
+ */
 public class Pubblicazione {
     private JPanel panel1;
     private JLabel descrizioneProblemaLabel;
@@ -23,10 +26,19 @@ public class Pubblicazione {
     private JTextField versioneField;
     private JLabel versioneLabel;
     private JTextArea textArea1;
+    /**
+     * The Pubblicazione frame.
+     */
     public JFrame pubblicazioneFrame;
     private Controller controller;
     private ActionButton actionButton;
 
+    /**
+     * Instantiates a new Pubblicazione.
+     *
+     * @param controller    the controller
+     * @param mittenteFrame the mittente frame
+     */
     public Pubblicazione(Controller controller, JFrame mittenteFrame) {
         pubblicazioneFrame = new JFrame("Pubblicazione");
         this.controller = controller;
@@ -169,6 +181,9 @@ public class Pubblicazione {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

@@ -17,6 +17,9 @@ import java.util.List;
 
 import static utils.Utils.*;
 
+/**
+ * The type Lista documenti.
+ */
 public class ListaDocumenti {
 
     private JPanel panel1;
@@ -24,13 +27,31 @@ public class ListaDocumenti {
     private JButton avantiButton;
     private JButton tornaIndietroButton;
     private JButton pubblicaProgressoButton;
+    /**
+     * The Lista documenti frame.
+     */
     public JFrame listaDocumentiFrame;
+    /**
+     * The Frame chiamante.
+     */
     public JFrame frameChiamante;
+    /**
+     * The Lista documenti model.
+     */
     public DefaultTableModel listaDocumentiModel;
     private Controller controller;
+    /**
+     * The Action button.
+     */
     public ActionButton actionButton;
 
 
+    /**
+     * Instantiates a new Lista documenti.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
+     */
     public ListaDocumenti(JFrame frameChiamante, Controller controller) {
 
         this.listaDocumentiFrame = new JFrame("ListaDocumenti");
@@ -198,6 +219,9 @@ public class ListaDocumenti {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

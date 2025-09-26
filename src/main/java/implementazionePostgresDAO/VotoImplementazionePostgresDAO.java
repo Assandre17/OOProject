@@ -8,9 +8,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Voto implementazione postgres dao.
+ */
 public class VotoImplementazionePostgresDAO implements VotoDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Voto implementazione postgres dao.
+     */
     public VotoImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;
@@ -43,6 +49,12 @@ public class VotoImplementazionePostgresDAO implements VotoDAO {
         return null;
     }
 
+    /**
+     * Gets voti by id team.
+     *
+     * @param id the id
+     * @return the voti by id team
+     */
     public List<Voto> getVotiByIdTeam(Long id) {
         try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM voti WHERE id_team = ?")){
             ps.setLong(1, id);

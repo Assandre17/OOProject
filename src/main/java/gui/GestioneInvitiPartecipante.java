@@ -16,10 +16,19 @@ import java.util.Optional;
 import static utils.Utils.COLONNE_LISTA_INVITI;
 
 
+/**
+ * The type Gestione inviti partecipante.
+ */
 public class GestioneInvitiPartecipante {
     private JPanel panel1;
     private JTable table1;
+    /**
+     * The Gestione inviti partecipante frame.
+     */
     public JFrame gestioneInvitiPartecipanteFrame;
+    /**
+     * The Home partecipante frame.
+     */
     public JFrame homePartecipanteFrame;
     private Controller controller;
     private JButton accettaButton;
@@ -27,6 +36,12 @@ public class GestioneInvitiPartecipante {
     private JButton tornaAllaHomeButton;
 
 
+    /**
+     * Instantiates a new Gestione inviti partecipante.
+     *
+     * @param homePartecipanteFrame the home partecipante frame
+     * @param controller            the controller
+     */
     public GestioneInvitiPartecipante(JFrame homePartecipanteFrame, Controller controller) {
         this.homePartecipanteFrame = homePartecipanteFrame;
         this.gestioneInvitiPartecipanteFrame = new JFrame("GestioneInvitiPartecipante");
@@ -157,6 +172,9 @@ public class GestioneInvitiPartecipante {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

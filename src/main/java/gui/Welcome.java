@@ -8,14 +8,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Welcome.
+ */
 public class Welcome {
 
     private JButton accediButton;
     private JButton registratiButton;
 
+    /**
+     * The Welcome frame.
+     */
     public JFrame welcomeFrame;
     private JPanel panel1;
 
+    /**
+     * Instantiates a new Welcome.
+     */
     public Welcome() {
         this.welcomeFrame = new JFrame("Welcome");
         welcomeFrame.setContentPane(panel1);
@@ -79,6 +88,9 @@ public class Welcome {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

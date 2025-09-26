@@ -12,8 +12,17 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * The type Crea hackathon.
+ */
 public class CreaHackathon {
+    /**
+     * The Crea frame.
+     */
     public JFrame creaFrame;
+    /**
+     * The Hco frame.
+     */
     public JFrame hcoFrame;
     private JPanel panel1;
     private JTextField sede;
@@ -27,6 +36,12 @@ public class CreaHackathon {
     private JLabel nome;
     private Controller controller;
 
+    /**
+     * Instantiates a new Crea hackathon.
+     *
+     * @param controller the controller
+     * @param hcoFrame   the hco frame
+     */
     public CreaHackathon(Controller controller, JFrame hcoFrame) {
         this.creaFrame = new JFrame("CreaHackathon");
         this.controller = controller;
@@ -132,6 +147,9 @@ public class CreaHackathon {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

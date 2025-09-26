@@ -9,10 +9,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Hackathon implementazione postgres dao.
+ */
 public class HackathonImplementazionePostgresDAO implements HackathonDAO {
 
     private Connection connection;
 
+    /**
+     * Instantiates a new Hackathon implementazione postgres dao.
+     */
     public HackathonImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;

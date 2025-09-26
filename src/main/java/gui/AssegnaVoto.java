@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+/**
+ * The type Assegna voto.
+ */
 public class AssegnaVoto {
     private JPanel panel1;
     private JLabel AssegnaVotoTeamLabel;
@@ -19,10 +22,18 @@ public class AssegnaVoto {
     private JTextArea textArea1;
     private JButton pubblicaVotoButton;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Assegna voto frame.
+     */
     public JFrame assegnaVotoFrame;
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Assegna voto.
+     *
+     * @param controller the controller
+     */
     public AssegnaVoto(Controller controller) {
         System.out.println("ID TEAM: " + controller.getIdTeam());
         this.controller = controller;
@@ -124,6 +135,9 @@ public class AssegnaVoto {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

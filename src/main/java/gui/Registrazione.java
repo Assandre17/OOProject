@@ -13,8 +13,17 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * The type Registrazione.
+ */
 public class Registrazione {
+    /**
+     * The Registration frame.
+     */
     public JFrame registrationFrame;
+    /**
+     * The Welcome frame.
+     */
     public JFrame welcomeFrame;
     private JPanel panel1;
 
@@ -28,6 +37,11 @@ public class Registrazione {
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Registrazione.
+     *
+     * @param welcomeFrame the welcome frame
+     */
     public Registrazione(JFrame welcomeFrame) {
         this.registrationFrame = new JFrame("Registrazione");
         this.controller = new Controller();
@@ -119,6 +133,9 @@ public class Registrazione {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

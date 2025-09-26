@@ -15,8 +15,17 @@ import java.time.LocalDate;
 
 import static utils.Utils.*;
 
+/**
+ * The type Dettagli hackathon.
+ */
 public class DettagliHackathon {
+    /**
+     * The Dettaglio frame.
+     */
     public JFrame dettaglioFrame;
+    /**
+     * The Hco frame.
+     */
     public JFrame hcoFrame;
     private JButton tornaIndietroButton;
     private JPanel panel1;
@@ -40,6 +49,12 @@ public class DettagliHackathon {
     private Controller controller;
     private Utente utente;
 
+    /**
+     * Instantiates a new Dettagli hackathon.
+     *
+     * @param controller the controller
+     * @param hcoFrame   the hco frame
+     */
     public DettagliHackathon(Controller controller, JFrame hcoFrame) {
         this.dettaglioFrame = new JFrame("DettagliHackathon");
         this.controller = controller;
@@ -258,6 +273,9 @@ public class DettagliHackathon {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

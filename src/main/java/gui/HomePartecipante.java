@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Home partecipante.
+ */
 public class HomePartecipante {
     private JPanel panel1;
     private JButton creaTeamButton;
@@ -21,9 +24,17 @@ public class HomePartecipante {
     private JButton iscrivitiAdHackathonButton;
     private JButton classificaButton;
     private JButton progressoButton;
+    /**
+     * The Home partecipante frame.
+     */
     public JFrame homePartecipanteFrame;
     private Controller controller;
 
+    /**
+     * Instantiates a new Home partecipante.
+     *
+     * @param controller the controller
+     */
     public HomePartecipante(Controller controller) {
         this.controller = controller;
         this.homePartecipanteFrame = new JFrame("HomePartecipante");
@@ -238,6 +249,9 @@ public class HomePartecipante {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

@@ -14,9 +14,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Utente implentazione postgres dao.
+ */
 public class UtenteImplentazionePostgresDAO implements UtenteDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Utente implentazione postgres dao.
+     */
     public UtenteImplentazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;
@@ -82,10 +88,6 @@ public class UtenteImplentazionePostgresDAO implements UtenteDAO {
                     teams.add(team);
                     utente = Utils.getUtenteModel(id, nome, cognome, email, password, tipo, teams, null);// Assumendo che Utente ora abbia una lista di Team
                 }
-
-
-
-
             }
             rs.close();
             return utente;

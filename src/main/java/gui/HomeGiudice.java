@@ -9,15 +9,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Home giudice.
+ */
 public class HomeGiudice {
 
     private JPanel panel1;
     private JButton listaHackathonButton;
     private JButton invitiButton;
     private JButton classificaButton;
+    /**
+     * The Home giudice frame.
+     */
     public JFrame homeGiudiceFrame;
     private Controller controller;
 
+    /**
+     * Instantiates a new Home giudice.
+     *
+     * @param controller the controller
+     */
     public HomeGiudice(Controller controller) {
         this.homeGiudiceFrame = new JFrame("HomeGiudice");
         this.controller = controller;
@@ -127,6 +138,9 @@ public class HomeGiudice {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

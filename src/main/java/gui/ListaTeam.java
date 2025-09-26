@@ -17,10 +17,19 @@ import java.util.Optional;
 import static utils.Utils.COLONNE_LISTA_TEAM;
 
 
+/**
+ * The type Lista team.
+ */
 public class ListaTeam {
     private JPanel panel1;
     private JTable table1;
+    /**
+     * The Lista team frame.
+     */
     public JFrame listaTeamFrame;
+    /**
+     * The Mittente frame.
+     */
     public JFrame mittenteFrame;
     private Controller controller;
     private JButton inviaRichiestaButton;
@@ -28,6 +37,12 @@ public class ListaTeam {
     private ActionButton actionButton;
 
 
+    /**
+     * Instantiates a new Lista team.
+     *
+     * @param mittenteFrame the mittente frame
+     * @param controller    the controller
+     */
     public ListaTeam(JFrame mittenteFrame, Controller controller) {
 
         this.mittenteFrame = mittenteFrame;
@@ -194,6 +209,9 @@ public class ListaTeam {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

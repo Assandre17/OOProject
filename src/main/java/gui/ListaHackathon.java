@@ -20,17 +20,35 @@ import java.util.List;
 import static utils.Utils.*;
 
 
+/**
+ * The type Lista hackathon.
+ */
 public class ListaHackathon {
     private JPanel panel1; // proviamo a inizializzarlo
     private JTable table1;
     private JButton dettaglioButton;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Home utente frame.
+     */
     public JFrame homeUtenteFrame;
+    /**
+     * The Lista hackathon c model.
+     */
     public DefaultTableModel listaHackathonCModel;
     private Controller controller;
     private ActionButton actionButton;
+    /**
+     * The Lista hackathon frame.
+     */
     public JFrame listaHackathonFrame;
 
+    /**
+     * Instantiates a new Lista hackathon.
+     *
+     * @param homeUtenteFrame the home utente frame
+     * @param controller      the controller
+     */
     public ListaHackathon(JFrame homeUtenteFrame, Controller controller) {
         this.homeUtenteFrame = homeUtenteFrame;
         this.controller = controller;

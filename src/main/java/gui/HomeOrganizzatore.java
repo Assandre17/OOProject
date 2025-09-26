@@ -9,14 +9,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Home organizzatore.
+ */
 public class HomeOrganizzatore {
     private JPanel panel1;
     private JButton creaButton;
     private JButton vediButton;
     private JButton classificaButton;
+    /**
+     * The Home organizzatore frame.
+     */
     public JFrame homeOrganizzatoreFrame;
     private Controller controller;
 
+    /**
+     * Instantiates a new Home organizzatore.
+     *
+     * @param controller the controller
+     */
     public HomeOrganizzatore(Controller controller) {
         this.controller = controller; //invece di controller=new Controller();
         this.homeOrganizzatoreFrame = new JFrame("HomeOrganizzatore");
@@ -116,6 +127,9 @@ public class HomeOrganizzatore {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

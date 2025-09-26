@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
+/**
+ * The type Dettaglio documento.
+ */
 public class DettaglioDocumento {
     private JPanel panel1;
     private JLabel dettaglioDocumentoLabel;
@@ -28,10 +31,19 @@ public class DettaglioDocumento {
     private JTextArea commGiudiceField;
     private JButton tornaIndietroButton;
     private JTextArea descField;
+    /**
+     * The Dettaglio documento frame.
+     */
     public JFrame dettaglioDocumentoFrame;
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Dettaglio documento.
+     *
+     * @param controller    the controller
+     * @param mittenteFrame the mittente frame
+     */
     public DettaglioDocumento(Controller controller, JFrame mittenteFrame) {
         this.dettaglioDocumentoFrame = new JFrame("DettaglioDocumento");
         this.controller = controller;
@@ -150,6 +162,9 @@ public class DettaglioDocumento {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

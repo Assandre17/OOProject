@@ -17,17 +17,35 @@ import java.util.List;
 import static utils.Utils.COLONNE_LISTA_PARTECIPANTI;
 
 
+/**
+ * The type Lista giudici.
+ */
 public class ListaGiudici {
     private JPanel panel1;
     private JTable table1;
     private JButton invitaButton;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Lista giudici frame.
+     */
     public JFrame listaGiudiciFrame;
+    /**
+     * The Mittente frame.
+     */
     public JFrame mittenteFrame;
+    /**
+     * The Lista giudici model.
+     */
     public DefaultTableModel listaGiudiciModel;
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Lista giudici.
+     *
+     * @param mittenteFrame the mittente frame
+     * @param controller    the controller
+     */
     public ListaGiudici(JFrame mittenteFrame, Controller controller) {
 
         this.mittenteFrame = mittenteFrame;
@@ -149,6 +167,9 @@ public class ListaGiudici {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

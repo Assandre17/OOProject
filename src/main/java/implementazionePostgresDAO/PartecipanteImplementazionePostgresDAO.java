@@ -15,9 +15,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Partecipante implementazione postgres dao.
+ */
 public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Partecipante implementazione postgres dao.
+     */
     public PartecipanteImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;

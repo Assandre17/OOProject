@@ -10,8 +10,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Crea team.
+ */
 public class CreaTeam {
+    /**
+     * The Crea team frame.
+     */
     public JFrame creaTeamFrame;
+    /**
+     * The Home partecipante frame.
+     */
     public JFrame homePartecipanteFrame;
     private Controller controller;
     private JPanel panel1;
@@ -19,6 +28,12 @@ public class CreaTeam {
     private JButton avantiButton;
 
 
+    /**
+     * Instantiates a new Crea team.
+     *
+     * @param homePartecipanteFrame the home partecipante frame
+     * @param controller            the controller
+     */
     public CreaTeam(JFrame homePartecipanteFrame, Controller controller) {
         this.creaTeamFrame = new JFrame("CreaTeam");
         this.homePartecipanteFrame = homePartecipanteFrame;
@@ -80,6 +95,9 @@ public class CreaTeam {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

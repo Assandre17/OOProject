@@ -13,9 +13,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Giudice implementazione postgres dao.
+ */
 public class GiudiceImplementazionePostgresDAO implements GiudiceDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Giudice implementazione postgres dao.
+     */
     public GiudiceImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;

@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
+/**
+ * The type Effettua commento giudice.
+ */
 public class EffettuaCommentoGiudice {
     private JTextPane commentoField;
     private JButton pubblicaCommentoButton;
@@ -22,9 +25,21 @@ public class EffettuaCommentoGiudice {
     private JPanel panel1;
     private JLabel dettaglioDocumentoLabel;
     private JLabel descrizioneLabel;
+    /**
+     * The Effettua commento giudice frame.
+     */
     public JFrame effettuaCommentoGiudiceFrame;
+    /**
+     * The Controller.
+     */
     public Controller controller;
 
+    /**
+     * Instantiates a new Effettua commento giudice.
+     *
+     * @param controller    the controller
+     * @param mittenteFrame the mittente frame
+     */
     public EffettuaCommentoGiudice(Controller controller, JFrame mittenteFrame) {
         effettuaCommentoGiudiceFrame = new JFrame("EffettuaCommentoGiudice");
         this.controller = controller;
@@ -139,6 +154,9 @@ public class EffettuaCommentoGiudice {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

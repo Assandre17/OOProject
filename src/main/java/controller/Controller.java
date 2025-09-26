@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
 
 import static utils.Utils.*;
 
+/**
+ * The type Controller.
+ */
 public class Controller {
     private String nomeTeam;
     private Utente utente;
@@ -26,14 +29,35 @@ public class Controller {
     private ActionButton actionButton;
     private String nomeButton;
 
+    /**
+     * Gets id hackathon.
+     * getter
+     * @return the id hackathon
+     */
     public Long getIdHackathon() {
         return idHackathon;
     }
 
+    /**
+     * Sets id hackathon.
+     * setter
+     * @param idHackathon the id hackathon
+     */
     public void setIdHackathon(Long idHackathon) {
         this.idHackathon = idHackathon;
     }
 
+    /**
+     * Crea hackathon.
+     *
+     * @param sede               the sede
+     * @param nome               the nome
+     * @param numMaxPartecipanti the num max partecipanti
+     * @param inizioIscrizioni   the inizio iscrizioni
+     * @param fineIscrizioni     the fine iscrizioni
+     * @param descrizione        the descrizione
+     * @throws SQLException the sql exception
+     */
     public void creaHackathon(String sede, String nome, String numMaxPartecipanti, String inizioIscrizioni, String fineIscrizioni, String descrizione) throws SQLException {
         System.out.println("creazione Hackathon in corso...");
 
@@ -67,30 +91,63 @@ public class Controller {
         organizzatoreDAO.insertHackathon(hackathon);
     }
 
+    /**
+     * Vedi hackathon creati list.
+     *
+     * @param user the user
+     * @return the list
+     * @throws SQLException the sql exception
+     */
     public List<Hackathon> vediHackathonCreati(Utente user) throws SQLException {
         System.out.println("visualizzazione Hackathon creati");
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         return organizzatoreDAO.getListHackathon(user); //visualizzazione hackathon creati fatta
     }
 
+    /**
+     * Gets all hackathon.
+     *
+     * @return the all hackathon
+     */
     public List<Hackathon> getAllHackathon() {
         HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
         return hackathonDAO.getAllHackathon();
     }
 
 
+    /**
+     * Gets hackathon where partecipante joined.
+     *
+     * @param user the user
+     * @return the hackathon partecipante
+     * @throws SQLException the sql exception
+     */
     public List<Hackathon> getHackathonPartecipante(Partecipante user) throws SQLException {
         System.out.println("visualizzazione Hackathon del partecipante");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
         return partecipanteDAO.getListHackathon(user);
     }
 
+    /**
+     * Gets hackathon where giudice joined.
+     *
+     * @param user the user
+     * @return the hackathon giudice
+     * @throws SQLException the sql exception
+     */
     public List<Hackathon> getHackathonGiudice(Giudice user) throws SQLException {
         System.out.println("visualizzazione Hackathon del giudice");
         GiudiceImplementazionePostgresDAO giudiceDAO = new GiudiceImplementazionePostgresDAO();
         return giudiceDAO.getListHackathon(user);
     }
 
+    /**
+     * Gets hackathon liberi.
+     *
+     * @param user the user
+     * @return the hackathon liberi
+     * @throws SQLException the sql exception
+     */
     public List<Hackathon> getHackathonLiberi(Partecipante user) throws SQLException {
         System.out.println("visualizzazione Hackathon  a cui può iscriversi il partecipante");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
@@ -98,33 +155,73 @@ public class Controller {
 
     }
 
+    /**
+     * Gets team by id hackathon.
+     *
+     * @param idHackathon the id hackathon
+     * @return the team by id hackathon
+     */
     public List<Team> getTeamByIdHackathon(Long idHackathon) {
         System.out.println("visualizzazione dei team appartenenti all'hackathon con id " + idHackathon);
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
         return teamDAO.getTeamByIdHackathon(idHackathon);
     }
 
+    /**
+     * Gets team by id.
+     *
+     * @param id the id
+     * @return the team by id
+     */
     public Team getTeamById(Long id) {
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
         return teamDAO.getTeamById(id);
     }
 
+    /**
+     * Get partecipanti without team list.
+     *
+     * @return the list
+     */
     public List<Partecipante> getPartecipantiWithoutTeam(){
         System.out.println("visualizzazione partecipanti senza team");
         PartecipanteImplementazionePostgresDAO partecipanteDAO = new PartecipanteImplementazionePostgresDAO();
         return partecipanteDAO.getPartecipantiWithoutTeam(getUtente().getId(), getIdHackathon());
     }
 
+    /**
+     * Get list giudici list.
+     *
+     * @return the list
+     */
     public List<Giudice> getListGiudici(){
         OrganizzatoreImplementazionePostgresDAO organizzatoreDAO = new OrganizzatoreImplementazionePostgresDAO();
         return organizzatoreDAO.getListGiudice(getIdHackathon());
     }
 
+    /**
+     * Apri registrazioni allows registrazioni from partecipanti.
+     *
+     * @param idHackathon      the id hackathon
+     * @param inizioIscrizioni the inizio iscrizioni
+     * @param fineIscrizioni   the fine iscrizioni
+     * @throws SQLException the sql exception
+     */
     public void apriRegistrazioni(Long idHackathon, LocalDate inizioIscrizioni, LocalDate fineIscrizioni) throws SQLException {
         HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
         hackathonDAO.apriRegistrazioni(idHackathon, inizioIscrizioni, fineIscrizioni);
     }
 
+    /**
+     * Registrati.
+     *
+     * @param nome     the nome
+     * @param cognome  the cognome
+     * @param email    the email
+     * @param password the password
+     * @param tipo     the tipo
+     * @throws InstanceAlreadyExistsException the instance already exists exception
+     */
     public void registrati(String nome,String cognome, String email, String password, String tipo) throws InstanceAlreadyExistsException {
         checkField(nome, cognome, email, password);
 
@@ -138,6 +235,15 @@ public class Controller {
 
         utenteDAO.insertUtente(utenteRegistrato);
     }
+
+    /**
+     * Accedi utente.
+     *
+     * @param email    the email
+     * @param password the password
+     * @return the utente
+     * @throws InstanceNotFoundException the instance not found exception
+     */
     public Utente accedi(String email, String password) throws InstanceNotFoundException {
         checkField("nome","cognome",email,password);
 
@@ -154,6 +260,12 @@ public class Controller {
         return utenteLoggato;
     }
 
+    /**
+     * Iscriviti.
+     *
+     * @param idPartecipante the id partecipante
+     * @param idHackathon    the id hackathon
+     */
     public void iscriviti(Long idPartecipante, Long idHackathon){
         System.out.println("iscrizione ad Hackathon in corso...");
 
@@ -164,6 +276,13 @@ public class Controller {
         hackathonDAO.addNumPartecipante(idHackathon);
 
     }
+
+    /**
+     * Crea team.
+     *
+     * @param nome              the nome
+     * @param listaPartecipanti the lista partecipanti
+     */
     public void creaTeam(String nome, List<Partecipante> listaPartecipanti){
         TeamImplementazionePostgresDAO teamDAO = new TeamImplementazionePostgresDAO();
         Long idTeam = teamDAO.insertTeam(nome,getIdHackathon());
@@ -181,17 +300,36 @@ public class Controller {
         partecipanti.forEach(partecipante -> invitoDAO.insertInvito(partecipante.getId(), idTeam, null, TIPO_TEAM));
 
     }
+
+    /**
+     * Richiesta ingresso team.
+     *
+     * @param partecipante the partecipante
+     * @param team         the team
+     */
     public void richiestaIngressoTeam(Partecipante partecipante, Team team){
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
         invitoDAO.insertInvito(partecipante.getId(), team.getId(), null, TIPO_PARTECIPANTE);
     }
 
+    /**
+     * Get inviti partecipante list.
+     *
+     * @param partecipante the partecipante
+     * @return the list
+     */
     public List<Invito> getInvitiPartecipante(Partecipante partecipante){
         System.out.println("visualizzazione inviti del partecipante");
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
         return invitoDAO.getInvitiPartecipante(partecipante);
     }
 
+    /**
+     * Gets inviti giudice.
+     *
+     * @param giudice the giudice
+     * @return the inviti giudice
+     */
     public List<Invito> getInvitiGiudice(Giudice giudice) {
         System.out.println("visualizzazione inviti del partecipante");
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
@@ -199,12 +337,24 @@ public class Controller {
     }
 
 
+    /**
+     * Gets documenti by id hackathon.
+     *
+     * @param idHackathon the id hackathon
+     * @return the documenti by id hackathon
+     */
     public List<Documento> getDocumentiByIdHackathon(Long idHackathon) {
         System.out.println("visualizzazione documenti dell'hackathon con id: " + idHackathon);
         DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
         return documentoDAO.getDocumentiByIdHackathon(idHackathon);
     }
 
+    /**
+     * Gets hackathon by id.
+     *
+     * @param idHackathon the id hackathon
+     * @return the hackathon by id
+     */
     public Hackathon getHackathonById(Long idHackathon) {
         try {
             HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
@@ -220,17 +370,37 @@ public class Controller {
         }
     }
 
+    /**
+     * Gets documenti by id team.
+     *
+     * @param idTeam the id team
+     * @return the documenti by id team
+     */
     public List<Documento> getDocumentiByIdTeam(Long idTeam) {
         System.out.println("visualizzazione documenti del team con id: " + idTeam);
         DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
         return documentoDAO.getDocumentiByIdTeam(idTeam);
     }
 
+    /**
+     * Gets documento by id.
+     *
+     * @param idDocumento the id documento
+     * @return the documento by id
+     */
     public Documento getDocumentoById(Long idDocumento) {
         DocumentoImplementazionePostgresDAO documentoDAO =  new DocumentoImplementazionePostgresDAO();
         return documentoDAO.getDocumentoById(idDocumento);
     }
 
+    /**
+     * Accetta o rifiuta invito team.
+     *
+     * @param decisione    the decisione
+     * @param partecipante the partecipante
+     * @param idTeam       the id team
+     * @param idInvito     the id invito
+     */
     public void accettaORifiutaInvitoTeam(boolean decisione,Partecipante partecipante, Long idTeam, Long idInvito){
         System.out.println("gestione invito in corso...");
 
@@ -251,6 +421,14 @@ public class Controller {
 
     }
 
+    /**
+     * Accetta o rifiuta invito organizzatore.
+     *
+     * @param decisione   the decisione
+     * @param giudice     the giudice
+     * @param idHackathon the id hackathon
+     * @param idInvito    the id invito
+     */
     public void accettaORifiutaInvitoOrganizzatore(boolean decisione, Giudice giudice, Long idHackathon, Long idInvito) {
         System.out.println("gestione invito in corso...");
 
@@ -269,12 +447,27 @@ public class Controller {
         invitoDAO.updateStatoInvito(idInvito,statoInvito);
 
     }
+
+    /**
+     * Pubblica problema.
+     *
+     * @param problema    the problema
+     * @param idHackathon the id hackathon
+     */
     public void pubblicaProblema(String problema, Long idHackathon){
         System.out.println("pubblica problema in corso...");
         HackathonImplementazionePostgresDAO hackathonDAO = new HackathonImplementazionePostgresDAO();
         hackathonDAO.addProblemaToHackathon(problema, idHackathon);
 
     }
+
+    /**
+     * Assegna voto.
+     *
+     * @param valutazione the valutazione
+     * @param commento    the commento
+     * @param idTeam      the id team
+     */
     public void assegnaVoto(Integer valutazione, String commento, Long idTeam){
         System.out.println("pubblica voto in corso...");
         VotoImplementazionePostgresDAO votoDAO = new VotoImplementazionePostgresDAO();
@@ -283,16 +476,36 @@ public class Controller {
     }
 
 
+    /**
+     * Pubblica documento.
+     *
+     * @param descrizione       the descrizione
+     * @param versione          the versione
+     * @param dataPubblicazione the data pubblicazione
+     */
     public void pubblicaDocumento(String descrizione, String versione, LocalDate dataPubblicazione){
 
         DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
         documentoDAO.addDocumento(descrizione,versione,dataPubblicazione, idTeam);
     }
 
+    /**
+     * Pubblica commento.
+     *
+     * @param commento    the commento
+     * @param idDocumento the id documento
+     */
     public void pubblicaCommento(String commento, Long idDocumento) {
         DocumentoImplementazionePostgresDAO documentoDAO = new DocumentoImplementazionePostgresDAO();
         documentoDAO.addCommentoToDocumento(commento, idDocumento);
     }
+
+    /**
+     * Stampa classifica list.
+     *
+     * @param idHackathon the id hackathon
+     * @return the list
+     */
     public List<Team> stampaClassifica(Long idHackathon){
        List<Team> listaTeam =  getTeamByIdHackathon(idHackathon);
 
@@ -311,6 +524,13 @@ public class Controller {
 
     }
 
+    /**
+     * Check partecipante have team boolean.
+     *
+     * @param partecipante the partecipante
+     * @param idHackathon  the id hackathon
+     * @return the boolean
+     */
     public boolean checkPartecipanteHaveTeam(Partecipante partecipante, Long idHackathon){
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
         partecipante =(Partecipante) utenteDAO.getUtenteByEmailAndPassword(partecipante.getEmail(), partecipante.getPassword());
@@ -322,6 +542,13 @@ public class Controller {
                 .anyMatch(team -> team.getHackathon().getId().equals(idHackathon));
     }
 
+    /**
+     * Has participant sent invite boolean.
+     *
+     * @param partecipante the partecipante
+     * @param idTeam       the id team
+     * @return the boolean
+     */
     public boolean hasParticipantSentInvite(Partecipante partecipante, Long  idTeam){
         List<Invito> listaInviti = getInvitiPartecipante(partecipante);
 
@@ -363,6 +590,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Check apri registrazioni.
+     *
+     * @param fineIscrizioni the fine iscrizioni
+     */
     public void checkApriRegistrazioni(LocalDate fineIscrizioni){
         LocalDate today = LocalDate.now();
         if (today.isAfter(fineIscrizioni)) {
@@ -370,6 +602,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Check invitato is utente loggato string.
+     *
+     * @param email the email
+     * @return the string
+     */
     public String checkInvitatoIsUtenteLoggato(String email){
         if(email.equals(utente.getEmail())){
             return "TU";
@@ -378,6 +616,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Calculate media voto double.
+     *
+     * @param voti the voti
+     * @return the double
+     */
     public Double calculateMediaVoto(List<Voto> voti){
         return voti.stream()
                 .map(Voto::getValutazione)
@@ -388,6 +632,12 @@ public class Controller {
     }
 
 
+    /**
+     * Gets medie.
+     *
+     * @param listaTeam the lista team
+     * @return the medie
+     */
     public Map<Long, Double> getMedie(List<Team> listaTeam) {
         Map<Long, Double> medie = new HashMap<>();
         for (Team team : listaTeam) {
@@ -398,15 +648,29 @@ public class Controller {
     }
 
 
-
+    /**
+     * Gets nome team.
+     *
+     * @return the nome team
+     */
     public String getNomeTeam() {
         return nomeTeam;
     }
 
+    /**
+     * Sets nome team.
+     *
+     * @param nomeTeam the nome team
+     */
     public void setNomeTeam(String nomeTeam) {
         this.nomeTeam = nomeTeam;
     }
 
+    /**
+     * Get utente utente.
+     *
+     * @return the utente
+     */
     public Utente getUtente(){
         UtenteImplentazionePostgresDAO utenteDAO = new UtenteImplentazionePostgresDAO();
         return utenteDAO.getUtenteByEmailAndPassword(utente.getEmail(), utente.getPassword());
@@ -416,39 +680,91 @@ public class Controller {
         this.utente = utente;
     }
 
+    /**
+     * Gets action button.
+     *
+     * @return the action button
+     */
     public ActionButton getActionButton() {
         return actionButton;
     }
 
+    /**
+     * Sets action button.
+     *
+     * @param actionButton the action button
+     */
     public void setActionButton(ActionButton actionButton) {
         this.actionButton = actionButton;
     }
 
+    /**
+     * Gets nome button.
+     *
+     * @return the nome button
+     */
     public String getNomeButton() {
         return nomeButton;
     }
 
+    /**
+     * Sets nome button.
+     *
+     * @param nomeButton the nome button
+     */
     public void setNomeButton(String nomeButton) {
         this.nomeButton = nomeButton;
     }
 
+    /**
+     * Gets id team.
+     *
+     * @return the id team
+     */
     public Long getIdTeam() {
         return idTeam;
     }
 
+    /**
+     * Sets id team.
+     *
+     * @param idTeam the id team
+     */
     public void setIdTeam(Long idTeam) {
         this.idTeam = idTeam;
     }
 
+    /**
+     * Gets id documento.
+     *
+     * @return the id documento
+     */
     public Long getIdDocumento() {return idDocumento;}
 
+    /**
+     * Sets id documento.
+     *
+     * @param idDocumento the id documento
+     */
     public void setIdDocumento(Long idDocumento) {this.idDocumento = idDocumento;}
 
+    /**
+     * Invita giudice.
+     *
+     * @param idHackathon    the id hackathon
+     * @param giudiciChecked the giudici checked
+     */
     public void invitaGiudice(Long idHackathon, List<Giudice> giudiciChecked) {
         InvitoImplementazionePostgresDAO invitoDAO = new InvitoImplementazionePostgresDAO();
         giudiciChecked.forEach(giudice -> invitoDAO.insertInvito(giudice.getId(), null, idHackathon, TIPO_ORGANIZZATORE));
     }
 
+    /**
+     * Gets voti by id team.
+     *
+     * @param id the id
+     * @return the voti by id team
+     */
     public List<Voto> getVotiByIdTeam(Long id) {
         VotoImplementazionePostgresDAO votoDao = new VotoImplementazionePostgresDAO();
         return votoDao.getVotiByIdTeam(id);

@@ -15,16 +15,34 @@ import java.util.Map;
 
 import static utils.Utils.COLONNE_CLASSIFICA;
 
+/**
+ * The type Classifica.
+ */
 public class Classifica {
     private JPanel panel1;
     private JTable table1;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Classifica frame.
+     */
     public JFrame classificaFrame;
+    /**
+     * The Home utente frame.
+     */
     public JFrame homeUtenteFrame;
+    /**
+     * The Lista team model.
+     */
     public DefaultTableModel listaTeamModel;
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Classifica.
+     *
+     * @param homeUtenteFrame the home utente frame
+     * @param controller      the controller
+     */
     public Classifica(JFrame homeUtenteFrame, Controller controller) {
 
         this.homeUtenteFrame = homeUtenteFrame;
@@ -112,6 +130,9 @@ public class Classifica {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

@@ -14,9 +14,15 @@ import java.util.Optional;
 
 import static utils.Utils.COLONNE_LISTA_INVITI_GIUDICE;
 
+/**
+ * The type Gestione inviti giudice.
+ */
 public class GestioneInvitiGiudice {
     private JPanel panel1;
     private JTable table1;
+    /**
+     * The Gestione inviti giudice frame.
+     */
     public JFrame gestioneInvitiGiudiceFrame;
     private Controller controller;
     private JButton accettaButton;
@@ -24,6 +30,12 @@ public class GestioneInvitiGiudice {
     private JButton tornaAllaHomeButton;
 
 
+    /**
+     * Instantiates a new Gestione inviti giudice.
+     *
+     * @param homeGiudiceFrame the home giudice frame
+     * @param controller       the controller
+     */
     public GestioneInvitiGiudice(JFrame homeGiudiceFrame, Controller controller) {
         this.gestioneInvitiGiudiceFrame = new JFrame("GestioneInvitiGiudice");
         this.controller = controller;
@@ -152,6 +164,9 @@ public class GestioneInvitiGiudice {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

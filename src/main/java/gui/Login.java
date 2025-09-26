@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Login.
+ */
 public class Login {
     private JPanel panel1;
     private JLabel emailLabel;
@@ -21,10 +24,18 @@ public class Login {
     private JPasswordField passwordField;
     private JButton accediButton;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Login frame.
+     */
     public JFrame loginFrame;
     private JFrame welcomeFrame;
     private Controller controller;
 
+    /**
+     * Instantiates a new Login.
+     *
+     * @param welcomeFrame the welcome frame
+     */
     public Login(JFrame welcomeFrame) {
         this.loginFrame = new JFrame("Login");
         controller = new Controller();
@@ -114,6 +125,9 @@ public class Login {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

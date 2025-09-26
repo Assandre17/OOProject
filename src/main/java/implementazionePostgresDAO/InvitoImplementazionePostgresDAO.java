@@ -14,9 +14,15 @@ import java.util.List;
 
 import static utils.Utils.*;
 
+/**
+ * The type Invito implementazione postgres dao.
+ */
 public class InvitoImplementazionePostgresDAO implements InvitoDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Invito implementazione postgres dao.
+     */
     public InvitoImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;

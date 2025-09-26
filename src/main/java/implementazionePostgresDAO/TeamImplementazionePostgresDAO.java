@@ -9,9 +9,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Team implementazione postgres dao.
+ */
 public class TeamImplementazionePostgresDAO implements TeamDAO {
     private Connection connection;
 
+    /**
+     * Instantiates a new Team implementazione postgres dao.
+     */
     public TeamImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;

@@ -6,9 +6,24 @@ import gui.HomeOrganizzatore;
 
 import javax.swing.*;
 
+/**
+ * The type Organizzatore.
+ */
 public class Organizzatore extends Utente {
+    /**
+     * Instantiates a new Organizzatore.
+     */
     public Organizzatore() {super();}
 
+    /**
+     * Instantiates a new Organizzatore.
+     *
+     * @param id       the id
+     * @param nome     the nome
+     * @param cognome  the cognome
+     * @param email    the email
+     * @param password the password
+     */
     public Organizzatore(Long id, String nome, String cognome, String email, String password) {
         super(id, nome, cognome, email, password);
     }

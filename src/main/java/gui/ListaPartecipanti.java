@@ -17,18 +17,40 @@ import java.util.List;
 import static utils.Utils.COLONNE_LISTA_PARTECIPANTI;
 
 
+/**
+ * The type Lista partecipanti.
+ */
 public class ListaPartecipanti {
     private JPanel panel1;
     private JTable table1;
     private JButton invitaButton;
     private JButton tornaAllaHomeButton;
+    /**
+     * The Lista partecipanti frame.
+     */
     public JFrame listaPartecipantiFrame;
+    /**
+     * The Crea team frame.
+     */
     public JFrame creaTeamFrame;
+    /**
+     * The Home partecipante frame.
+     */
     public JFrame homePartecipanteFrame;
+    /**
+     * The Lista partecipanti model.
+     */
     public DefaultTableModel listaPartecipantiModel;
     private Controller controller;
 
 
+    /**
+     * Instantiates a new Lista partecipanti.
+     *
+     * @param creaTeamFrame         the crea team frame
+     * @param homePartecipanteFrame the home partecipante frame
+     * @param controller            the controller
+     */
     public ListaPartecipanti(JFrame creaTeamFrame, JFrame homePartecipanteFrame, Controller controller) {
 
         this.creaTeamFrame = creaTeamFrame;
@@ -153,6 +175,9 @@ public class ListaPartecipanti {
     }
 
     /**
+     * $$$ get root component $$$ j component.
+     *
+     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

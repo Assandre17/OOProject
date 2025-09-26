@@ -10,10 +10,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Documento implementazione postgres dao.
+ */
 public class DocumentoImplementazionePostgresDAO implements DocumentoDAO {
 
     private Connection connection;
 
+    /**
+     * Instantiates a new Documento implementazione postgres dao.
+     */
     public DocumentoImplementazionePostgresDAO() {
         try {
             connection = ConnessioneDatabase.getInstance().connection;
