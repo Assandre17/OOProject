@@ -34,5 +34,5 @@ public interface OrganizzatoreDAO {
      * @return the list giudice
      * @throws SQLException the sql exception
      */
-    public List<Giudice> getListGiudice(Long idHackathon) throws SQLException;
+    public List<Giudice> getListGiudice(Long idHackathon);
 }

@@ -3,6 +3,10 @@ package dao;
 /**
  * The interface Voto dao.
  */
+import model.Voto;
+
+import java.util.List;
+
 public interface VotoDAO {
     /**
      * Insert voto long.
@@ -13,4 +17,6 @@ public interface VotoDAO {
      * @return the long
      */
     Long insertVoto(Integer valutazione, String commento, Long idTeam);
+
+    List<Voto> getVotiByIdTeam(Long id);
 }

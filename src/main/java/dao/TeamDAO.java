@@ -25,7 +25,7 @@ public interface TeamDAO {
      * @return the team by id hackathon
      * @throws SQLException the sql exception
      */
-    List<Team> getTeamByIdHackathon(Long idHackathon) throws SQLException;
+    List<Team> getTeamByIdHackathon(Long idHackathon);
 
     /**
      * Gets team by id.
