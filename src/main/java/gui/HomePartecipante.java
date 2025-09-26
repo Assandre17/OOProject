@@ -54,8 +54,8 @@ public class HomePartecipante {
 
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Avanti");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
@@ -72,9 +72,9 @@ public class HomePartecipante {
 
                     }
                     controller.setNomeButton("Invia richiesta");
-                    HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                    InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(hackathonCreatiOrganizzatore.hcoFrame, controller);
-                    inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                    ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                    ListaTeam listaTeam = new ListaTeam(listaHackathon.listaHackathonFrame, controller);
+                    listaTeam.listaTeamFrame.setVisible(true);
                 }
             };
 
@@ -83,8 +83,8 @@ public class HomePartecipante {
 
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Avanti");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
@@ -115,8 +115,8 @@ public class HomePartecipante {
             public void actionPerformed(ActionEvent e) {
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Iscriviti");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
@@ -146,8 +146,8 @@ public class HomePartecipante {
                         JOptionPane.showMessageDialog(null, e.getMessage());
                         throw new RuntimeException(e);
                     }
-                    HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hackathonCreatiOrganizzatore.hcoFrame);
+                    ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, listaHackathon.listaHackathonFrame);
                     dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
@@ -156,8 +156,8 @@ public class HomePartecipante {
             public void actionPerformed(ActionEvent e) {
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Avanti");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
 
             }
@@ -180,8 +180,8 @@ public class HomePartecipante {
             public void actionPerformed(ActionEvent e) {
                 controller.setNomeButton("Vedi classifica");
                 controller.setActionButton(actionButton);
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homePartecipanteFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homePartecipanteFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homePartecipanteFrame.setVisible(false);
             }
         });

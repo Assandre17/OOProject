@@ -28,8 +28,8 @@ public class HomeOrganizzatore {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    HackathonCreatiOrganizzatore hco = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
-                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hco.hcoFrame);
+                    ListaHackathon hco = new ListaHackathon(homeOrganizzatoreFrame, controller);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hco.listaHackathonFrame);
                     dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
@@ -38,8 +38,8 @@ public class HomeOrganizzatore {
             public void actionPerformed(ActionEvent e) {
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Vedi dettaglio");
-                HackathonCreatiOrganizzatore hco = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
-                hco.hcoFrame.setVisible(true);
+                ListaHackathon hco = new ListaHackathon(homeOrganizzatoreFrame, controller);
+                hco.listaHackathonFrame.setVisible(true);
                 homeOrganizzatoreFrame.setVisible(false);
             }
         });
@@ -68,8 +68,8 @@ public class HomeOrganizzatore {
             public void actionPerformed(ActionEvent e) {
                 controller.setNomeButton("Vedi classifica");
                 controller.setActionButton(actionButton);
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeOrganizzatoreFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homeOrganizzatoreFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homeOrganizzatoreFrame.setVisible(false);
             }
         });

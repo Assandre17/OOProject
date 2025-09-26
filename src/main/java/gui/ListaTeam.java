@@ -17,10 +17,10 @@ import java.util.Optional;
 import static utils.Utils.COLONNE_LISTA_TEAM;
 
 
-public class InviaRichiestaPartecipante {
+public class ListaTeam {
     private JPanel panel1;
     private JTable table1;
-    public JFrame inviaRichiestaPartecipanteFrame;
+    public JFrame listaTeamFrame;
     public JFrame mittenteFrame;
     private Controller controller;
     private JButton inviaRichiestaButton;
@@ -28,14 +28,14 @@ public class InviaRichiestaPartecipante {
     private ActionButton actionButton;
 
 
-    public InviaRichiestaPartecipante(JFrame mittenteFrame, Controller controller) {
+    public ListaTeam(JFrame mittenteFrame, Controller controller) {
 
         this.mittenteFrame = mittenteFrame;
-        this.inviaRichiestaPartecipanteFrame = new JFrame("InviaRichiestaPartecipante");
+        this.listaTeamFrame = new JFrame("ListaTeam");
         this.controller = controller;
-        inviaRichiestaPartecipanteFrame.setContentPane(panel1);
-        inviaRichiestaPartecipanteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        inviaRichiestaPartecipanteFrame.pack();
+        listaTeamFrame.setContentPane(panel1);
+        listaTeamFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        listaTeamFrame.pack();
         this.actionButton = controller.getActionButton();
         this.inviaRichiestaButton.setText(controller.getNomeButton());
 
@@ -101,8 +101,8 @@ public class InviaRichiestaPartecipante {
 //                }
 
                 actionButton.doAction();
-                inviaRichiestaPartecipanteFrame.setVisible(false);
-                inviaRichiestaPartecipanteFrame.dispose();
+                listaTeamFrame.setVisible(false);
+                listaTeamFrame.dispose();
 
             }
         });
@@ -111,8 +111,8 @@ public class InviaRichiestaPartecipante {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mittenteFrame.setVisible(true);
-                inviaRichiestaPartecipanteFrame.setVisible(false);
-                inviaRichiestaPartecipanteFrame.dispose();
+                listaTeamFrame.setVisible(false);
+                listaTeamFrame.dispose();
 
 
             }

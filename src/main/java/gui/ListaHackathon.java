@@ -20,7 +20,7 @@ import java.util.List;
 import static utils.Utils.*;
 
 
-public class HackathonCreatiOrganizzatore {
+public class ListaHackathon {
     private JPanel panel1; // proviamo a inizializzarlo
     private JTable table1;
     private JButton dettaglioButton;
@@ -29,18 +29,18 @@ public class HackathonCreatiOrganizzatore {
     public DefaultTableModel listaHackathonCModel;
     private Controller controller;
     private ActionButton actionButton;
-    public JFrame hcoFrame;
+    public JFrame listaHackathonFrame;
 
-    public HackathonCreatiOrganizzatore(JFrame homeUtenteFrame, Controller controller) {
+    public ListaHackathon(JFrame homeUtenteFrame, Controller controller) {
         this.homeUtenteFrame = homeUtenteFrame;
         this.controller = controller;
         this.actionButton = controller.getActionButton();
         this.dettaglioButton.setText(controller.getNomeButton());
 
-        this.hcoFrame = new JFrame("HackathonCreatiOrganizzatore");
-        hcoFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
-        hcoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        hcoFrame.pack();
+        this.listaHackathonFrame = new JFrame("ListaHackathon");
+        listaHackathonFrame.setContentPane(panel1); //hcoFrame invece di listaHackathonCFrame
+        listaHackathonFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        listaHackathonFrame.pack();
 
         List<Hackathon> listaHackathon = null;
         try {
@@ -77,8 +77,8 @@ public class HackathonCreatiOrganizzatore {
             @Override
             public void actionPerformed(ActionEvent e) {
                 homeUtenteFrame.setVisible(true);
-                hcoFrame.setVisible(false);
-                hcoFrame.dispose();
+                listaHackathonFrame.setVisible(false);
+                listaHackathonFrame.dispose();
             }
         });
 
@@ -94,8 +94,8 @@ public class HackathonCreatiOrganizzatore {
                     Long id = Long.parseLong(table1.getValueAt(riga, 0).toString());
                     controller.setIdHackathon(id);
                     actionButton.doAction();
-                    hcoFrame.setVisible(false);
-                    hcoFrame.dispose();
+                    listaHackathonFrame.setVisible(false);
+                    listaHackathonFrame.dispose();
                 }catch (Exception ex){
                     throw new RuntimeException(ex);
                 }

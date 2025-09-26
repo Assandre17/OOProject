@@ -5,14 +5,12 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import controller.Controller;
 import model.Hackathon;
-import model.Organizzatore;
 import model.Utente;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static utils.Utils.*;
@@ -107,8 +105,8 @@ public class DettagliHackathon {
                 }
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Assegna Voto");
-                InviaRichiestaPartecipante inviaRichiestaPartecipante = new InviaRichiestaPartecipante(dettaglioFrame, controller);
-                inviaRichiestaPartecipante.inviaRichiestaPartecipanteFrame.setVisible(true);
+                ListaTeam listaTeam = new ListaTeam(dettaglioFrame, controller);
+                listaTeam.listaTeamFrame.setVisible(true);
                 dettaglioFrame.setVisible(false);
                 dettaglioFrame.dispose();
             }

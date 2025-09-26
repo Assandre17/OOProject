@@ -30,8 +30,8 @@ public class HomeGiudice {
             final ActionButton actionButton = new ActionButton() {
                 @Override
                 public void doAction() {
-                    HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeGiudiceFrame, controller);
-                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, hackathonCreatiOrganizzatore.hcoFrame);
+                    ListaHackathon listaHackathon = new ListaHackathon(homeGiudiceFrame, controller);
+                    DettagliHackathon dettagliHackathon = new DettagliHackathon(controller, listaHackathon.listaHackathonFrame);
                     dettagliHackathon.dettaglioFrame.setVisible(true);
                 }
             };
@@ -40,8 +40,8 @@ public class HomeGiudice {
             public void actionPerformed(ActionEvent e) {
                 controller.setActionButton(actionButton);
                 controller.setNomeButton("Dettaglio");
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeGiudiceFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homeGiudiceFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homeGiudiceFrame.setVisible(false);
 
             }
@@ -75,8 +75,8 @@ public class HomeGiudice {
             public void actionPerformed(ActionEvent e) {
                 controller.setNomeButton("Vedi classifica");
                 controller.setActionButton(actionButton);
-                HackathonCreatiOrganizzatore hackathonCreatiOrganizzatore = new HackathonCreatiOrganizzatore(homeGiudiceFrame, controller);
-                hackathonCreatiOrganizzatore.hcoFrame.setVisible(true);
+                ListaHackathon listaHackathon = new ListaHackathon(homeGiudiceFrame, controller);
+                listaHackathon.listaHackathonFrame.setVisible(true);
                 homeGiudiceFrame.setVisible(false);
             }
         });
