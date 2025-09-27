@@ -104,10 +104,10 @@ public class CreaHackathon {
         label2.setText("numero massimo partecipanti:");
         panel2.add(label2, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
-        label3.setText("inizio iscrizioni:");
+        label3.setText("data inizio:");
         panel2.add(label3, new GridConstraints(4, 0, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
-        label4.setText("fine iscrizioni:");
+        label4.setText("data fine:");
         panel2.add(label4, new GridConstraints(5, 0, 1, 5, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("descrizione:");
@@ -147,9 +147,6 @@ public class CreaHackathon {
     }
 
     /**
-     * $$$ get root component $$$ j component.
-     *
-     * @return the j component
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {

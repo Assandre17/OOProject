@@ -62,9 +62,10 @@ public class PartecipanteImplementazionePostgresDAO implements PartecipanteDAO {
     @Override
     public List<Partecipante> getPartecipantiWithoutTeam(Long idPartecipante, Long idHackathon) {
         List<Partecipante> partecipantiList = new TreeList();
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users u WHERE tipo = 'PARTECIPANTE' AND id != ? AND NOT EXISTS (SELECT 1 FROM partecipante_team pt JOIN teams t ON pt.id_team = t.id WHERE pt.id_partecipante = u.id AND t.id_hackathon = ?)" )) {
+        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users u JOIN partecipante_hackathon ph ON ph.id_partecipante = u.id WHERE tipo = 'PARTECIPANTE' AND u.id != ? AND ph.id_hackathon = ? AND NOT EXISTS (SELECT 1 FROM partecipante_team pt JOIN teams t ON pt.id_team = t.id WHERE pt.id_partecipante = u.id AND t.id_hackathon = ?)" )) {
             ps.setLong(1, idPartecipante);
             ps.setLong(2, idHackathon);
+            ps.setLong(3, idHackathon);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 Long id = rs.getLong("id");
